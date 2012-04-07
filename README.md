@@ -28,3 +28,5 @@ Known issues
   the value of the global table, ignore this or delete
   `PowerBarColor['MANA'] = {r = 0/255, g = 0.55, b = 1}` in the
   `!Colorz.lua` file.
+
+  
