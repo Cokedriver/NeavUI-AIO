@@ -1,0 +1,123 @@
+## Interface: 40300
+## Author: Neav / Cokedriver
+## Version: 1.0
+## Title: |cffCC3333N|r|cffE53300e|r|cffFF4D00a|r|cffFF6633v|rUI
+## OptionalDeps: Blizzard_TimeManager
+
+-- oUF Load
+oUF\oUF.xml
+
+-- Core
+Core\nEngine.lua
+Core\nBeautycase.lua
+Core\nColorz.lua
+Core\nCore.lua
+
+-- Config
+Config\Defaults.lua
+
+-- AddOns
+AddOns\ActionButtonText\ABT.lua
+AddOns\ActionButtonText\ABTSpells.lua
+AddOns\ActionButtonText\localisation.en.lua
+AddOns\ActionButtonText\ABTOptions.lua
+AddOns\ActionButtonText\ABTConfig.lua
+
+--- NeavUI Modules
+
+-- Buffs
+Modules\Buff\nBuff.lua
+
+-- Chat
+Modules\Chat\nChat.lua
+Modules\Chat\nCopy.lua
+Modules\Chat\nHyperlink.lua
+Modules\Chat\nInvite.lua
+Modules\Chat\nUrlcopy.lua
+Modules\Chat\nWhisper.lua
+
+-- General
+Modules\General\nAltbuy.lua
+Modules\General\nAutogreed.lua
+Modules\General\nBubbles.lua
+Modules\General\nCoords.lua
+Modules\General\nDurability.lua
+Modules\General\nMail.lua
+Modules\General\nOmniCC.lua
+Modules\General\nQuicky.lua
+Modules\General\nSkins.lua
+Modules\General\nSpellid.lua
+Modules\General\nWarning.lua
+Modules\General\nWatchframe.lua
+
+
+-- Mainbar
+Modules\Mainbar\nMainbar.lua
+Modules\Mainbar\nBottomLeft.lua
+Modules\Mainbar\nBottomRight.lua
+Modules\Mainbar\nLeft.lua
+Modules\Mainbar\nRight.lua
+Modules\Mainbar\nSkins.lua
+Modules\Mainbar\nExpbar.lua
+Modules\Mainbar\nHotkey.lua
+Modules\Mainbar\nMouseover.lua
+Modules\Mainbar\nPetbar.lua
+Modules\Mainbar\nPossessbar.lua
+Modules\Mainbar\nRepbar.lua
+Modules\Mainbar\nSlash.lua
+Modules\Mainbar\nStancebar.lua
+Modules\Mainbar\nPicomenu.lua
+Modules\Mainbar\nShortbar\nShortbar.lua
+Modules\Mainbar\nShortbar\nExtras.lua
+Modules\Mainbar\nShortbar\nTotem.lua
+
+
+-- Minimap
+Modules\Minimap\nMinimap.lua
+Modules\Minimap\nCapture.lua
+Modules\Minimap\nCalendar.lua
+Modules\Minimap\nClock.lua
+Modules\Minimap\nDifficulty.lua
+Modules\Minimap\nTab.lua
+
+-- Nameplates
+Modules\Nameplates\nPlates.lua
+
+-- Tooltip
+Modules\Tooltip\nTooltip.lua
+Modules\Tooltip\nFade.lua
+Modules\Tooltip\nHealth.lua
+
+-- Unit Frames
+Modules\Unitframes\Modules\nOffline.lua
+Modules\Unitframes\Modules\nPortraittimers.lua
+Modules\Unitframes\Modules\nSmartthreat.lua
+Modules\Unitframes\Modules\oUF_CombatFeedback\oUF_CombatFeedback.lua
+Modules\Unitframes\Modules\oUF_Smooth\oUF_Smooth.lua
+
+Modules\Unitframes\nKill.lua
+Modules\Unitframes\nTags.lua
+Modules\Unitframes\nCastbar.lua
+Modules\Unitframes\nUnitframes.lua
+Modules\Unitframes\nBoss.lua
+Modules\Unitframes\nArena.lua
+
+-- Raid Frames
+Modules\Raidframes\oUF_AuraWatch\oUF_AuraWatch.lua
+Modules\Raidframes\oUF_SpellRange\oUF_SpellRange.lua
+Modules\Raidframes\oUF_Freebgrid\oUF_Freebgrid_AurasPriority.lua
+Modules\Raidframes\oUF_Freebgrid\oUF_Freebgrid_AurasList.lua
+Modules\Raidframes\oUF_Freebgrid\oUF_Freebgrid_Auras.lua
+Modules\Raidframes\nKill.lua
+Modules\Raidframes\nTags.lua
+Modules\Raidframes\nRaidframes.lua
+Modules\Raidframes\nMarker.lua
+
+
+
+
+
+
+
+
+

@@ -1,7 +1,0 @@
-## Interface: 40200
-## Title: Evl's Raid Status
-## Author: Evl
-
-evl_RaidStatus.lua
-
-watches.lua

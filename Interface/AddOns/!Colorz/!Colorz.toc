@@ -1,5 +1,0 @@
-## Interface: 40200
-## Title: !Colorz
-## Notes: Custom colors
-
-!Colorz.lua
