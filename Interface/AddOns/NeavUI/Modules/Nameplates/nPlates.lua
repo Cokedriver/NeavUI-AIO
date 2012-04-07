@@ -371,7 +371,7 @@ local function SkinPlate(self)
     if (not self.Health.Value) then    
         self.Health.Value = self.Health:CreateFontString(nil, 'OVERLAY')
         self.Health.Value:SetPoint('CENTER', self.Health, 0, 0)
-        self.Health.Value:SetFont('NeavUI\\Media\\fontNumber', 12)
+        self.Health.Value:SetFont('Fonts\\ARIALN.ttf', 12)
         self.Health.Value:SetShadowOffset(1, -1)
     end
 

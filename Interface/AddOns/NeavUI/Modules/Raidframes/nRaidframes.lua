@@ -1,5 +1,7 @@
 local N, C = unpack(select(2, ...)) -- Import:  N - function; C - C['raidframes']
 
+if C['raidframes'].enable ~=true then return end
+
 local ADDON_NAME, ns = ...
 local oUF = ns.oUF or oUF
 assert(oUF, "NeavUI was unable to locate oUF install.")

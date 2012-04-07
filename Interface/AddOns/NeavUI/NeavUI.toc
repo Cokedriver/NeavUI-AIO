@@ -2,21 +2,36 @@
 ## Author: Neav / Cokedriver
 ## Version: 1.0
 ## Title: |cffCC3333N|r|cffE53300e|r|cffFF4D00a|r|cffFF6633v|rUI
+## SavedVariables: NeavDB
+## SavedVariablesPerCharacter: NeavDBPerCharacter
 ## OptionalDeps: Blizzard_TimeManager
 
--- oUF Load
+<! -- oUF -- >
 oUF\oUF.xml
 
--- Core
+
+<! -- NeavUI AIO Core -- >
 Core\nEngine.lua
 Core\nBeautycase.lua
 Core\nColorz.lua
 Core\nCore.lua
 
--- Config
+<! -- Config -- >
 Config\Defaults.lua
 
--- AddOns
+<! -- oUF Modules -- >
+oUF\Modules\nOffline.lua
+oUF\Modules\nPortraittimers.lua
+oUF\Modules\nSmartthreat.lua
+oUF\Modules\oUF_CombatFeedback\oUF_CombatFeedback.lua
+oUF\Modules\oUF_Smooth\oUF_Smooth.lua
+oUF\Modules\oUF_AuraWatch.lua
+oUF\Modules\oUF_SpellRange.lua
+oUF\Modules\oUF_Freebgrid_AurasPriority.lua
+oUF\Modules\oUF_Freebgrid_AurasList.lua
+oUF\Modules\oUF_Freebgrid_Auras.lua
+
+<! -- AddOns -- >
 AddOns\ActionButtonText\ABT.lua
 AddOns\ActionButtonText\ABTSpells.lua
 AddOns\ActionButtonText\localisation.en.lua
@@ -25,10 +40,10 @@ AddOns\ActionButtonText\ABTConfig.lua
 
 --- NeavUI Modules
 
--- Buffs
+<! -- nBuffs -- >
 Modules\Buff\nBuff.lua
 
--- Chat
+<! -- nChat -- >
 Modules\Chat\nChat.lua
 Modules\Chat\nCopy.lua
 Modules\Chat\nHyperlink.lua
@@ -36,7 +51,7 @@ Modules\Chat\nInvite.lua
 Modules\Chat\nUrlcopy.lua
 Modules\Chat\nWhisper.lua
 
--- General
+<! -- nCore -- >
 Modules\General\nAltbuy.lua
 Modules\General\nAutogreed.lua
 Modules\General\nBubbles.lua
@@ -51,7 +66,7 @@ Modules\General\nWarning.lua
 Modules\General\nWatchframe.lua
 
 
--- Mainbar
+<! -- nMainbar -- >
 Modules\Mainbar\nMainbar.lua
 Modules\Mainbar\nBottomLeft.lua
 Modules\Mainbar\nBottomRight.lua
@@ -72,7 +87,7 @@ Modules\Mainbar\nShortbar\nExtras.lua
 Modules\Mainbar\nShortbar\nTotem.lua
 
 
--- Minimap
+<! -- nMinimap -- >
 Modules\Minimap\nMinimap.lua
 Modules\Minimap\nCapture.lua
 Modules\Minimap\nCalendar.lua
@@ -80,21 +95,18 @@ Modules\Minimap\nClock.lua
 Modules\Minimap\nDifficulty.lua
 Modules\Minimap\nTab.lua
 
--- Nameplates
+<! -- nPlates -- >
 Modules\Nameplates\nPlates.lua
 
--- Tooltip
+<! -- nPower -- >
+Modules\Powerbar\nPower.lua
+
+<! -- nTooltip -- >
 Modules\Tooltip\nTooltip.lua
 Modules\Tooltip\nFade.lua
 Modules\Tooltip\nHealth.lua
 
--- Unit Frames
-Modules\Unitframes\Modules\nOffline.lua
-Modules\Unitframes\Modules\nPortraittimers.lua
-Modules\Unitframes\Modules\nSmartthreat.lua
-Modules\Unitframes\Modules\oUF_CombatFeedback\oUF_CombatFeedback.lua
-Modules\Unitframes\Modules\oUF_Smooth\oUF_Smooth.lua
-
+<! -- oUF_Neav -- >
 Modules\Unitframes\nKill.lua
 Modules\Unitframes\nTags.lua
 Modules\Unitframes\nCastbar.lua
@@ -102,12 +114,7 @@ Modules\Unitframes\nUnitframes.lua
 Modules\Unitframes\nBoss.lua
 Modules\Unitframes\nArena.lua
 
--- Raid Frames
-Modules\Raidframes\oUF_AuraWatch\oUF_AuraWatch.lua
-Modules\Raidframes\oUF_SpellRange\oUF_SpellRange.lua
-Modules\Raidframes\oUF_Freebgrid\oUF_Freebgrid_AurasPriority.lua
-Modules\Raidframes\oUF_Freebgrid\oUF_Freebgrid_AurasList.lua
-Modules\Raidframes\oUF_Freebgrid\oUF_Freebgrid_Auras.lua
+<! -- oUF_NeavRaid -- >
 Modules\Raidframes\nKill.lua
 Modules\Raidframes\nTags.lua
 Modules\Raidframes\nRaidframes.lua

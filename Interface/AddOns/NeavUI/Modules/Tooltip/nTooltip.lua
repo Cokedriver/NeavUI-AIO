@@ -456,6 +456,8 @@ end)
 hooksecurefunc('GameTooltip_SetDefaultAnchor', function(self, parent)
     if (C['tooltip'].showOnMouseover) then
         self:SetOwner(parent, 'ANCHOR_CURSOR')
+    elseif C['mainbar'].short ~= true then
+        self:SetPoint('BOTTOMRIGHT', UIParent, -95, 135)		
     else
         self:SetPoint(unpack(C['tooltip'].position))
     end
