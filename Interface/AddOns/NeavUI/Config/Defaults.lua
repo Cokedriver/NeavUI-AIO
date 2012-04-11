@@ -371,7 +371,9 @@ DB['unitframes'] = {
             style = 'NORMAL',                                                               -- 'NORMAL' 'RARE' 'ELITE' 'CUSTOM'
 
             mouseoverText = false,
-			-- Tags are not Included on the In_Game Options
+			
+			-- Tags are not Included on the In_Game Options. 
+			-- IF YOU WANT TO CHANGE TAGS THEY MUST BE CHANGED HERE IN THE LUA.
             healthTag = '$cur/$max',
             healthTagFull = '$cur',
             powerTag = '$cur/$max',
@@ -426,7 +428,8 @@ DB['unitframes'] = {
             auraSize = 22,
 	
             mouseoverText = true,
-			-- Tags are not Included on the In_Game Options. If you Want to change them they must be changed here.
+			-- Tags are not Included on the In_Game Options. 
+			-- IF YOU WANT TO CHANGE TAGS THEY MUST BE CHANGED HERE IN THE LUA.
             healthTag = '$cur/$max',
             healthTagFull = '$cur',
             powerTag = '$cur/$max',
@@ -485,7 +488,9 @@ DB['unitframes'] = {
             numComboPointsColor = { r = 0.9, g = 0, b = 0 },                                              -- Textcolor of the combopoints if showComboPointsAsNumber = true
 
             mouseoverText = false,
-			-- Tags are not Included on the In_Game Options
+
+			-- Tags are not Included on the In_Game Options. 
+			-- IF YOU WANT TO CHANGE TAGS THEY MUST BE CHANGED HERE IN THE LUA.			
             healthTag = '$cur/$max',
             healthTagFull = '$cur',
             powerTag = '$cur/$max',
@@ -532,6 +537,9 @@ DB['unitframes'] = {
             disableAura = false,                                                             -- Disable Auras on this unitframe
 
             mouseoverText = false,
+			
+			-- Tags are not Included on the In_Game Options. 
+			-- IF YOU WANT TO CHANGE TAGS THEY MUST BE CHANGED HERE IN THE LUA.
             healthTag = '$perc',
             healthTagFull = '',
        },
@@ -542,7 +550,9 @@ DB['unitframes'] = {
             numDebuffs = 6,
             
             mouseoverText = false,
-			-- Tags are not Included on the In_Game Options
+
+			-- Tags are not Included on the In_Game Options. 
+			-- IF YOU WANT TO CHANGE TAGS THEY MUST BE CHANGED HERE IN THE LUA.
             healthTag = '$cur/$max',
             healthTagFull = '$cur',
             powerTag = '$cur/$max',
@@ -554,8 +564,8 @@ DB['unitframes'] = {
             showCombatFeedback = false,
 
             enableFocusToggleKeybind = true,
-            focusToggleKey = 'type4',                                                       -- type1, type2 (mousebutton 1 or 2, 3, 4, 5 etc. works too)
-
+            focusToggleKey = 'type4',             		-- type1, type2 (mousebutton 1 or 2, 3, 4, 5 etc. works too) 
+			
             castbar = {
                 show = true, 
 
@@ -578,6 +588,9 @@ DB['unitframes'] = {
             scale = 1.193,
 
             mouseoverText = false,
+			
+			-- Tags are not Included on the In_Game Options. 
+			-- IF YOU WANT TO CHANGE TAGS THEY MUST BE CHANGED HERE IN THE LUA.			
             healthTag = '$perc',
             healthTagFull = '',
         },
@@ -588,7 +601,9 @@ DB['unitframes'] = {
             hideInRaid = true,
 
             mouseoverText = true,
-			-- Tags are not Included on the In_Game Options
+
+			-- Tags are not Included on the In_Game Options. 
+			-- IF YOU WANT TO CHANGE TAGS THEY MUST BE CHANGED HERE IN THE LUA.
             healthTag = '$cur/$max',
             healthTagFull = '$cur',
             powerTag = '$cur/$max',
@@ -607,7 +622,9 @@ DB['unitframes'] = {
             scale = 1,
 
             mouseoverText = true,
-			-- Tags are not Included on the In_Game Options
+
+			-- Tags are not Included on the In_Game Options. 
+			-- IF YOU WANT TO CHANGE TAGS THEY MUST BE CHANGED HERE IN THE LUA.
             healthTag = '$cur/$max',
             healthTagFull = '$cur',
             powerTag = '$cur/$max',
@@ -640,7 +657,9 @@ DB['unitframes'] = {
             auraSize = 22,
 
             mouseoverText = true,
-			-- Tags are not Included on the In_Game Options
+			
+			-- Tags are not Included on the In_Game Options. 
+			-- IF YOU WANT TO CHANGE TAGS THEY MUST BE CHANGED HERE IN THE LUA.
             healthTag = '$cur/$max',
             healthTagFull = '$cur',
             powerTag = '$cur/$max',
@@ -656,11 +675,12 @@ DB['unitframes'] = {
 			},			
 
             castbar = {
+				color = { r = 1, g = 0, b = 0 },
+				
                 icon = {
                     size = 22,
                 },
 
-                color = { r = 1, g = 0, b = 0 },
             },
         },
     },
@@ -672,9 +692,6 @@ DB['unitframes'] = {
 
 DB['raidframes'] = {
 	enable = false,
-    media = {
-        statusbar = 'Interface\\AddOns\\NeavUI\\Media\\statusbarTexture',                 -- Health- and Powerbar texture
-    },
 
     font = {
         fontSmallSize = 11,

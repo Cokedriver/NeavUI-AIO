@@ -369,7 +369,7 @@ local function CreateRaidLayout(self, unit)
         -- Health bar
 
     self.Health = CreateFrame('StatusBar', nil, self)
-    self.Health:SetStatusBarTexture(C['raidframes'].media.statusbar, 'ARTWORK')
+    self.Health:SetStatusBarTexture('Interface\\AddOns\\NeavUI\\Media\\statusbarTexture', 'ARTWORK')
     self.Health:SetAllPoints(self)
     self.Health:SetOrientation(C['raidframes'].units.raid.horizontalHealthBars and 'HORIZONTAL' or 'VERTICAL')
 
@@ -387,7 +387,7 @@ local function CreateRaidLayout(self, unit)
 
     self.Health.bg = self.Health:CreateTexture(nil, 'BORDER')
     self.Health.bg:SetAllPoints(self.Health)
-    self.Health.bg:SetTexture(C['raidframes'].media.statusbar)
+    self.Health.bg:SetTexture('Interface\\AddOns\\NeavUI\\Media\\statusbarTexture')
 
     self.Health.bg.multiplier = 0.3
 
@@ -411,7 +411,7 @@ local function CreateRaidLayout(self, unit)
 
     if (C['raidframes'].units.raid.manabar.show) then
         self.Power = CreateFrame('StatusBar', nil, self)
-        self.Power:SetStatusBarTexture(C['raidframes'].media.statusbar, 'ARTWORK')
+        self.Power:SetStatusBarTexture('Interface\\AddOns\\NeavUI\\Media\\statusbarTexture', 'ARTWORK')
 
         if (C['raidframes'].units.raid.manabar.horizontalOrientation) then
             self.Power:SetPoint('TOPLEFT', self.Health, 'BOTTOMLEFT', 0, -1)
@@ -442,7 +442,7 @@ local function CreateRaidLayout(self, unit)
         -- Heal prediction, new healcomm
 
     local myBar = CreateFrame('StatusBar', nil, self)
-    myBar:SetStatusBarTexture(C['raidframes'].media.statusbar, 'OVERLAY')
+    myBar:SetStatusBarTexture('Interface\\AddOns\\NeavUI\\Media\\statusbarTexture', 'OVERLAY')
     myBar:SetStatusBarColor(0, 1, 0.3, 0.5)
 
     if (C['raidframes'].units.raid.smoothUpdates) then
@@ -462,7 +462,7 @@ local function CreateRaidLayout(self, unit)
     end
 
     local otherBar = CreateFrame('StatusBar', nil, self)
-    otherBar:SetStatusBarTexture(C['raidframes'].media.statusbar, 'OVERLAY')
+    otherBar:SetStatusBarTexture('Interface\\AddOns\\NeavUI\\Media\\statusbarTexture', 'OVERLAY')
     otherBar:SetStatusBarColor(0, 1, 0, 0.35)
 
     if (C['raidframes'].units.raid.smoothUpdates) then
@@ -505,7 +505,7 @@ local function CreateRaidLayout(self, unit)
     if (C['raidframes'].units.raid.showMouseoverHighlight) then    
         self.Mouseover = self.Health:CreateTexture(nil, 'OVERLAY')
         self.Mouseover:SetAllPoints(self.Health)
-        self.Mouseover:SetTexture(C['raidframes'].media.statusbar)
+        self.Mouseover:SetTexture('Interface\\AddOns\\NeavUI\\Media\\statusbarTexture')
         self.Mouseover:SetVertexColor(0, 0, 0)
         self.Mouseover:SetAlpha(0)
     end
@@ -515,7 +515,7 @@ local function CreateRaidLayout(self, unit)
     self.ThreatGlow = CreateFrame('Frame', nil, self)
     self.ThreatGlow:SetPoint('TOPLEFT', self, 'TOPLEFT', -4, 4)
     self.ThreatGlow:SetPoint('BOTTOMRIGHT', self, 'BOTTOMRIGHT', 4, -4)
-    self.ThreatGlow:SetBackdrop({edgeFile = 'Interface\\AddOns\\oUF_NeavRaid\\media\\textureGlow', edgeSize = 3})
+    self.ThreatGlow:SetBackdrop({edgeFile = 'Interface\\AddOns\\NeavUI\\Media\\textureGlow', edgeSize = 3})
     self.ThreatGlow:SetBackdropBorderColor(0, 0, 0, 0)
     self.ThreatGlow:SetFrameLevel(self:GetFrameLevel() - 1)
     self.ThreatGlow.ignore = true
@@ -634,7 +634,7 @@ local function CreateRaidLayout(self, unit)
         -- self.TargetBorder:SetPoint('BOTTOMLEFT', self, -5, -5)
         self.TargetBorder:SetAllPoints(self.Health)
         self.TargetBorder:SetTexture('Interface\\Addons\\NeavUI\\Media\\borderTarget')
-        self.TargetBorder:SetVertexColor(unpack(C['raidframes'].units.raid.targetBorderColor))
+        self.TargetBorder:SetVertexColor(C['raidframes'].units.raid.targetBorderColor.r, C['raidframes'].units.raid.targetBorderColor.g, C['raidframes'].units.raid.targetBorderColor.b)
         self.TargetBorder:Hide()
  
         self:RegisterEvent('PLAYER_TARGET_CHANGED', function()
