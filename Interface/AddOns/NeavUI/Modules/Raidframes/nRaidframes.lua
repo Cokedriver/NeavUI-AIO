@@ -1,4 +1,4 @@
-local N, C = unpack(select(2, ...)) -- Import:  N - function; C - C['raidframes']
+local N, C, DB = unpack(select(2, ...)) -- Import:  N - function; C - config; DB - database
 
 if C['raidframes'].enable ~=true then return end
 
@@ -214,7 +214,7 @@ local function CreateIndicators(self, unit)
 
             icon.icon = icon:CreateTexture(nil, 'OVERLAY')
             icon.icon:SetAllPoints(icon)
-            icon.icon:SetTexture('Interface\\AddOns\\oUF_NeavRaid\\media\\borderIndicator')
+            icon.icon:SetTexture('Interface\\AddOns\\oUF_NeavRaid\\Media\\borderIndicator')
 
             if (spell[3]) then
                 icon.icon:SetVertexColor(unpack(spell[3]))
@@ -227,7 +227,7 @@ local function CreateIndicators(self, unit)
                 icon.count:SetShadowColor(0, 0, 0)
                 icon.count:SetShadowOffset(1, -1)
                 icon.count:SetPoint(unpack(offsets[spell[2]].count))
-                icon.count:SetFont('Interface\\AddOns\\oUF_NeavRaid\\media\\fontVisitor.ttf', 13)
+                icon.count:SetFont(C['media'].fontVisitor, 13)
             end
 
             self.AuraWatch.icons[spell[1]] = icon
@@ -395,14 +395,14 @@ local function CreateRaidLayout(self, unit)
 
     self.Health.Value = self.Health:CreateFontString(nil, 'OVERLAY')
     self.Health.Value:SetPoint('TOP', self.Health, 'CENTER', 0, 2)
-    self.Health.Value:SetFont(C['raidframes'].font.fontSmall, C['raidframes'].font.fontSmallSize)
+    self.Health.Value:SetFont(C['media'].fontSmall, C['raidframes'].font.fontSmallSize)
     self.Health.Value:SetShadowOffset(1, -1)
 
         -- Name text
 
     self.Name = self.Health:CreateFontString(nil, 'OVERLAY')
     self.Name:SetPoint('BOTTOM', self.Health, 'CENTER', 0, 3)
-    self.Name:SetFont(C['raidframes'].font.fontBig,C['raidframes'].font.fontBigSize)
+    self.Name:SetFont(C['media'].fontThick, C['raidframes'].font.fontBigSize)
     self.Name:SetShadowOffset(1, -1)
     self.Name:SetTextColor(1, 1, 1)
     self:Tag(self.Name, '[name:raid]')
@@ -492,8 +492,8 @@ local function CreateRaidLayout(self, unit)
     if (C['raidframes'].units.raid.showNotHereTimer) then
         self.NotHere = self.Health:CreateFontString(nil, 'OVERLAY')
         self.NotHere:SetPoint('CENTER', self, 'BOTTOM')
-        -- self.NotHere:SetFont(C['raidframes'].font.fontSmall, 11)
-        self.NotHere:SetFont(C['raidframes'].font.fontSmall, 11, 'THINOUTLINE')
+        -- self.NotHere:SetFont(C['media'].fontSmall, 11)
+        self.NotHere:SetFont(C['media'].fontSmall, 11, 'THINOUTLINE')
         self.NotHere:SetShadowOffset(0, 0)
         self.NotHere:SetTextColor(0, 1, 0)
         self.NotHere.frequentUpdates = 1
@@ -525,7 +525,7 @@ local function CreateRaidLayout(self, unit)
     if (C['raidframes'].units.raid.showThreatText) then
         self.ThreatText = self.Health:CreateFontString(nil, 'OVERLAY')
         self.ThreatText:SetPoint('CENTER', self, 'BOTTOM')
-        self.ThreatText:SetFont(C['raidframes'].font.fontSmall, 11, 'THINOUTLINE')
+        self.ThreatText:SetFont(C['media'].fontSmall, 11, 'THINOUTLINE')
         self.ThreatText:SetShadowOffset(0, 0)
         self.ThreatText:SetTextColor(1, 0, 0)
         self.ThreatText:SetText('AGGRO')
@@ -591,7 +591,7 @@ local function CreateRaidLayout(self, unit)
     if (C['raidframes'].units.raid.showRolePrefix) then
         self.LFDRoleText = self.Health:CreateFontString(nil, 'ARTWORK')
         self.LFDRoleText:SetPoint('TOPLEFT', self.Health, 0, 4)
-        self.LFDRoleText:SetFont(C['raidframes'].font.fontSmall, 15)
+        self.LFDRoleText:SetFont(C['media'].fontSmall, 15)
         self.LFDRoleText:SetShadowOffset(0.5, -0.5)
         self.LFDRoleText:SetTextColor(1, 0, 1)
         self:Tag(self.LFDRoleText, '[role:raid]')
@@ -602,7 +602,7 @@ local function CreateRaidLayout(self, unit)
     if (C['raidframes'].units.raid.showResurrectText) then
         self.ResurrectIcon = self.Health:CreateFontString(nil, 'OVERLAY')
         self.ResurrectIcon:SetPoint('CENTER', self, 'BOTTOM', 0, 1)
-        self.ResurrectIcon:SetFont(C['raidframes'].font.fontSmall, 11, 'THINOUTLINE')
+        self.ResurrectIcon:SetFont(C['media'].fontSmall, 11, 'THINOUTLINE')
         self.ResurrectIcon:SetShadowOffset(0, 0)
         self.ResurrectIcon:SetTextColor(0.1, 1, 0.1)
         self.ResurrectIcon:SetText('RES') -- RESURRECT

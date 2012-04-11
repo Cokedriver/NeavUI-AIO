@@ -1,4 +1,4 @@
-local N, C = unpack(select(2, ...)) -- Import:  N - function; C - config
+local N, C, DB = unpack(select(2, ...)) -- Import:  N - function; C - config; DB - database
 
 hooksecurefunc(GameTooltip, 'SetUnitBuff', function(self,...)
     local id = select(11,UnitBuff(...))

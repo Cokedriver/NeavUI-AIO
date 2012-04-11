@@ -1,4 +1,6 @@
-local N, C = unpack(select(2, ...)) -- Import:  N - function; C - config
+local N, C, DB = unpack(select(2, ...)) -- Import:  N - function; C - config; DB - database
+
+if C['tooltip'].enable ~= true then return end
 
 local _G = _G
 local select = select
@@ -23,18 +25,18 @@ local damagerIcon = '|TInterface\\LFGFrame\\UI-LFG-ICON-PORTRAITROLES.blp:13:13:
     -- Some tooltip changes
 
 if (C['tooltip'].fontOutline) then
-    GameTooltipHeaderText:SetFont('Fonts\\ARIALN.ttf', (C['tooltip'].fontSize + 2), 'THINOUTLINE')
+    GameTooltipHeaderText:SetFont(C['media'].font, (C['tooltip'].fontSize + 2), 'THINOUTLINE')
     GameTooltipHeaderText:SetShadowOffset(0, 0)
 
-    GameTooltipText:SetFont('Fonts\\ARIALN.ttf', (C['tooltip'].fontSize), 'THINOUTLINE')
+    GameTooltipText:SetFont(C['media'].font, (C['tooltip'].fontSize), 'THINOUTLINE')
     GameTooltipText:SetShadowOffset(0, 0)
 
-    GameTooltipTextSmall:SetFont('Fonts\\ARIALN.ttf', (C['tooltip'].fontSize), 'THINOUTLINE')
+    GameTooltipTextSmall:SetFont(C['media'].font, (C['tooltip'].fontSize), 'THINOUTLINE')
     GameTooltipTextSmall:SetShadowOffset(0, 0)
 else
-    GameTooltipHeaderText:SetFont('Fonts\\ARIALN.ttf', (C['tooltip'].fontSize + 2))
-    GameTooltipText:SetFont('Fonts\\ARIALN.ttf', (C['tooltip'].fontSize))
-    GameTooltipTextSmall:SetFont('Fonts\\ARIALN.ttf', (C['tooltip'].fontSize))
+    GameTooltipHeaderText:SetFont(C['media'].font, (C['tooltip'].fontSize + 2))
+    GameTooltipText:SetFont(C['media'].font, (C['tooltip'].fontSize))
+    GameTooltipTextSmall:SetFont(C['media'].font, (C['tooltip'].fontSize))
 end
 
 GameTooltipStatusBar:SetHeight(7)
@@ -249,7 +251,7 @@ end
 local function SetHealthBarColor(unit)
     local r, g, b
     if (C['tooltip'].healthbar.customColor.apply and not C['tooltip'].healthbar.reactionColoring) then
-        r, g, b = C['tooltip'].healthbar.customColor.r, C['tooltip'].healthbar.customColor.g, C['tooltip'].healthbar.customColor.b
+        r, g, b = C['tooltip'].healthbar.customColor.color.r, C['tooltip'].healthbar.customColor.color.g, C['tooltip'].healthbar.customColor.color.b
     elseif (C['tooltip'].healthbar.reactionColoring and unit) then
         r, g, b = UnitSelectionColor(unit)
     else
@@ -459,6 +461,6 @@ hooksecurefunc('GameTooltip_SetDefaultAnchor', function(self, parent)
     elseif C['mainbar'].short ~= true then
         self:SetPoint('BOTTOMRIGHT', UIParent, -95, 135)		
     else
-        self:SetPoint(unpack(C['tooltip'].position))
+        self:SetPoint(C['tooltip'].position.selfAnchor , C['tooltip'].position.frameParent, C['tooltip'].position.relAnchor , C['tooltip'].position.offSetX , C['tooltip'].position.offSetY )
     end
 end)

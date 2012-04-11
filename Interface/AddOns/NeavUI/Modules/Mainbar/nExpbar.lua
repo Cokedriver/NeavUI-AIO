@@ -1,8 +1,10 @@
-local N, C = unpack(select(2, ...)) -- Import:  N - function; C - config
+local N, C, DB = unpack(select(2, ...)) -- Import:  N - function; C - config; DB - database
+
+if C['mainbar'].enable ~= true then return end
 
     -- experience bar mouseover text
 
-MainMenuBarExpText:SetFont(C['mainbar'].expBar.font, C['mainbar'].expBar.fontsize, 'THINOUTLINE')
+MainMenuBarExpText:SetFont(C['media'].font, C['mainbar'].expBar.fontsize, 'THINOUTLINE')
 MainMenuBarExpText:SetShadowOffset(0, 0)
 
 if (C['mainbar'].expBar.mouseover) then

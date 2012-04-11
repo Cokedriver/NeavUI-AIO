@@ -1,8 +1,10 @@
-local N, C = unpack(select(2, ...)) -- Import:  N - function; C - config
+local N, C, DB = unpack(select(2, ...)) -- Import:  N - function; C - config; DB - database
+
+if C['mainbar'].enable ~= true then return end
  
     -- reputation bar mouseover text
 
-ReputationWatchStatusBarText:SetFont(C['mainbar'].repBar.font, C['mainbar'].repBar.fontsize, 'THINOUTLINE')
+ReputationWatchStatusBarText:SetFont(C['media'].font, C['mainbar'].repBar.fontsize, 'THINOUTLINE')
 ReputationWatchStatusBarText:SetShadowOffset(0, 0)
 
 if (C['mainbar'].repBar.mouseover) then

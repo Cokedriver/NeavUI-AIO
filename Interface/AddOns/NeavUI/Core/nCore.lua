@@ -1,4 +1,4 @@
-local N, C = unpack(select(2, ...)) -- Import:  N - function; C - config
+local N, C, DB = unpack(select(2, ...)) -- Import:  N - function; C - config; DB - database
 
 local L = setmetatable({}, { __index = function(t,k)
     local v = tostring(k)
@@ -19,13 +19,13 @@ N.version = GetAddOnMetadata("NeavUI", "Version")
 N.patch = GetBuildInfo()
 N.level = UnitLevel("player")
 N.locale = GetLocale()
-N.resolution = GetCurrentResolution()
-N.getscreenresolution = select(N.resolution, GetScreenResolutions())
-N.getscreenheight = tonumber(string.match(({GetScreenResolutions()})[GetCurrentResolution()], "%d+x(%d+)"))
-N.getscreenwidth = tonumber(string.match(({GetScreenResolutions()})[GetCurrentResolution()], "(%d+)x+%d"))
 N.ccolor = RAID_CLASS_COLORS[select(2, UnitClass("player"))]
-N.regions ={['TOPLEFT'] = L['TOPLEFT'], ['TOP'] = L['TOP'], ['TOPRIGHT'] = L['TOPRIGHT'], ['LEFT'] = L['LEFT'], ['CENTER'] = L['CENTER'], ['RIGHT'] = L['RIGHT'], ['BOTTOMLEFT'] = L['BOTTOMLEFT'], ['BOTTOM'] = L['BOTTOM'], ['BOTTOMRIGHT'] = L['BOTTOMRIGHT']}
-
+N.regions = {['TOPLEFT'] = L['TOPLEFT'], ['TOP'] = L['TOP'], ['TOPRIGHT'] = L['TOPRIGHT'], ['LEFT'] = L['LEFT'], ['CENTER'] = L['CENTER'], ['RIGHT'] = L['RIGHT'], ['BOTTOMLEFT'] = L['BOTTOMLEFT'], ['BOTTOM'] = L['BOTTOM'], ['BOTTOMRIGHT'] = L['BOTTOMRIGHT']}
+N.vPosition = {['LEFT'] = L['LEFT'], ['RIGHT'] = L['RIGHT']}
+N.healthTag = {['$cur'] = L['$cur'], ['$max'] = L['$max'], ['$deficit'] = L['$deficit'], ['$perc'] = L['$perc'], ['$smartperc'] = L['$smartperc'], ['$smartcolorperc'] = L['$smartcolorperc'], ['$colorperc'] = L['$colorperc']}
+N.healthFormat = {['$cur/$max'] = L['$cur/$max'], ['$cur-$max'] = L['$cur-$max']}
+N.style = {['NORMAL'] = L['NORMAL'], ['RARE'] = L['RARE'], ['ELITE'] = L['ELITE'], ['CUSTOM'] = L['CUSTOM']}
+N.LorR = {['LEFT'] = L['LEFT'], ['RIGHT'] = L['RIGHT']}
 
 -- Greeting
 local EventFrame = CreateFrame("Frame")
@@ -33,12 +33,12 @@ EventFrame:RegisterEvent("PLAYER_LOGIN")
 EventFrame:SetScript("OnEvent", function(self,event,...) 
 	if type(NeavDBPerCharacter) ~= "number" then
 		NeavDBPerCharacter = 1
-		ChatFrame1:AddMessage('Welcome to Azeroth '.. UnitName("Player")..". I do believe this is the first time we've met. Nice to meet you! You're using |cff00B4FFNeavUI v"..N.version..'|r.')
+		ChatFrame1:AddMessage('Welcome to Azeroth '..N.myname..". I do believe this is the first time we've met. Nice to meet you! You're using |cff00B4FFNeavUI v"..N.version..'|r.')
 	else
 		if NeavDBPerCharacter == 1 then
-			ChatFrame1:AddMessage('Welcome to Azeroth '.. UnitName("Player")..". How nice to see you again. You're using |cff00B4FFNeavUI v"..N.version..'|r.')
+			ChatFrame1:AddMessage('Welcome to Azeroth '..N.myname..". How nice to see you again. You're using |cff00B4FFNeavUI v"..N.version..'|r.')
 		else
-			ChatFrame1:AddMessage('Welcome to Azeroth '.. UnitName("Player")..". How nice to see you again. You're using |cff00B4FFNeavUI v"..N.version..'|r.')
+			ChatFrame1:AddMessage('Welcome to Azeroth '..N.myname..". How nice to see you again. You're using |cff00B4FFNeavUI v"..N.version..'|r.')
 		end
 		NeavDBPerCharacter = NeavDBPerCharacter + 1
 	end
@@ -334,10 +334,10 @@ function N.CreateCastbarStrings(self, size)
     self.Castbar.Time = self.Castbar:CreateFontString(nil, 'OVERLAY')
 
     if (size) then
-        self.Castbar.Time:SetFont(C['unitframes'].font.normal, 21)
+        self.Castbar.Time:SetFont(C['media'].fontSmall, 21)
         self.Castbar.Time:SetPoint('RIGHT', self.Castbar, -2, 0)  
     else
-        self.Castbar.Time:SetFont(C['unitframes'].font.normal, C['unitframes'].font.normalSize)
+        self.Castbar.Time:SetFont(C['media'].fontSmall, C['unitframes'].font.normalSize)
         self.Castbar.Time:SetPoint('RIGHT', self.Castbar, -5, 0)  
     end
 
@@ -347,7 +347,7 @@ function N.CreateCastbarStrings(self, size)
     self.Castbar.Time:SetParent(self.Castbar)
 
     self.Castbar.Text = self.Castbar:CreateFontString(nil, 'OVERLAY')
-    self.Castbar.Text:SetFont(C['unitframes'].font.normal, C['unitframes'].font.normalSize)
+    self.Castbar.Text:SetFont(C['media'].fontSmall, C['unitframes'].font.normalSize)
     self.Castbar.Text:SetPoint('LEFT', self.Castbar, 4, 0)  
 
     if (size) then
@@ -393,12 +393,12 @@ N.UpdateAuraTimer = function(self, elapsed)
         if (timeLeft <= 5 and IsMine(self.owner)) then
             self.remaining:SetText('|cffff0000'..ExactTime(timeLeft)..'|r')
             if (not self.ignoreSize) then
-                self.remaining:SetFont(C['unitframes'].font.normal, 12, 'THINOUTLINE')
+                self.remaining:SetFont(C['media'].fontSmall, 12, 'THINOUTLINE')
             end
         else
             self.remaining:SetText(N.FormatTime(timeLeft))
             if (not self.ignoreSize) then
-                self.remaining:SetFont(C['unitframes'].font.normal, 8, 'THINOUTLINE')
+                self.remaining:SetFont(C['media'].fontSmall, 8, 'THINOUTLINE')
             end
         end
     end
@@ -469,13 +469,13 @@ N.UpdateAuraIcons = function(auras, button)
         button.icon:SetPoint('CENTER', button)
         button.icon:SetSize(size, size)
 
-        button.overlay:SetTexture(C['unitframes'].media.border)
+        button.overlay:SetTexture('Interface\\AddOns\\NeavUI\\Media\\borderBackground')
         button.overlay:SetTexCoord(0, 1, 0, 1)
         button.overlay:ClearAllPoints()
         button.overlay:SetPoint('TOPRIGHT', button.icon, 1.35, 1.35)
         button.overlay:SetPoint('BOTTOMLEFT', button.icon, -1.35, -1.35)
 
-        button.count:SetFont(C['unitframes'].font.normal, 11, 'THINOUTLINE')
+        button.count:SetFont(C['media'].fontSmall, 11, 'THINOUTLINE')
         button.count:SetShadowOffset(0, 0)
         button.count:ClearAllPoints()
         button.count:SetPoint('BOTTOMRIGHT', button.icon, 2, 0)
@@ -491,7 +491,7 @@ N.UpdateAuraIcons = function(auras, button)
             -- button.cd.noOCC = true
 
             button.remaining = button:CreateFontString(nil, 'OVERLAY')
-            button.remaining:SetFont(C['unitframes'].font.normal, 8, 'THINOUTLINE')
+            button.remaining:SetFont(C['media'].fontSmall, 8, 'THINOUTLINE')
             button.remaining:SetShadowOffset(0, 0)
             button.remaining:SetPoint('TOP', button.icon, 0, 2)
         end

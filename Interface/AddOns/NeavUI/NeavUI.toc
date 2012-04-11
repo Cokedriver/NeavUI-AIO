@@ -4,6 +4,7 @@
 ## Title: |cffCC3333N|r|cffE53300e|r|cffFF4D00a|r|cffFF6633v|rUI
 ## SavedVariables: NeavDB
 ## SavedVariablesPerCharacter: NeavDBPerCharacter
+## RequiredDeps: NeavUI_Config
 ## OptionalDeps: Blizzard_TimeManager
 
 <! -- oUF -- >
@@ -18,6 +19,7 @@ Core\nCore.lua
 
 <! -- Config -- >
 Config\Defaults.lua
+Config\Config.lua
 
 <! -- oUF Modules -- >
 oUF\Modules\nOffline.lua

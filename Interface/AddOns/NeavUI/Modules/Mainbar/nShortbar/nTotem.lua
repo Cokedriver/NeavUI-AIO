@@ -1,4 +1,6 @@
-local N, C = unpack(select(2, ...)) -- Import:  N - function; C - config
+local N, C, DB = unpack(select(2, ...)) -- Import:  N - function; C - config; DB - database
+
+if C['mainbar'].enable ~= true then return end
 
 if (not C['mainbar'].MainMenuBar.shortBar and not C['mainbar'].MainMenuBar.moveableExtraBars) then
     return

@@ -1,14 +1,23 @@
-local N, C = unpack(select(2, ...)) -- Import:  N - function; C - config
+local N, C, DB = unpack(select(2, ...)) -- Import:  N - function; C - config; DB - database
 
 -- Below are the Default Settings for NeavUI
+
+DB["media"] = {
+	font = "Fonts\\ARIALN.ttf",
+	fontSmall = "Interface\\AddOns\\NeavUI\\Media\\fontSmall.ttf",
+	fontThick = "Interface\\AddOns\\NeavUI\\Media\\fontThick.ttf",	
+	fontVisitor = "Interface\\AddOns\\NeavUI\\Media\\fontVisitor.ttf",	
+	fontNumber = "Interface\\AddOns\\NeavUI\\Media\\fontNumber.ttf",	
+}
 
 ---------------
 -- nBuff Options
 ----------------
-C['buff'] = {
+DB['buff'] = {
+	enable = true,
     buffSize = 36,
     buffScale = 1,
-    buffBorderColor = {1, 1, 1}, 
+    buffBorderColor = {r = 1, g = 1, b = 1}, 
 
     buffFontSize = 14,
     buffCountSize = 16,
@@ -25,17 +34,17 @@ C['buff'] = {
     paddingX = 7,
     paddingY = 7,
     buffPerRow = 8,
-
-    durationFont = 'Fonts\\ARIALN.ttf',
-    countFont = 'Fonts\\ARIALN.ttf',
 }	
 
 ----------------
 -- nChat Options
 ----------------
-C['chat'] = {
+DB['chat'] = {
+	enable = true,
     disableFade = false,
     chatOutline = false,
+	chatBorder = true,
+	chatBorderClassColor = true,
 
     enableBottomButton = false, 
     enableHyperlinkTooltip = false, 
@@ -44,15 +53,35 @@ C['chat'] = {
     tab = {
         fontSize = 15,
         fontOutline = true, 
-        normalColor = {1, 1, 1},
-        specialColor = {1, 0, 1},
-        selectedColor = {0, 0.75, 1},
+        normalColor = { r = 1, g = 1, b = 1 },
+        specialColor = { r = 1, g = 0, b = 1 },
+        selectedColor = { r = 0, g = 0.75, b = 1 },
     },
+}
+
+--------------------
+-- nGeneral Options
+--------------------
+DB['general'] = {
+	altbuy = true,
+	autogreed = true,
+	bubbles = true,
+	coords = true,
+	durability = true,
+	mail = true,
+	omnicc = true,
+	quicky = true,
+	skins = true,
+	spellid = true,
+	warning = true,
+	watchframe = true,
 }
 ------------------
 -- nMainbar Options
 ------------------
-C['mainbar'] = {
+DB['mainbar'] = {
+	enable = true,
+	
     showPicomenu = true,
 
     button = { 
@@ -61,39 +90,34 @@ C['mainbar'] = {
         showMacronames = false,
 
         countFontsize = 19,
-        countFont = 'Fonts\\ARIALN.ttf',
         
         macronameFontsize = 17,
-        macronameFont = 'Fonts\\ARIALN.ttf',
         
         hotkeyFontsize = 18,
-        hotkeyFont = 'Fonts\\ARIALN.ttf',
     },
 
     color = {   -- Red, Green, Blue
-        Normal = { 1, 1, 1 },
-        IsEquipped = { 0, 1, 0 },
+        Normal = { r = 1, g = 1, b = 1 },
+        IsEquipped = { r = 0, g = 1, b = 0 },
         
-        OutOfRange = { 0.9, 0, 0 },
-        OutOfMana = { 0.3, 0.3, 1 },
+        OutOfRange = { r = 0.9, g = 0, b = 0 },
+        OutOfMana = { r = 0.3, g = 0.3, b = 1 },
         
-        NotUsable = { 0.35, 0.35, 0.35 },
+        NotUsable = { r = 0.35, g = 0.35, b = 0.35 },
         
-        HotKeyText = { 0.6, 0.6, 0.6 },
-        MacroText = { 1, 1, 1 },
-        CountText = { 1, 1, 1 },
+        HotKeyText = { r = 0.6, g = 0.6, b = 0.6 },
+        MacroText = { r = 1, g = 1, b = 1 },
+        CountText = { r = 1, g = 1, b = 1 },
     },
 
     expBar = {
         mouseover = true,
         fontsize = 14,
-        font = 'Fonts\\ARIALN.ttf',
     },
 
     repBar = {
         mouseover = true,
         fontsize = 14,
-        font = 'Fonts\\ARIALN.ttf',
     },
 
     MainMenuBar = {
@@ -163,7 +187,8 @@ C['mainbar'] = {
 -------------------
 -- nMinimap Options
 -------------------
-C['minimap'] = {
+DB['minimap'] = {
+	enable = true,
     tab = {
         show = true,
         showAlways = false,
@@ -183,7 +208,8 @@ C['minimap'] = {
 --------------------
 -- nPlates Options 
 --------------------
-C['plates'] = {
+DB['plates'] = {
+	enable = true,
     enableTankMode = true,              -- Color the nameplate threat border green, if you have no aggro
     colorNameWithThreat = true,         -- The name has the same color as the threat of the unit (better visibility)
 
@@ -199,8 +225,14 @@ C['plates'] = {
 -- nPower Options 
 --------------------
 
-C['power'] = {
-    position = {'CENTER', UIParent, 0, -100},
+DB['power'] = {
+	enable = true,
+    position = {
+		selfAnchor = 'CENTER',
+		frameParent = UIParent,
+		offSetX = 0,
+		offSetY = -100
+	},
     sizeWidth = 200,
     
     showCombatRegen = true, 
@@ -211,53 +243,34 @@ C['power'] = {
     
     valueAbbrev = true,
         
-    valueFont = 'Fonts\\ARIALN.ttf',
     valueFontSize = 20,
     valueFontOutline = true,
     valueFontAdjustmentX = 0,
 
     showSoulshards = true,
     showHolypower = true,
-    
-    extraFont = 'Fonts\\ARIALN.ttf',                -- The font for the holypower and soulshard number
+    showMana = true,
+	showFocus = true,
+	showRage = true,
+	
     extraFontSize = 16,                             -- The fontsiz for the holypower and soulshard number
     extraFontOutline = true,                        
         
-    mana = {
-        show = true,
-    },
     
     energy = {
         show = true,
         showComboPoints = true,
 		comboPointsBelow = false,
         
-        comboColor = {
-            [1] = {r = 1.0, g = 1.0, b = 1.0},
-            [2] = {r = 1.0, g = 1.0, b = 1.0},
-            [3] = {r = 1.0, g = 1.0, b = 1.0},
-            [4] = {r = 0.9, g = 0.7, b = 0.0},
-            [5] = {r = 1.0, g = 0.0, b = 0.0},
-        },
-        
-        comboFont = 'Fonts\\ARIALN.ttf',
         comboFontSize = 16,
         comboFontOutline = true,
     },
     
-    focus = {
-        show = true,
-    },
-    
-    rage = {
-        show = true,
-    },
     
     rune = {
         show = true,
         showRuneCooldown = false,
-        
-        runeFont = 'Fonts\\ARIALN.ttf',
+       
         runeFontSize = 16,
         runeFontOutline = true,
     },
@@ -266,11 +279,18 @@ C['power'] = {
 -------------------
 -- nTooltip Options
 -------------------
-C['tooltip'] = {											
+DB['tooltip'] = {
+	enable = true,
     fontSize = 15,
     fontOutline = false,
 
-    position = {'BOTTOMRIGHT', UIParent, 'BOTTOMRIGHT', -27.35, 27.35},
+    position = {
+		selfAnchor = 'BOTTOMRIGHT',
+		frameParent = UIParent,
+		relAnchor = 'BOTTOMRIGHT',
+		offSetX = -27.35,
+		offSetY = 27.35,
+	},
 
     disableFade = false,                        -- Can cause errors or a buggy tooltip!
     showOnMouseover = false,
@@ -288,20 +308,17 @@ C['tooltip'] = {
     healthbar = {
         showHealthValue = false,
 
-        healthFormat = '$cur / $max',           -- Possible: $cur, $max, $deficit, $perc, $smartperc, $smartcolorperc, $colorperc
+        healthFormat = '$cur/$max',			-- Possible: $cur, $max, $deficit, $perc, $smartperc, $smartcolorperc, $colorperc
         healthFullFormat = '$cur',              -- if the tooltip unit has 100% hp 
 
         fontSize = 13,
-        font = 'Fonts\\ARIALN.ttf',
         showOutline = true,
         textPos = 'CENTER',                     -- Possible 'TOP' 'BOTTOM' 'CENTER'
 
         reactionColoring = true,               -- Overrides customColor 
         customColor = {
             apply = false, 
-            r = 0, 
-            g = 1, 
-            b = 1
+            color = {r = 0, g = 1, b = 1},
         } 
     },		
 }
@@ -332,7 +349,8 @@ C['tooltip'] = {
         So you have a red deficit value
 --]]
 
-C['unitframes'] = {
+DB['unitframes'] = {
+	enable = true,
     show = {
         castbars = true,
         pvpicons = true,
@@ -342,16 +360,8 @@ C['unitframes'] = {
         portraitTimer = true,
     },
 
-    media = {
-        border = 'Interface\\AddOns\\NeavUI\\Media\\borderTexture',                       -- Buffborder Texture
-        statusbar = 'Interface\\AddOns\\NeavUI\\Media\\statusbarTexture',                 -- Statusbar texture
-    },
-
-    font = {
-        normal = 'Interface\\AddOns\\NeavUI\\Media\\fontSmall.ttf',                       -- General font for all other  
+    font = { 
         normalSize = 13,
-
-        normalBig = 'Interface\\AddOns\\NeavUI\\Media\\fontThick.ttf',                    -- Name font
         normalBigSize = 14,
     },
 
@@ -359,9 +369,9 @@ C['unitframes'] = {
         ['player'] = {
             scale = 1.193,
             style = 'NORMAL',                                                               -- 'NORMAL' 'RARE' 'ELITE' 'CUSTOM'
-            customTexture = 'Interface\\AddOns\\NeavUI\\Media\\customFrameTexture',       -- Custom texture if style = 'CUSTOM'
 
             mouseoverText = false,
+			-- Tags are not Included on the In_Game Options
             healthTag = '$cur/$max',
             healthTagFull = '$cur',
             powerTag = '$cur/$max',
@@ -373,7 +383,12 @@ C['unitframes'] = {
             showStatusFlash = true,
             showCombatFeedback = false,
 
-            position = {'TOPLEFT', UIParent, 34, -30},
+            position = {
+				selfAnchor ='TOPLEFT',
+				frameParent = UIParent,
+				offSetX = 34, 
+				offSetY = -30,
+			},
 
             castbar = {
                 show = true, 
@@ -384,10 +399,10 @@ C['unitframes'] = {
 
                 showLatency = true, 
                 showSafezone = true,
-                safezoneColor = {1, 0, 1},
+                safezoneColor = { r = 1, g = 0, b = 1 },
 
                 classcolor = true,
-                color = {1, 0.7, 0},
+                color = { r = 1, g = 0.7, b = 0 },
 
                 icon = {
                     show = false,
@@ -395,7 +410,13 @@ C['unitframes'] = {
                     positionOutside = true,
                 },
 
-                position = {'BOTTOM', UIParent, 'BOTTOM', 0, 200},
+				position = {
+					selfAnchor = 'BOTTOM',
+					frameParent = UIParent,
+					relAnchor = 'BOTTOM',
+					offSetX = 0,
+					offSetY = 200,
+				},				
             },
         },
 
@@ -403,8 +424,9 @@ C['unitframes'] = {
             scale = 1.193,
 
             auraSize = 22,
-
+	
             mouseoverText = true,
+			-- Tags are not Included on the In_Game Options. If you Want to change them they must be changed here.
             healthTag = '$cur/$max',
             healthTagFull = '$cur',
             powerTag = '$cur/$max',
@@ -413,7 +435,10 @@ C['unitframes'] = {
 
             showPowerPercent = false,
 
-            position = {43, -20},
+            position = {
+				offSetX = 43,
+				offSetY = -20
+			},
 
             castbar = {
                 show = true, 
@@ -422,7 +447,7 @@ C['unitframes'] = {
                 height = 19,
                 scale = 0.93,
 
-                color = {0, 0.65, 1},
+                color = { r = 0, g = 0.65, b = 1},
 
                 icon = {
                     show = false,
@@ -430,7 +455,13 @@ C['unitframes'] = {
                     positionOutside = true,
                 },
 
-                position = {'TOP', oUF_Neav_Player, 'BOTTOM', 0, -50},
+				position = {
+					selfAnchor = 'TOP',
+					frameParent = oUF_Neav_Player,
+					relAnchor = 'BOTTOM',
+					offSetX = 0,
+					offSetY = -50,
+				},				
 
                 ignoreSpells = true,                                                        -- Hides castbar for spells listed in 'ignoreList'
                 ignoreList = {
@@ -451,10 +482,11 @@ C['unitframes'] = {
 
             showComboPoints = true,
             showComboPointsAsNumber = false,
-            numComboPointsColor = {0.9, 0, 0},                                              -- Textcolor of the combopoints if showComboPointsAsNumber = true
+            numComboPointsColor = { r = 0.9, g = 0, b = 0 },                                              -- Textcolor of the combopoints if showComboPointsAsNumber = true
 
             mouseoverText = false,
-            healthTag = '$cur - $perc',
+			-- Tags are not Included on the In_Game Options
+            healthTag = '$cur/$max',
             healthTagFull = '$cur',
             powerTag = '$cur/$max',
             powerTagFull = '$cur',
@@ -462,7 +494,12 @@ C['unitframes'] = {
 
             showCombatFeedback = false,
 
-            position = {'TOPLEFT', UIParent, 300, -30},
+			position = {
+				selfAnchor = 'TOPLEFT',
+				frameParent = UIParent,
+				offSetX = 300,
+				offSetY = -30,
+			},			
 
             castbar = {
                 show = true, 
@@ -471,8 +508,8 @@ C['unitframes'] = {
                 height = 19,
                 scale = 0.93,
 
-                color = {0.9, 0.1, 0.1},
-                interruptColor = {1, 0, 1},
+                color = { r = 0.9, g = 0.1, b = 0.1},
+                interruptColor = { r = 1, g = 0, b = 1},
 
                 icon = {
                     show = false,
@@ -480,7 +517,13 @@ C['unitframes'] = {
                     positionOutside = false,
                 },
 
-                position = {'BOTTOM', UIParent, 'BOTTOM', 0, 380},
+				position = {
+					selfAnchor = 'BOTTOM',
+					frameParent = UIParent,
+					relAnchor = 'BOTTOM',
+					offSetX = 0,
+					offSetY = 380,
+				},				
             },
         },
 
@@ -499,7 +542,8 @@ C['unitframes'] = {
             numDebuffs = 6,
             
             mouseoverText = false,
-            healthTag = '$cur - $perc',
+			-- Tags are not Included on the In_Game Options
+            healthTag = '$cur/$max',
             healthTagFull = '$cur',
             powerTag = '$cur/$max',
             powerTagFull = '$cur',
@@ -519,8 +563,8 @@ C['unitframes'] = {
                 height = 19,
                 scale = 0.93,
 
-                color = {0, 0.65, 1},
-                interruptColor = {1, 0, 1},
+                color = { r = 0, g = 0.65, b = 1},
+                interruptColor = { r = 1, g = 0, b = 1 },
 
                 icon = {
                     show = false,
@@ -544,29 +588,42 @@ C['unitframes'] = {
             hideInRaid = true,
 
             mouseoverText = true,
+			-- Tags are not Included on the In_Game Options
             healthTag = '$cur/$max',
             healthTagFull = '$cur',
             powerTag = '$cur/$max',
             powerTagFull = '$cur',
             powerTagNoMana = '$cur',
 
-            position = {'TOPLEFT', UIParent, 25, -200},
+			position = {
+				selfAnchor = 'TOPLEFT',
+				frameParent = UIParent,
+				offSetX = 25,
+				offSetY = -200,
+			},			
         },
 
         ['boss'] = {
             scale = 1,
 
             mouseoverText = true,
-            healthTag = '$cur - $perc',
+			-- Tags are not Included on the In_Game Options
+            healthTag = '$cur/$max',
             healthTagFull = '$cur',
-            powerTag = '$cur',
+            powerTag = '$cur/$max',
             powerTagFull = '$cur',
             powerTagNoMana = '$cur',
 
-            position = {'TOPRIGHT', UIParent, 'TOPRIGHT', -50, -250},
+			position = {
+				selfAnchor = 'TOPRIGHT',
+				frameParent = UIParent,
+				relAnchor = 'TOPRIGHT',
+				offSetX = -50,
+				offSetY = -250,
+			},			
 
             castbar = {
-                color = {1, 0, 0},
+                color = { r = 1, g = 0, b = 0 },
 
                 icon = {
                     size = 22,
@@ -583,20 +640,27 @@ C['unitframes'] = {
             auraSize = 22,
 
             mouseoverText = true,
+			-- Tags are not Included on the In_Game Options
             healthTag = '$cur/$max',
             healthTagFull = '$cur',
             powerTag = '$cur/$max',
             powerTagFull = '$cur',
             powerTagNoMana = '$cur',
 
-            position = {'TOPRIGHT', UIParent, 'TOPRIGHT', -80, -300},
+			position = {
+				selfAnchor = 'TOPRIGHT',
+				frameParent = UIParent,
+				relAnchor = 'TOPRIGHT',
+				offSetX = -80,
+				offSetY = -300,
+			},			
 
             castbar = {
                 icon = {
                     size = 22,
                 },
 
-                color = {1, 0, 0},
+                color = { r = 1, g = 0, b = 0 },
             },
         },
     },
@@ -606,17 +670,14 @@ C['unitframes'] = {
 -- oUF_NeavRaid Options
 --------------------
 
-C['raidframes'] = {
+DB['raidframes'] = {
 	enable = false,
     media = {
         statusbar = 'Interface\\AddOns\\NeavUI\\Media\\statusbarTexture',                 -- Health- and Powerbar texture
     },
 
     font = {
-        fontSmall = 'Interface\\AddOns\\NeavUI\\Media\\fontSmall.ttf',                    -- Name font
         fontSmallSize = 11,
-
-        fontBig = 'Interface\\AddOns\\NeavUI\\Media\\fontThick.ttf',                      -- Health, dead/ghost/offline etc. font
         fontBigSize = 12,
     },
 
@@ -648,7 +709,7 @@ C['raidframes'] = {
             showMouseoverHighlight = true,
 
             showTargetBorder = true,                                                        -- Ahows a little border on the raid/party frame if this unit is your target
-            targetBorderColor = {1, 1, 1},
+            targetBorderColor = { r = 1, g = 1, b = 1 },
 
             iconSize = 22,                                                                  -- The size of the debufficon
             indicatorSize = 7,

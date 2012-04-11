@@ -1,4 +1,6 @@
-local N, C, DB = unpack(select(2, ...)) -- Import:  N - function; C - C['unitframes']; DB - Database
+local N, C, DB = unpack(select(2, ...)) -- Import:  N - function; C - config; DB - database
+
+if C['unitframes'].enable ~= true then return end
 
 local ADDON_NAME, ns = ...
 local oUF = ns.oUF or oUF
@@ -50,7 +52,7 @@ local function CreateBossLayout(self, unit)
         -- healthbar
 
     self.Health = CreateFrame('StatusBar', nil, self)
-    self.Health:SetStatusBarTexture(C['unitframes'].media.statusbar, 'BORDER')
+    self.Health:SetStatusBarTexture('Interface\\AddOns\\NeavUI\\Media\\statusbarTexture', 'BORDER')
     self.Health:SetSize(115, 8)
     self.Health:SetPoint('TOPRIGHT', self.Texture, -105, -43)
 
@@ -65,14 +67,14 @@ local function CreateBossLayout(self, unit)
         -- health text
 
     self.Health.Value = self.Health:CreateFontString(nil, 'ARTWORK')
-    self.Health.Value:SetFont('Fonts\\ARIALN.ttf', C['unitframes'].font.normalSize)
+    self.Health.Value:SetFont(C['media'].font, C['unitframes'].font.normalSize)
     self.Health.Value:SetShadowOffset(1, -1)
     self.Health.Value:SetPoint('CENTER', self.Health)
 
         -- powerbar
 
     self.Power = CreateFrame('StatusBar', nil, self)
-    self.Power:SetStatusBarTexture(C['unitframes'].media.statusbar, 'BORDER')
+    self.Power:SetStatusBarTexture('Interface\\AddOns\\NeavUI\\Media\\statusbarTexture', 'BORDER')
     self.Power:SetPoint('TOPLEFT', self.Health, 'BOTTOMLEFT', 0, -4)
     self.Power:SetPoint('TOPRIGHT', self.Health, 'BOTTOMRIGHT', 0, -4)
     self.Power:SetHeight(self.Health:GetHeight())
@@ -89,14 +91,14 @@ local function CreateBossLayout(self, unit)
         -- power text
 
     self.Power.Value = self.Health:CreateFontString(nil, 'ARTWORK')
-    self.Power.Value:SetFont('Fonts\\ARIALN.ttf', C['unitframes'].font.normalSize)
+    self.Power.Value:SetFont(C['media'].font, C['unitframes'].font.normalSize)
     self.Power.Value:SetShadowOffset(1, -1)
     self.Power.Value:SetPoint('CENTER', self.Power)
 
         -- name
 
     self.Name = self.Health:CreateFontString(nil, 'ARTWORK')
-    self.Name:SetFont(C['unitframes'].font.normalBig, C['unitframes'].font.normalBigSize)
+    self.Name:SetFont(C['media'].fontThick, C['unitframes'].font.normalBigSize)
     self.Name:SetShadowOffset(1, -1)
     self.Name:SetJustifyH('CENTER')
     self.Name:SetSize(110, 10)
@@ -159,15 +161,15 @@ local function CreateBossLayout(self, unit)
 
     if (C['unitframes'].units.boss.castbar.show) then  
         self.Castbar = CreateFrame('StatusBar', self:GetName()..'Castbar', self)
-        self.Castbar:SetStatusBarTexture(C['unitframes'].media.statusbar)
+        self.Castbar:SetStatusBarTexture('Interface\\AddOns\\NeavUI\\Media\\statusbarTexture')
         self.Castbar:SetSize(150, 18)
-        self.Castbar:SetStatusBarColor(unpack(C['unitframes'].units.boss.castbar.color))
+        self.Castbar:SetStatusBarColor(C['unitframes'].units.boss.castbar.color.r, C['unitframes'].units.boss.castbar.color.g, C['unitframes'].units.boss.castbar.color.b)
         self.Castbar:SetPoint('BOTTOM', self, 'TOP', 10, 13)
 
         self.Castbar.Bg = self.Castbar:CreateTexture(nil, 'BACKGROUND')
         self.Castbar.Bg:SetTexture('Interface\\Buttons\\WHITE8x8')
         self.Castbar.Bg:SetAllPoints(self.Castbar)
-        self.Castbar.Bg:SetVertexColor(C['unitframes'].units.boss.castbar.color[1]*0.3, C['unitframes'].units.boss.castbar.color[2]*0.3, C['unitframes'].units.boss.castbar.color[3]*0.3, 0.8)
+        self.Castbar.Bg:SetVertexColor(C['unitframes'].units.boss.castbar.color.r*0.3, C['unitframes'].units.boss.castbar.color.g*0.3, C['unitframes'].units.boss.castbar.color.b*0.3, 0.8)
 
         self.Castbar:CreateBeautyBorder(11)
         self.Castbar:SetBeautyBorderPadding(3)
@@ -190,7 +192,7 @@ oUF:Factory(function(self)
         boss[i] = self:Spawn('boss'..i, 'oUF_Neav_BossFrame'..i)
 
         if (i == 1) then
-            boss[i]:SetPoint(unpack(C['unitframes'].units.boss.position))
+            boss[i]:SetPoint(C['unitframes'].units.boss.position.selfAnchor , C['unitframes'].units.boss.position.frameParent , C['unitframes'].units.boss.position.relAnchor , C['unitframes'].units.boss.position.offSetX , C['unitframes'].units.boss.position.offSetY)
         else
             boss[i]:SetPoint('TOPLEFT', boss[i-1], 'BOTTOMLEFT', 0, (C['unitframes'].units.boss.castbar.show and -80) or -50)
         end

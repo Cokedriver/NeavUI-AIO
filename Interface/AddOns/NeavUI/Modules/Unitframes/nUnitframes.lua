@@ -1,4 +1,6 @@
-local N, C, DB = unpack(select(2, ...)) -- Import:  N - function; C - C['unitframes']; DB - Database
+local N, C, DB = unpack(select(2, ...)) -- Import:  N - function; C - config; DB - database
+
+if C['unitframes'].enable ~= true then return end
 
 local ADDON_NAME, ns = ...
 local oUF = ns.oUF or oUF
@@ -47,7 +49,7 @@ UnitPopupMenus['MOVE_PLAYER_FRAME'] = {
 
 local __pa = CreateFrame('Frame', 'oUF_Neav_Player_Anchor', UIParent)
 __pa:SetSize(1, 1)
-__pa:SetPoint(unpack(C['unitframes'].units.player.position))
+__pa:SetPoint(C['unitframes'].units.player.position.selfAnchor , C['unitframes'].units.player.position.frameParent, C['unitframes'].units.player.position.offSetX , C['unitframes'].units.player.position.offSetY )
 __pa:SetMovable(true)
 __pa:SetUserPlaced(true)
 __pa:SetClampedToScreen(true)
@@ -70,7 +72,7 @@ end
 function PlayerFrame_ResetUserPlacedPosition()
     if (oUF_Neav_Player) then
         __pa:ClearAllPoints()
-        __pa:SetPoint(unpack(C['unitframes'].units.player.position))
+        __pa:SetPoint(C['unitframes'].units.player.position.selfAnchor , C['unitframes'].units.player.position.frameParent, C['unitframes'].units.player.position.offSetX , C['unitframes'].units.player.position.offSetY )
         PlayerFrame_SetLocked(true)
     end
 end
@@ -83,7 +85,7 @@ UnitPopupMenus['MOVE_TARGET_FRAME'] = {
 
 local __ta = CreateFrame('Frame', 'oUF_Neav_Target_Anchor', UIParent)
 __ta:SetSize(1, 1)
-__ta:SetPoint(unpack(C['unitframes'].units.target.position))
+__ta:SetPoint(C['unitframes'].units.target.position.selfAnchor , C['unitframes'].units.target.position.frameParent, C['unitframes'].units.target.position.offSetX , C['unitframes'].units.target.position.offSetY )
 __ta:SetMovable(true)
 __ta:SetUserPlaced(true)
 __ta:SetClampedToScreen(true)
@@ -106,7 +108,7 @@ end
 function TargetFrame_ResetUserPlacedPosition()
     if (oUF_Neav_Target) then
         __ta:ClearAllPoints()
-        __ta:SetPoint(unpack(C['unitframes'].units.target.position))
+        __ta:SetPoint(C['unitframes'].units.target.position.selfAnchor , C['unitframes'].units.target.position.frameParent, C['unitframes'].units.target.position.offSetX , C['unitframes'].units.target.position.offSetY )
         TargetFrame_SetLocked(true)
     end
 end
@@ -213,7 +215,7 @@ local function VehicleToPlayerTexture(self, event, unit)
     elseif (C['unitframes'].units.player.style == 'ELITE') then
         self.Texture:SetTexture(tarTexPath..'UI-TargetingFrame-Elite')
     elseif (C['unitframes'].units.player.style == 'CUSTOM') then
-        self.Texture:SetTexture(C['unitframes'].units.player.customTexture)
+        self.Texture:SetTexture('Interface\\AddOns\\NeavUI\\Media\\customFrameTexture')
     end
 
     if (self.Portrait.Bg) then
@@ -257,7 +259,7 @@ local function CreateTab(self, text)
     self.T[3]:SetPoint('RIGHT', self.T[1], 'LEFT')
 
     self.T[4] = self:CreateFontString(nil, 'OVERLAY')
-    self.T[4]:SetFont(C['unitframes'].font.normal, C['unitframes'].font.normalSize - 1)
+    self.T[4]:SetFont(C['media'].fontSmall, C['unitframes'].font.normalSize - 1)
     self.T[4]:SetShadowOffset(1, -1)
     self.T[4]:SetPoint('BOTTOM', self.T[1], 0, 2)
     self.T[4]:SetAlpha(0.5)
@@ -475,7 +477,7 @@ local function CreateUnitLayout(self, unit)
         -- Healthbar
 
     self.Health = CreateFrame('StatusBar', nil, self)
-    self.Health:SetStatusBarTexture(C['unitframes'].media.statusbar)
+    self.Health:SetStatusBarTexture('Interface\\AddOns\\NeavUI\\Media\\statusbarTexture')
     self.Health:SetFrameLevel(self:GetFrameLevel() - 1)
     self.Health:SetBackdrop({bgFile = 'Interface\\Buttons\\WHITE8x8'})
     self.Health:SetBackdropColor(0, 0, 0, 0.55)
@@ -506,17 +508,17 @@ local function CreateUnitLayout(self, unit)
     self.Health.Value:SetShadowOffset(1, -1)
 
     if (self.IsTargetFrame) then
-        self.Health.Value:SetFont(C['unitframes'].font.normal, C['unitframes'].font.normalSize - 2)
+        self.Health.Value:SetFont(C['media'].fontSmall, C['unitframes'].font.normalSize - 2)
         self.Health.Value:SetPoint('CENTER', self.Health, 'BOTTOM', -4, 1)
     else
-        self.Health.Value:SetFont(C['unitframes'].font.normal, C['unitframes'].font.normalSize)
+        self.Health.Value:SetFont(C['media'].fontSmall, C['unitframes'].font.normalSize)
         self.Health.Value:SetPoint('CENTER', self.Health, 1, 1)
     end
 
         -- Powerbar
 
     self.Power = CreateFrame('StatusBar', nil, self)
-    self.Power:SetStatusBarTexture(C['unitframes'].media.statusbar)
+    self.Power:SetStatusBarTexture('Interface\\AddOns\\NeavUI\\Media\\statusbarTexture')
     self.Power:SetFrameLevel(self:GetFrameLevel() - 1)
     self.Power:SetBackdrop({bgFile = 'Interface\\Buttons\\WHITE8x8'})
     self.Power:SetBackdropColor(0, 0, 0, 0.55)
@@ -539,7 +541,7 @@ local function CreateUnitLayout(self, unit)
 
     if (not self.IsTargetFrame) then
         self.Power.Value = self:CreateFontString(nil, 'OVERLAY')
-        self.Power.Value:SetFont(C['unitframes'].font.normal, C['unitframes'].font.normalSize)
+        self.Power.Value:SetFont(C['media'].fontSmall, C['unitframes'].font.normalSize)
         self.Power.Value:SetShadowOffset(1, -1)
         self.Power.Value:SetPoint('CENTER', self.Power, 0, 0)
 
@@ -549,7 +551,7 @@ local function CreateUnitLayout(self, unit)
         -- Name
 
     self.Name = self:CreateFontString(nil, 'OVERLAY')
-    self.Name:SetFont(C['unitframes'].font.normalBig, C['unitframes'].font.normalBigSize)
+    self.Name:SetFont(C['media'].fontThick, C['unitframes'].font.normalBigSize)
     self.Name:SetShadowOffset(1, -1)
     self.Name:SetJustifyH('CENTER')
     self.Name:SetHeight(10)
@@ -655,7 +657,7 @@ local function CreateUnitLayout(self, unit)
 
         self.PortraitTimer.Remaining = self.PortraitTimer:CreateFontString(nil, 'OVERLAY')
         self.PortraitTimer.Remaining:SetPoint('CENTER', self.PortraitTimer.Icon) 
-        self.PortraitTimer.Remaining:SetFont(C['unitframes'].font.normal, (self.Portrait:GetWidth()/3.5), 'THINOUTLINE')
+        self.PortraitTimer.Remaining:SetFont(C['media'].fontSmall, (self.Portrait:GetWidth()/3.5), 'THINOUTLINE')
         self.PortraitTimer.Remaining:SetTextColor(1, 1, 1)
     end
 
@@ -841,7 +843,7 @@ local function CreateUnitLayout(self, unit)
                 _G['TotemFrameTotem'..i..'Duration']:SetDrawLayer('OVERLAY')
                 _G['TotemFrameTotem'..i..'Duration']:ClearAllPoints()
                 _G['TotemFrameTotem'..i..'Duration']:SetPoint('BOTTOM', _G['TotemFrameTotem'..i], 0, 3)
-                _G['TotemFrameTotem'..i..'Duration']:SetFont(C['unitframes'].font.normal, 10, 'OUTLINE')
+                _G['TotemFrameTotem'..i..'Duration']:SetFont(C['media'].fontSmall, 10, 'OUTLINE')
                 _G['TotemFrameTotem'..i..'Duration']:SetShadowOffset(0, 0)
             end
         end
@@ -870,7 +872,7 @@ local function CreateUnitLayout(self, unit)
                 _G['TotemFrameTotem'..i]:SetAlpha(0)
                 _G['TotemFrameTotem'..i..'Duration']:SetParent(self)
                 _G['TotemFrameTotem'..i..'Duration']:SetDrawLayer('OVERLAY')
-                _G['TotemFrameTotem'..i..'Duration']:SetFont(C['unitframes'].font.normal, 12)
+                _G['TotemFrameTotem'..i..'Duration']:SetFont(C['media'].fontSmall, 12)
                 _G['TotemFrameTotem'..i..'Duration']:SetTextColor(0.3, 1, 0)
                 -- _G['TotemFrameTotem'..i..'Duration']:SetTextColor(0.3, 1, 0)
                 -- _G['TotemFrameTotem'..i..'Duration']:SetAlpha(0.75)
@@ -886,14 +888,14 @@ local function CreateUnitLayout(self, unit)
 
             self.DruidMana = CreateFrame('StatusBar', nil, self)
             self.DruidMana:SetPoint('TOP', self.Power, 'BOTTOM', 0, -1)
-            self.DruidMana:SetStatusBarTexture(C['unitframes'].media.statusbar, 'BORDER')
+            self.DruidMana:SetStatusBarTexture('Interface\\AddOns\\NeavUI\\Media\\statusbarTexture', 'BORDER')
             self.DruidMana:SetSize(99, 9)
             self.DruidMana:SetBackdrop({bgFile = 'Interface\\Buttons\\WHITE8x8'})
             self.DruidMana:SetBackdropColor(0, 0, 0, 0.55)
             self.DruidMana.colorPower = true
 
             self.DruidMana.Value = self.DruidMana:CreateFontString(nil, 'OVERLAY')
-            self.DruidMana.Value:SetFont(C['unitframes'].font.normal, C['unitframes'].font.normalSize)
+            self.DruidMana.Value:SetFont(C['media'].fontSmall, C['unitframes'].font.normalSize)
             self.DruidMana.Value:SetShadowOffset(1, -1)
             self.DruidMana.Value:SetPoint('CENTER', self.DruidMana, 0, 0.5)
 
@@ -985,7 +987,7 @@ local function CreateUnitLayout(self, unit)
 
         if (self.PvP) then
             self.PvPTimer = self:CreateFontString(nil, 'OVERLAY')
-            self.PvPTimer:SetFont(C['unitframes'].font.normal, C['unitframes'].font.normalSize)
+            self.PvPTimer:SetFont(C['media'].fontSmall, C['unitframes'].font.normalSize)
             self.PvPTimer:SetShadowOffset(1, -1)
             self.PvPTimer:SetPoint('BOTTOM', self.PvP, 'TOP', -12, -3   )
             self.PvPTimer.frequentUpdates = 0.5
@@ -1003,10 +1005,10 @@ local function CreateUnitLayout(self, unit)
             self.Swing:SetPoint('TOPRIGHT', self.Castbar, 'BOTTOMRIGHT', 0, -10)
             self.Swing:Hide()
 
-            self.Swing.texture = C['unitframes'].media.statusbar
+            self.Swing.texture = 'Interface\\AddOns\\NeavUI\\Media\\statusbarTexture'
             self.Swing.color = {0, 0.8, 1, 1}
 
-            self.Swing.textureBG = C['unitframes'].media.statusbar
+            self.Swing.textureBG = 'Interface\\AddOns\\NeavUI\\Media\\statusbarTexture'
             self.Swing.colorBG = {0, 0, 0, 0.55}
 
             self.Swing:CreateBeautyBorder(11)
@@ -1016,7 +1018,7 @@ local function CreateUnitLayout(self, unit)
             self.Swing.f:SetFrameStrata('HIGH')       
 
             self.Swing.Text = self.Swing.f:CreateFontString(nil, 'OVERLAY')
-            self.Swing.Text:SetFont(C['unitframes'].font.normal, C['unitframes'].font.normalSize)
+            self.Swing.Text:SetFont(C['media'].fontSmall, C['unitframes'].font.normalSize)
             self.Swing.Text:SetPoint('CENTER', self.Swing)
 
             self.Swing.disableMelee = false
@@ -1031,7 +1033,7 @@ local function CreateUnitLayout(self, unit)
             self.Vengeance:SetHeight(7)
             self.Vengeance:SetPoint('TOPLEFT', self.Castbar, 'BOTTOMLEFT', 0, -10)
             self.Vengeance:SetPoint('TOPRIGHT', self.Castbar, 'BOTTOMRIGHT', 0, -10)
-            self.Vengeance:SetStatusBarTexture(C['unitframes'].media.statusbar)
+            self.Vengeance:SetStatusBarTexture('Interface\\AddOns\\NeavUI\\Media\\statusbarTexture')
             self.Vengeance:SetStatusBarColor(1, 0, 0)
 
             self.Vengeance:CreateBeautyBorder(11)
@@ -1042,7 +1044,7 @@ local function CreateUnitLayout(self, unit)
             self.Vengeance.Bg:SetTexture(0, 0, 0, 0.55)
 
             self.Vengeance.Text = self.Vengeance:CreateFontString(nil, 'OVERLAY')
-            self.Vengeance.Text:SetFont(C['unitframes'].font.normal, C['unitframes'].font.normalSize)
+            self.Vengeance.Text:SetFont(C['media'].fontSmall, C['unitframes'].font.normalSize)
             self.Vengeance.Text:SetPoint('CENTER', self.Vengeance)
         end
 
@@ -1050,7 +1052,7 @@ local function CreateUnitLayout(self, unit)
 
         if (C['unitframes'].units.player.showCombatFeedback) then
             self.CombatFeedbackText = self:CreateFontString(nil, 'OVERLAY')
-            self.CombatFeedbackText:SetFont(C['unitframes'].font.normal, 18, 'OUTLINE')
+            self.CombatFeedbackText:SetFont(C['media'].fontSmall, 18, 'OUTLINE')
             self.CombatFeedbackText:SetShadowOffset(0, 0)
             self.CombatFeedbackText:SetPoint('CENTER', self.Portrait)
         end
@@ -1115,7 +1117,7 @@ local function CreateUnitLayout(self, unit)
 
         if (C['unitframes'].units.target.showCombatFeedback or C['unitframes'].units.focus.showCombatFeedback) then
             self.CombatFeedbackText = self:CreateFontString(nil, 'OVERLAY')
-            self.CombatFeedbackText:SetFont(C['unitframes'].font.normal, 18, 'OUTLINE')
+            self.CombatFeedbackText:SetFont(C['media'].fontSmall, 18, 'OUTLINE')
             self.CombatFeedbackText:SetShadowOffset(0, 0)
             self.CombatFeedbackText:SetPoint('CENTER', self.Portrait)
         end
@@ -1378,7 +1380,7 @@ oUF:Factory(function(self)
         -- Pet frame spawn
 
     local pet = self:Spawn('pet', 'oUF_Neav_Pet')
-    pet:SetPoint('TOPLEFT', player, 'BOTTOMLEFT', unpack(C['unitframes'].units.pet.position))
+    pet:SetPoint('TOPLEFT', player, 'BOTTOMLEFT', C['unitframes'].units.pet.position.offSetX, C['unitframes'].units.pet.position.offSetY)
     
         -- Target frame spawn
 
@@ -1442,6 +1444,6 @@ oUF:Factory(function(self)
             'showParty', true,
             'yOffset', -30
         )
-        party:SetPoint(unpack(C['unitframes'].units.party.position))
+        party:SetPoint(C['unitframes'].units.party.position.selfAnchor, C['unitframes'].units.party.position.frameParent, C['unitframes'].units.party.position.offSetX, C['unitframes'].units.party.position.offSetY)
     end
 end)

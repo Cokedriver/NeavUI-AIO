@@ -1,4 +1,6 @@
-local N, C = unpack(select(2, ...)) -- Import:  N - function; C - config
+local N, C, DB = unpack(select(2, ...)) -- Import:  N - function; C - config; DB - database
+
+if C['buff'].enable ~= true then return end
 
 local _G = _G
 local unpack = unpack
@@ -176,7 +178,7 @@ for i = 1, NUM_TEMP_ENCHANT_FRAMES do
     local duration = _G['TempEnchant'..i..'Duration']
     duration:ClearAllPoints()
     duration:SetPoint('BOTTOM', button, 'BOTTOM', 0, -2)
-    duration:SetFont(C['buff'].durationFont, C['buff'].buffFontSize, 'THINOUTLINE')
+    duration:SetFont(C['media'].font, C['buff'].buffFontSize, 'THINOUTLINE')
     duration:SetShadowOffset(0, 0)
     duration:SetDrawLayer('OVERLAY')
 
@@ -219,9 +221,9 @@ hooksecurefunc('AuraButton_Update', function(self, index)
             duration:ClearAllPoints()
             duration:SetPoint('BOTTOM', button, 'BOTTOM', 0, -2)
             if (self:match('Debuff')) then
-                duration:SetFont(C['buff'].durationFont, C['buff'].debuffFontSize, 'THINOUTLINE')
+                duration:SetFont(C['media'].font, C['buff'].debuffFontSize, 'THINOUTLINE')
             else
-                duration:SetFont(C['buff'].durationFont, C['buff'].buffFontSize, 'THINOUTLINE')
+                duration:SetFont(C['media'].font, C['buff'].buffFontSize, 'THINOUTLINE')
             end
             duration:SetShadowOffset(0, 0)
             duration:SetDrawLayer('OVERLAY')
@@ -232,9 +234,9 @@ hooksecurefunc('AuraButton_Update', function(self, index)
             count:ClearAllPoints()
             count:SetPoint('TOPRIGHT', button)
             if (self:match('Debuff')) then
-                count:SetFont(C['buff'].countFont, C['buff'].debuffCountSize, 'THINOUTLINE')
+                count:SetFont(C['media'].font, C['buff'].debuffCountSize, 'THINOUTLINE')
             else
-                count:SetFont(C['buff'].countFont, C['buff'].buffCountSize, 'THINOUTLINE')
+                count:SetFont(C['media'].font, C['buff'].buffCountSize, 'THINOUTLINE')
             end
             count:SetShadowOffset(0, 0)
             count:SetDrawLayer('OVERLAY')
@@ -255,7 +257,7 @@ hooksecurefunc('AuraButton_Update', function(self, index)
                 button.texture:SetTexture(C['buff'].borderBuff)
                 button.texture:SetPoint('TOPRIGHT', button, 1, 1)
                 button.texture:SetPoint('BOTTOMLEFT', button, -1, -1)
-                button.texture:SetVertexColor(unpack(C['buff'].buffBorderColor))
+                button.texture:SetVertexColor(C['buff'].buffBorderColor.r, C['buff'].buffBorderColor.g, C['buff'].buffBorderColor.b)
             end
         end
 

@@ -1,4 +1,6 @@
-local N, C = unpack(select(2, ...)) -- Import:  N - function; C - config
+local N, C, DB = unpack(select(2, ...)) -- Import:  N - function; C - config; DB - database
+
+if C['tooltip'].enable ~= true then return end
 
 if (not C['tooltip'].healthbar.showHealthValue) then
     return
@@ -16,10 +18,10 @@ bar.Text = bar:CreateFontString(nil, 'OVERLAY')
 bar.Text:SetPoint('CENTER', bar, C['tooltip'].healthbar.textPos, 0, 1)
 
 if (C['tooltip'].healthbar.showOutline) then
-    bar.Text:SetFont(C['tooltip'].healthbar.font, C['tooltip'].healthbar.fontSize, 'THINOUTLINE')
+    bar.Text:SetFont(C['media'].font, C['tooltip'].healthbar.fontSize, 'THINOUTLINE')
     bar.Text:SetShadowOffset(0, 0)
 else
-    bar.Text:SetFont(C['tooltip'].healthbar.font, C['tooltip'].healthbar.fontSize)
+    bar.Text:SetFont(C['media'].font, C['tooltip'].healthbar.fontSize)
     bar.Text:SetShadowOffset(1, -1)
 end
 

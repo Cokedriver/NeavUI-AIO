@@ -1,4 +1,6 @@
-local N, C = unpack(select(2, ...)) -- Import:  N - function; C - config
+local N, C, DB = unpack(select(2, ...)) -- Import:  N - function; C - config; DB - database
+
+if C['minimap'].enable ~= true then return end
 
 hooksecurefunc('UIParent_ManageFramePositions', function()
     if (NUM_EXTENDED_UI_FRAMES) then

@@ -1,4 +1,6 @@
-local N, C = unpack(select(2, ...)) -- Import:  N - function; C - config
+local N, C, DB = unpack(select(2, ...)) -- Import:  N - function; C - config; DB - database
+
+if C['chat'].enable ~= true then return end
 
     -- Mouseover Itemlinks in the chat
     -- Code provided by the Tukui crew (Tukui.org)

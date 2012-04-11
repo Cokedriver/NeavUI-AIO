@@ -1,4 +1,6 @@
-local N, C = unpack(select(2, ...)) -- Import:  N - function; C - config
+local N, C, DB = unpack(select(2, ...)) -- Import:  N - function; C - config; DB - database
+
+if C['mainbar'].enable ~= true then return end
 
 if (not C['mainbar'].MainMenuBar.skinButton) then
     return
@@ -20,8 +22,8 @@ local function UpdateVehicleButton()
     for i = 1, VEHICLE_MAX_ACTIONBUTTONS do
         local hotkey = _G['VehicleMenuBarActionButton'..i..'HotKey']
         if (C['mainbar'].button.showVehicleKeybinds) then
-            hotkey:SetFont(C['mainbar'].button.hotkeyFont, C['mainbar'].button.hotkeyFontsize + 3, 'OUTLINE')
-            hotkey:SetVertexColor(C['mainbar'].color.HotKeyText[1], C['mainbar'].color.HotKeyText[2], C['mainbar'].color.HotKeyText[3])
+            hotkey:SetFont(C['media'].font, C['mainbar'].button.hotkeyFontsize + 3, 'OUTLINE')
+            hotkey:SetVertexColor(C['mainbar'].color.HotKeyText.r, C['mainbar'].color.HotKeyText.g, C['mainbar'].color.HotKeyText.b)
         else
             hotkey:Hide()
         end
@@ -52,7 +54,7 @@ hooksecurefunc('PetActionBar_Update', function()
                     normal:ClearAllPoints()
                     normal:SetPoint('TOPRIGHT', button, 1.5, 1.5)
                     normal:SetPoint('BOTTOMLEFT', button, -1.5, -1.5)
-                    normal:SetVertexColor(C['mainbar'].color.Normal[1], C['mainbar'].color.Normal[2], C['mainbar'].color.Normal[3], 1)
+                    normal:SetVertexColor(C['mainbar'].color.Normal.r, C['mainbar'].color.Normal.g, C['mainbar'].color.Normal.b, 1)
 
                     local icon = _G[name..i..'Icon']
                     icon:SetTexCoord(0.05, 0.95, 0.05, 0.95)
@@ -139,7 +141,7 @@ hooksecurefunc('ActionButton_Update', function(self)
                 normal:ClearAllPoints()
                 normal:SetPoint('TOPRIGHT', button, 1, 1)
                 normal:SetPoint('BOTTOMLEFT', button, -1, -1)
-                normal:SetVertexColor(C['mainbar'].color.Normal[1], C['mainbar'].color.Normal[2], C['mainbar'].color.Normal[3], 1)
+                normal:SetVertexColor(C['mainbar'].color.Normal.r, C['mainbar'].color.Normal.g, C['mainbar'].color.Normal.b, 1)
                 -- normal:SetDrawLayer('ARTWORK')
             end
 
@@ -165,14 +167,14 @@ hooksecurefunc('ActionButton_Update', function(self)
                 border:SetAllPoints(normal)
                 -- border:SetDrawLayer('OVERLAY')
                 border:SetTexture(path..'MainbarHighlight')
-                border:SetVertexColor(unpack(C['mainbar'].color.IsEquipped))
+                border:SetVertexColor(C['mainbar'].color.IsEquipped.r, C['mainbar'].color.IsEquipped.g, C['mainbar'].color.IsEquipped.b)
             end
 
             local count = _G[self:GetName()..'Count']
             if (count) then
                 count:SetPoint('BOTTOMRIGHT', button, 0, 1)
-                count:SetFont(C['mainbar'].button.countFont, C['mainbar'].button.countFontsize, 'OUTLINE')
-                count:SetVertexColor(C['mainbar'].color.CountText[1], C['mainbar'].color.CountText[2], C['mainbar'].color.CountText[3], 1)
+                count:SetFont(C['media'].font, C['mainbar'].button.countFontsize, 'OUTLINE')
+                count:SetVertexColor(C['mainbar'].color.CountText.r, C['mainbar'].color.CountText.g, C['mainbar'].color.CountText.b, 1)
             end
 
             local macroname = _G[self:GetName()..'Name']
@@ -182,8 +184,8 @@ hooksecurefunc('ActionButton_Update', function(self)
                 else
                     -- macroname:SetDrawLayer('OVERLAY')
                     macroname:SetWidth(button:GetWidth() + 15)
-                    macroname:SetFont(C['mainbar'].button.macronameFont, C['mainbar'].button.macronameFontsize, 'OUTLINE')
-                    macroname:SetVertexColor(unpack(C['mainbar'].color.MacroText))
+                    macroname:SetFont(C['media'].font, C['mainbar'].button.macronameFontsize, 'OUTLINE')
+                    macroname:SetVertexColor(C['mainbar'].color.MacroText.r, C['mainbar'].color.MacroText.g, C['mainbar'].color.MacroText.b)
                 end
             end
 
@@ -224,7 +226,7 @@ end)
 hooksecurefunc('ActionButton_ShowGrid', function(self)
     local normal = _G[self:GetName()..'NormalTexture']
     if (normal) then
-        normal:SetVertexColor(C['mainbar'].color.Normal[1], C['mainbar'].color.Normal[2], C['mainbar'].color.Normal[3], 1) 
+        normal:SetVertexColor(C['mainbar'].color.Normal.r, C['mainbar'].color.Normal.g, C['mainbar'].color.Normal.b, 1) 
     end
 end)
 
@@ -235,16 +237,16 @@ hooksecurefunc('ActionButton_UpdateUsable', function(self)
 
     local normal = _G[self:GetName()..'NormalTexture']
     if (normal) then
-        normal:SetVertexColor(C['mainbar'].color.Normal[1], C['mainbar'].color.Normal[2], C['mainbar'].color.Normal[3], 1) 
+        normal:SetVertexColor(C['mainbar'].color.Normal.r, C['mainbar'].color.Normal.g, C['mainbar'].color.Normal.b, 1) 
     end
 
     local isUsable, notEnoughMana = IsUsableAction(self.action)
     if (isUsable) then
         _G[self:GetName()..'Icon']:SetVertexColor(1, 1, 1)
     elseif (notEnoughMana) then
-        _G[self:GetName()..'Icon']:SetVertexColor(unpack(C['mainbar'].color.OutOfMana))
+        _G[self:GetName()..'Icon']:SetVertexColor(C['mainbar'].color.OutOfMana.r, C['mainbar'].color.OutOfMana.g, C['mainbar'].color.OutOfMana.b)
     else
-        _G[self:GetName()..'Icon']:SetVertexColor(unpack(C['mainbar'].color.NotUsable))
+        _G[self:GetName()..'Icon']:SetVertexColor(C['mainbar'].color.NotUsable.r, C['mainbar'].color.NotUsable.g, C['mainbar'].color.NotUsable.b)
     end
 end)
 
@@ -256,8 +258,8 @@ hooksecurefunc('ActionButton_UpdateHotkeys', function(self)
             hotkey:ClearAllPoints()
             hotkey:SetPoint('TOPRIGHT', self, 0, -3)
             -- hotkey:SetDrawLayer('OVERLAY')
-            hotkey:SetFont(C['mainbar'].button.hotkeyFont, C['mainbar'].button.hotkeyFontsize, 'OUTLINE')
-            hotkey:SetVertexColor(C['mainbar'].color.HotKeyText[1], C['mainbar'].color.HotKeyText[2], C['mainbar'].color.HotKeyText[3])
+            hotkey:SetFont(C['media'].font, C['mainbar'].button.hotkeyFontsize, 'OUTLINE')
+            hotkey:SetVertexColor(C['mainbar'].color.HotKeyText.r, C['mainbar'].color.HotKeyText.g, C['mainbar'].color.HotKeyText.b)
         else
             hotkey:Hide()    
         end

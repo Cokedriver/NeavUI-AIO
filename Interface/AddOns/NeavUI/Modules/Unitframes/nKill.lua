@@ -1,4 +1,7 @@
-local N, C = unpack(select(2, ...)) -- Import:  N - function; C - config
+local N, C, DB = unpack(select(2, ...)) -- Import:  N - function; C - config; DB - database
+
+if C['unitframes'].enable ~= true then return end
+
     -- kill the config entry with stuff like 'show arena background' or 'bigger focustarget'
 
 InterfaceOptionsFrameCategoriesButton10:SetScale(0.00001)

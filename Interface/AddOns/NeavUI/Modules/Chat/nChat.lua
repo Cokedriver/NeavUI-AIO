@@ -1,4 +1,6 @@
-local N, C = unpack(select(2, ...)) -- Import:  N - function; C - config
+local N, C, DB = unpack(select(2, ...)) -- Import:  N - function; C - config; DB - database
+
+if C['chat'].enable ~= true then return end
 
 local _G = _G
 local type = type
@@ -152,6 +154,31 @@ if (C['chat'].enableBorderColoring) then
     end)
 end
 
+if C['chat'].chatBorder == true then	
+	do	
+		for i = 1, NUM_CHAT_WINDOWS do
+			local cf = _G['ChatFrame'..i]
+			if cf then
+				cf:CreateBeautyBorder(12)
+				cf:SetBeautyBorderPadding( 5, 5, 5, 5, 5, 8, 5, 8)
+				if C['chat'].chatBorderClassColor == true then
+					cf:SetBeautyBorderTexture('white')
+					cf:SetBeautyBorderColor(N.ccolor.r, N.ccolor.g, N.ccolor.b)
+				end	
+			end
+		end
+		
+		local ct = _G['ChatFrame2']
+		if ct then
+			ct:CreateBeautyBorder(12)
+			ct:SetBeautyBorderPadding(5, 29, 5, 29, 5, 8, 5, 8)
+			if C['chat'].chatBorderClassColor == true then
+				ct:SetBeautyBorderTexture('white')
+				ct:SetBeautyBorderColor(N.ccolor.r, N.ccolor.g, N.ccolor.b)
+			end				
+		end
+	end
+end	
     -- Hide the menu and friend button
 
 FriendsMicroButton:SetAlpha(0)
@@ -255,9 +282,9 @@ function SkinTab(self)
     local a1, a2, a3, a4, a5 = tabText:GetPoint()
     tabText:SetPoint(a1, a2, a3, a4, 1)
 
-    local s1, s2, s3 = unpack(C['chat'].tab.specialColor)
-    local e1, e2, e3 = unpack(C['chat'].tab.selectedColor)
-    local n1, n2, n3 = unpack(C['chat'].tab.normalColor)
+    local s1, s2, s3 = C['chat'].tab.specialColor.r, C['chat'].tab.specialColor.g, C['chat'].tab.specialColor.b
+    local e1, e2, e3 = C['chat'].tab.selectedColor.r, C['chat'].tab.selectedColor.g, C['chat'].tab.selectedColor.b
+    local n1, n2, n3 = C['chat'].tab.normalColor.r, C['chat'].tab.normalColor.g, C['chat'].tab.normalColor.b
 
     local tabGlow = _G[self..'TabGlow']
     hooksecurefunc(tabGlow, 'Show', function()
@@ -394,7 +421,8 @@ local function SetChatStyle()
 
             chat.hasModification = true
         end
-    end
+    end	
+	
 end
 hooksecurefunc('FCF_OpenTemporaryWindow', SetChatStyle)
 SetChatStyle()

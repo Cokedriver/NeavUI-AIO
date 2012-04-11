@@ -1,11 +1,13 @@
-local N, C = unpack(select(2, ...)) -- Import:  N - function; C - config
+local N, C, DB = unpack(select(2, ...)) -- Import:  N - function; C - config; DB - database
+
+if C['unitframes'].enable ~= true then return end
 
 local function UpdateCastbarColor(self, unit, config)
     if (self.interrupt) then
-        N.ColorBorder(self, 'white', unpack(config.interruptColor))
+        N.ColorBorder(self, 'white', config.interruptColor.r, config.interruptColor.g, config.interruptColor.b)
 
         if (self.IconOverlay) then
-            N.ColorBorder(self.IconOverlay, 'white', unpack(config.interruptColor))
+            N.ColorBorder(self.IconOverlay, 'white', config.interruptColor.r, config.interruptColor.g, config.interruptColor.b)
         end
     else
         N.ColorBorder(self, 'default', 1, 1, 1, 0)
@@ -23,7 +25,7 @@ function N.CreateCastbars(self, unit)
 
     if (N.MultiCheck(unit, 'player', 'target', 'focus', 'pet') and config and config.show) then 
         self.Castbar = CreateFrame('StatusBar', self:GetName()..'Castbar', self)
-        self.Castbar:SetStatusBarTexture(C['unitframes'].media.statusbar)
+        self.Castbar:SetStatusBarTexture('Interface\\AddOns\\NeavUI\\Media\\statusbarTexture')
         self.Castbar:SetScale(config.scale)
         self.Castbar:SetSize(config.width, config.height)
         self.Castbar:SetStatusBarColor(unpack(config.color))  
@@ -31,13 +33,13 @@ function N.CreateCastbars(self, unit)
         if (unit == 'focus') then
             self.Castbar:SetPoint('BOTTOM', self, 'TOP', 0, 25)
         else
-            self.Castbar:SetPoint(unpack(config.position))
+            self.Castbar:SetPoint(config.position.selfAnchor , config.position.frameParent , config.position.relAnchor , config.position.offSetX , config.position.offSetY )
         end
 
         self.Castbar.Background = self.Castbar:CreateTexture(nil, 'BACKGROUND')
         self.Castbar.Background:SetTexture('Interface\\Buttons\\WHITE8x8')
         self.Castbar.Background:SetAllPoints(self.Castbar)
-        self.Castbar.Background:SetVertexColor(config.color[1]*0.3, config.color[2]*0.3, config.color[3]*0.3, 0.8)
+        self.Castbar.Background:SetVertexColor(config.color.r * 0.3, config.color.g * 0.3, config.color.b * 0.3, 0.8)
 
         if (unit == 'player') then
             local playerColor = RAID_CLASS_COLORS[select(2, UnitClass('player'))]
@@ -49,12 +51,12 @@ function N.CreateCastbars(self, unit)
 
             if (config.showSafezone) then
                 self.Castbar.SafeZone = self.Castbar:CreateTexture(nil, 'BORDER') 
-                self.Castbar.SafeZone:SetTexture(unpack(config.safezoneColor))
+                self.Castbar.SafeZone:SetTexture(config.safezoneColor.r, config.safezoneColor.g, config.safezoneColor.b)
             end
 
             if (config.showLatency) then
                 self.Castbar.Latency = self.Castbar:CreateFontString(nil, 'OVERLAY')
-                self.Castbar.Latency:SetFont(C['unitframes'].font.normal, C['unitframes'].font.normalSize - 1)
+                self.Castbar.Latency:SetFont(C['media'].fontSmall, C['unitframes'].font.normalSize - 1)
                 self.Castbar.Latency:SetShadowOffset(1, -1)
                 self.Castbar.Latency:SetVertexColor(0.6, 0.6, 0.6, 1)
             end
@@ -171,7 +173,7 @@ for i = 1, MIRRORTIMER_NUMTIMERS do
     end
 
     local statusbar = _G['MirrorTimer'..i..'StatusBar']
-    statusbar:SetStatusBarTexture(C['unitframes'].media.statusbar)
+    statusbar:SetStatusBarTexture('Interface\\AddOns\\NeavUI\\Media\\statusbarTexture')
     statusbar:SetAllPoints(bar)
 
     local backdrop = select(1, bar:GetRegions())
@@ -183,7 +185,7 @@ for i = 1, MIRRORTIMER_NUMTIMERS do
     border:Hide()
 
     local text = _G['MirrorTimer'..i..'Text']
-    text:SetFont(C['unitframes'].font.normal, C['unitframes'].font.normalSize)
+    text:SetFont(C['media'].fontSmall, C['unitframes'].font.normalSize)
     text:ClearAllPoints()
     text:SetPoint('CENTER', bar)
 end
@@ -209,13 +211,13 @@ f:SetScript('OnEvent', function(self, event)
                 if (region and region:GetObjectType() == 'FontString') then
                     region:ClearAllPoints()
                     region:SetPoint('CENTER', bar)
-                    region:SetFont(C['unitframes'].font.normal, C['unitframes'].font.normalSize)
+                    region:SetFont(C['media'].fontSmall, C['unitframes'].font.normalSize)
                 end
             end
 
             bar:CreateBeautyBorder(11)
             bar:SetBeautyBorderPadding(3)
-            bar:SetStatusBarTexture(C['unitframes'].media.statusbar)
+            bar:SetStatusBarTexture('Interface\\AddOns\\NeavUI\\Media\\statusbarTexture')
 
             local backdrop = select(1, bar:GetRegions())
             backdrop:SetTexture('Interface\\Buttons\\WHITE8x8')
