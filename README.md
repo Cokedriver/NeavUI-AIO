@@ -1,7 +1,7 @@
-# Neav UI
+# NeavUI-AIO
 
 This is a Github mirror of Neav UI on WoWInterface.
-With a All In One style vs several seperate addons.
+With a All In One style and In-Game options.
 
 ## Addons included
 
