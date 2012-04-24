@@ -35,8 +35,7 @@ end
 
 
 function NeavUIConfig:OnInitialize()	
-	NeavUIConfig:RegisterChatCommand("bc", "ShowConfig")
-	NeavUIConfig:RegisterChatCommand("NeavUI", "ShowConfig")
+	NeavUIConfig:RegisterChatCommand("neavui", "ShowConfig")
 	
 	self.OnInitialize = nil
 end
@@ -69,27 +68,10 @@ function NeavUIConfig:SetupOptions()
 	self.profileOptions = LibStub("AceDBOptions-3.0"):GetOptionsTable(self.db);
 	LibStub("AceConfig-3.0"):RegisterOptionsTable("NeavUIProfiles", self.profileOptions)
 	
-	-- The ordering here matters, it determines the order in the Blizzard Interface Options
-	local ACD3 = LibStub("AceConfigDialog-3.0")
-	self.optionsFrames = {}
-	self.optionsFrames.NeavUIConfig = ACD3:AddToBlizOptions("NeavUIConfig", "|cffCC3333N|r|cffE53300e|r|cffFF4D00a|r|cffFF6633v|rUI", nil)
-	--self.optionsFrames.nGeneral = ACD3:AddToBlizOptions("NeavUIConfig", L["|cffCC3333 n|rCore"], "|cffCC3333N|r|cffE53300e|r|cffFF4D00a|r|cffFF6633v|rUI", "general")
-	--self.optionsFrames.nBuff = ACD3:AddToBlizOptions("NeavUIConfig", L["|cffCC3333 n|rBuff"], "|cffCC3333N|r|cffE53300e|r|cffFF4D00a|r|cffFF6633v|rUI", "buff")
-	--self.optionsFrames.nChat = ACD3:AddToBlizOptions("NeavUIConfig", L["|cffCC3333 n|rChat"], "|cffCC3333N|r|cffE53300e|r|cffFF4D00a|r|cffFF6633v|rUI", "chat")
-	--self.optionsFrames.nMainbar = ACD3:AddToBlizOptions("NeavUIConfig", L["|cffCC3333 n|rMainbar"], "|cffCC3333N|r|cffE53300e|r|cffFF4D00a|r|cffFF6633v|rUI", "mainbar")
-	--self.optionsFrames.nMinimap = ACD3:AddToBlizOptions("NeavUIConfig", L["|cffCC3333 n|rMinimap"], "|cffCC3333N|r|cffE53300e|r|cffFF4D00a|r|cffFF6633v|rUI", "minimap")
-	--self.optionsFrames.nPlates = ACD3:AddToBlizOptions("NeavUIConfig", L["|cffCC3333 n|rPlates"], "|cffCC3333N|r|cffE53300e|r|cffFF4D00a|r|cffFF6633v|rUI", "plates")
-	--self.optionsFrames.nPower = ACD3:AddToBlizOptions("NeavUIConfig", L["|cffCC3333 n|rPower"], "|cffCC3333N|r|cffE53300e|r|cffFF4D00a|r|cffFF6633v|rUI", "power")
-	--self.optionsFrames.nTooltip = ACD3:AddToBlizOptions("NeavUIConfig", L["|cffCC3333 n|rTooltip"], "|cffCC3333N|r|cffE53300e|r|cffFF4D00a|r|cffFF6633v|rUI", "tooltip")
-	--self.optionsFrames.nUnitframes = ACD3:AddToBlizOptions("NeavUIConfig", L["oUF_|cffCC3333N|r|cffE53300e|r|cffFF4D00a|r|cffFF6633v|r"], "|cffCC3333N|r|cffE53300e|r|cffFF4D00a|r|cffFF6633v|rUI", "unitframes")
-	--self.optionsFrames.nRaidframes = ACD3:AddToBlizOptions("NeavUIConfig", L["oUF_|cffCC3333N|r|cffE53300e|r|cffFF4D00a|r|cffFF6633v|rRaid"], "|cffCC3333N|r|cffE53300e|r|cffFF4D00a|r|cffFF6633v|rUI", "raidframes")
-	self.optionsFrames.Profiles = ACD3:AddToBlizOptions("NeavUIProfiles", L["|cffCC3333N|r|cffE53300e|r|cffFF4D00a|r|cffFF6633v|rUI Profiles"], "|cffCC3333N|r|cffE53300e|r|cffFF4D00a|r|cffFF6633v|rUI")
-	self.SetupOptions = nil	
-	
-	--[[self.optionsFrame = LibStub("AceConfigDialog-3.0"):AddToBlizOptions("NeavUIConfig", "|cffCC3333N|r|cffE53300e|r|cffFF4D00a|r|cffFF6633v|rUI");
+	self.optionsFrame = LibStub("AceConfigDialog-3.0"):AddToBlizOptions("NeavUIConfig", "|cffCC3333N|r|cffE53300e|r|cffFF4D00a|r|cffFF6633v|rUI");
 	self.optionsFrame.default = function() self:SetDefaultOptions(); ReloadUI(); end;
 	self.profilesFrame = LibStub("AceConfigDialog-3.0"):AddToBlizOptions("NeavUIProfiles", L["|cffCC3333N|r|cffE53300e|r|cffFF4D00a|r|cffFF6633v|rUI Profiles"], "|cffCC3333N|r|cffE53300e|r|cffFF4D00a|r|cffFF6633v|rUI");	
-	self.SetupOptions = nil]]
+	self.SetupOptions = nil
 end
 
 function NeavUIConfig.GenerateOptions()
