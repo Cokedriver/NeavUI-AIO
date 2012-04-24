@@ -1,6 +1,6 @@
 ## Interface: 40300
 ## Author: Neav / Cokedriver
-## Version: 1.0
+## Version: 1.1
 ## Title: |cffCC3333N|r|cffE53300e|r|cffFF4D00a|r|cffFF6633v|rUI
 ## SavedVariables: NeavDB
 ## SavedVariablesPerCharacter: NeavDBPerCharacter
