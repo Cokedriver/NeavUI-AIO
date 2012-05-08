@@ -1,27 +1,34 @@
 ## Interface: 40300
 ## Author: Neav / Cokedriver
-## Version: 1.1
+## Version: 1.2
 ## Title: |cffCC3333N|r|cffE53300e|r|cffFF4D00a|r|cffFF6633v|rUI
 ## SavedVariables: NeavDB
 ## SavedVariablesPerCharacter: NeavDBPerCharacter
 ## RequiredDeps: NeavUI_Config
 ## OptionalDeps: Blizzard_TimeManager
 
+<! -- Ace Libs -- >
+nLibs\nLibs.xml
+
 <! -- oUF -- >
 oUF\oUF.xml
 
+<! -- nMedia -- >
+nMedia\nSharedMedia.lua
+
 
 <! -- NeavUI AIO Core -- >
-Core\nEngine.lua
-Core\nBeautycase.lua
-Core\nColorz.lua
-Core\nCore.lua
+nCore\nEngine.lua
+nCore\nBeautycase.lua
+nCore\nColorz.lua
+nCore\nMain.lua
 
 <! -- Config -- >
-Config\Defaults.lua
-Config\Config.lua
+nConfig\nDefaults.lua
+nConfig\nConfig.lua
+nConfig\nMedia.lua
 
-<! -- oUF Modules -- >
+<! -- oUF -- >
 oUF\Modules\nOffline.lua
 oUF\Modules\nPortraittimers.lua
 oUF\Modules\nSmartthreat.lua
@@ -33,100 +40,111 @@ oUF\Modules\oUF_Freebgrid_AurasPriority.lua
 oUF\Modules\oUF_Freebgrid_AurasList.lua
 oUF\Modules\oUF_Freebgrid_Auras.lua
 
-<! -- AddOns -- >
-AddOns\ActionButtonText\ABT.lua
-AddOns\ActionButtonText\ABTSpells.lua
-AddOns\ActionButtonText\localisation.en.lua
-AddOns\ActionButtonText\ABTOptions.lua
-AddOns\ActionButtonText\ABTConfig.lua
-
---- NeavUI Modules
+--- NeavUI nModules
 
 <! -- nBuffs -- >
-Modules\Buff\nBuff.lua
+nModules\nBuff\nBuff.lua
 
 <! -- nChat -- >
-Modules\Chat\nChat.lua
-Modules\Chat\nCopy.lua
-Modules\Chat\nHyperlink.lua
-Modules\Chat\nInvite.lua
-Modules\Chat\nUrlcopy.lua
-Modules\Chat\nWhisper.lua
+nModules\nChat\nChat.lua
+nModules\nChat\nCopy.lua
+nModules\nChat\nHyperlink.lua
+nModules\nChat\nInvite.lua
+nModules\nChat\nUrlcopy.lua
+nModules\nChat\nWhisper.lua
 
 <! -- nCore -- >
-Modules\General\nAltbuy.lua
-Modules\General\nAutogreed.lua
-Modules\General\nBubbles.lua
-Modules\General\nCoords.lua
-Modules\General\nDurability.lua
-Modules\General\nMail.lua
-Modules\General\nOmniCC.lua
-Modules\General\nQuicky.lua
-Modules\General\nSkins.lua
-Modules\General\nSpellid.lua
-Modules\General\nWarning.lua
-Modules\General\nWatchframe.lua
+nModules\nCore\nAltbuy.lua
+nModules\nCore\nAutogreed.lua
+nModules\nCore\nBubbles.lua
+nModules\nCore\nCoords.lua
+nModules\nCore\nDurability.lua
+nModules\nCore\nFont.lua
+nModules\nCore\nMail.lua
+nModules\nCore\nMerchant.lua
+nModules\nCore\nOmniCC.lua
+nModules\nCore\nQuest.lua
+nModules\nCore\nQuicky.lua
+nModules\nCore\nSelfbuffs.lua
+nModules\nCore\nSkins.lua
+nModules\nCore\nSpellid.lua
+nModules\nCore\nWarning.lua
+nModules\nCore\nWatchframe.lua
+
+<!-- Data --!>
+nModules\nData\nDatapanel.lua
+nModules\nData\nPositions.lua
+nModules\nData\nColors.lua
+nModules\nData\nCoords.lua
+nModules\nData\nProfessions.lua
+nModules\nData\nStat1.lua
+nModules\nData\nStat2.lua
+nModules\nData\nBattleground.lua
+nModules\nData\nDurability.lua
+nModules\nData\nSystem.lua
+nModules\nData\nFriends.lua
+nModules\nData\nGuild.lua
+nModules\nData\nTime.lua
+nModules\nData\nBags.lua
+nModules\nData\nDps.lua
+nModules\nData\nHps.lua
+nModules\nData\nSpec.lua
+nModules\nData\nThreatbar.lua
+nModules\nData\nZone.lua	
+nModules\nData\nCalltoarms.lua
+nModules\nData\nRecount.lua
 
 
 <! -- nMainbar -- >
-Modules\Mainbar\nMainbar.lua
-Modules\Mainbar\nBottomLeft.lua
-Modules\Mainbar\nBottomRight.lua
-Modules\Mainbar\nLeft.lua
-Modules\Mainbar\nRight.lua
-Modules\Mainbar\nSkins.lua
-Modules\Mainbar\nExpbar.lua
-Modules\Mainbar\nHotkey.lua
-Modules\Mainbar\nMouseover.lua
-Modules\Mainbar\nPetbar.lua
-Modules\Mainbar\nPossessbar.lua
-Modules\Mainbar\nRepbar.lua
-Modules\Mainbar\nSlash.lua
-Modules\Mainbar\nStancebar.lua
-Modules\Mainbar\nPicomenu.lua
-Modules\Mainbar\nShortbar\nShortbar.lua
-Modules\Mainbar\nShortbar\nExtras.lua
-Modules\Mainbar\nShortbar\nTotem.lua
+nModules\nMainbar\nMainbar.lua
+nModules\nMainbar\nBottomLeft.lua
+nModules\nMainbar\nBottomRight.lua
+nModules\nMainbar\nLeft.lua
+nModules\nMainbar\nRight.lua
+nModules\nMainbar\nSkins.lua
+nModules\nMainbar\nExpbar.lua
+nModules\nMainbar\nHotkey.lua
+nModules\nMainbar\nMouseover.lua
+nModules\nMainbar\nPetbar.lua
+nModules\nMainbar\nPossessbar.lua
+nModules\nMainbar\nRepbar.lua
+nModules\nMainbar\nSlash.lua
+nModules\nMainbar\nStancebar.lua
+nModules\nMainbar\nPicomenu.lua
+nModules\nMainbar\nShortbar\nShortbar.lua
+nModules\nMainbar\nShortbar\nExtras.lua
+nModules\nMainbar\nShortbar\nTotem.lua
 
 
 <! -- nMinimap -- >
-Modules\Minimap\nMinimap.lua
-Modules\Minimap\nCapture.lua
-Modules\Minimap\nCalendar.lua
-Modules\Minimap\nClock.lua
-Modules\Minimap\nDifficulty.lua
-Modules\Minimap\nTab.lua
+nModules\nMinimap\nMinimap.lua
+nModules\nMinimap\nCapture.lua
+nModules\nMinimap\nCalendar.lua
+nModules\nMinimap\nClock.lua
+nModules\nMinimap\nDifficulty.lua
+nModules\nMinimap\nTab.lua
 
 <! -- nPlates -- >
-Modules\Nameplates\nPlates.lua
+nModules\nPlates\nPlates.lua
 
 <! -- nPower -- >
-Modules\Powerbar\nPower.lua
+nModules\nPower\nPower.lua
 
 <! -- nTooltip -- >
-Modules\Tooltip\nTooltip.lua
-Modules\Tooltip\nFade.lua
-Modules\Tooltip\nHealth.lua
+nModules\nTooltip\nTooltip.lua
+nModules\nTooltip\nFade.lua
+nModules\nTooltip\nHealth.lua
 
 <! -- oUF_Neav -- >
-Modules\Unitframes\nKill.lua
-Modules\Unitframes\nTags.lua
-Modules\Unitframes\nCastbar.lua
-Modules\Unitframes\nUnitframes.lua
-Modules\Unitframes\nBoss.lua
-Modules\Unitframes\nArena.lua
+nModules\nUnitframes\nKill.lua
+nModules\nUnitframes\nTags.lua
+nModules\nUnitframes\nCastbar.lua
+nModules\nUnitframes\nUnitframes.lua
+nModules\nUnitframes\nBoss.lua
+nModules\nUnitframes\nArena.lua
 
 <! -- oUF_NeavRaid -- >
-Modules\Raidframes\nKill.lua
-Modules\Raidframes\nTags.lua
-Modules\Raidframes\nRaidframes.lua
-Modules\Raidframes\nMarker.lua
-
-
-
-
-
-
-
-
-
+nModules\nRaidframes\nKill.lua
+nModules\nRaidframes\nTags.lua
+nModules\nRaidframes\nRaidframes.lua
+nModules\nRaidframes\nMarker.lua

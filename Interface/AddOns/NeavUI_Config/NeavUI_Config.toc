@@ -6,46 +6,6 @@
 ## RequiredDeps: NeavUI
 
 
-Libs\LibStub.lua
-Libs\CallbackHandler-1.0.lua
-Libs\AceAddon-3.0.lua
-Libs\AceEvent-3.0.lua
-Libs\AceGUI-3.0.lua
-Libs\AceGUIContainer-BlizOptionsGroup.lua
-Libs\AceGUIContainer-DropDownGroup.lua
-Libs\AceGUIContainer-Frame.lua
-Libs\AceGUIContainer-InlineGroup.lua
-Libs\AceGUIContainer-ScrollFrame.lua
-Libs\AceGUIContainer-SimpleGroup.lua
-Libs\AceGUIContainer-TabGroup.lua
-Libs\AceGUIContainer-TreeGroup.lua
-Libs\AceGUIContainer-Window.lua
-Libs\AceGUIWidget-Button.lua
-Libs\AceGUIWidget-CheckBox.lua
-Libs\AceGUIWidget-ColorPicker.lua
-Libs\AceGUIWidget-DropDown.lua
-Libs\AceGUIWidget-DropDown-Items.lua
-Libs\AceGUIWidget-EditBox.lua
-Libs\AceGUIWidget-Heading.lua
-Libs\AceGUIWidget-Icon.lua
-Libs\AceGUIWidget-InteractiveLabel.lua
-Libs\AceGUIWidget-Keybinding.lua
-Libs\AceGUIWidget-Label.lua
-Libs\AceGUIWidget-MultiLineEditBox.lua
-Libs\AceGUIWidget-Slider.lua
-Libs\AceConfigRegistry-3.0.lua
-Libs\AceConfigCmd-3.0.lua
-Libs\AceConfigDialog-3.0.lua
-Libs\AceConfig-3.0.lua
-Libs\AceConsole-3.0.lua
-Libs\AceDB-3.0.lua
-Libs\AceDBOptions-3.0.lua
-Libs\LibSharedMedia-3.0.lua
-Libs\prototypes.lua
-Libs\FontWidget.lua
-Libs\SoundWidget.lua
-Libs\StatusbarWidget.lua
-Libs\BorderWidget.lua
-Libs\BackgroundWidget.lua
+Libs\Libs.xml
 
 NeavUI_Config.lua
