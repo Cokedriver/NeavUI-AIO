@@ -59,12 +59,12 @@ if C['nData'].pro and C['nData'].pro > 0 then
 		local prof1, prof2 = GetProfessions()
 		if btn == "LeftButton" then
 			if prof1 then
-				if (GetProfessionInfo(prof1) == (B.locale == "deDE" and "Kr\195\164uterkunde" or'Herbalism')) then
+				if (GetProfessionInfo(prof1) == (N.locale == "deDE" and "Kr\195\164uterkunde" or'Herbalism')) then
 						print('|cff00B4FFBasic|rUI: |cffFF0000Herbalism has no options!|r')
-				elseif(GetProfessionInfo(prof1) == (B.locale == "deDE" and "K\195\188rschnerei" or 'Skinning')) then
+				elseif(GetProfessionInfo(prof1) == (N.locale == "deDE" and "K\195\188rschnerei" or 'Skinning')) then
 						print('|cff00B4FFBasic|rUI: |cffFF0000Skinning has no options!|r')
-				elseif(GetProfessionInfo(prof1) == (B.locale == "deDE" and "Bergbau" or 'Mining')) then
-					if(B.locale == "deDE") then
+				elseif(GetProfessionInfo(prof1) == (N.locale == "deDE" and "Bergbau" or 'Mining')) then
+					if(N.locale == "deDE") then
 						CastSpellByName("Verh\195\188ttung")
 					else
 						CastSpellByName("Smelting")
@@ -79,12 +79,12 @@ if C['nData'].pro and C['nData'].pro > 0 then
 			ToggleFrame(SpellBookFrame)		
 		elseif btn == "RightButton" then
 			if prof2 then
-				if (GetProfessionInfo(prof2) == (B.locale == "deDE" and "Kräuterkunde" or'Herbalism')) then
+				if (GetProfessionInfo(prof2) == (N.locale == "deDE" and "Kräuterkunde" or'Herbalism')) then
 						print('|cff00B4FFBasic|rUI: |cffFF0000Herbalism has no options!|r')
-				elseif(GetProfessionInfo(prof2) == (B.locale == "deDE" and "K\195\188rschnerei" or 'Skinning')) then
+				elseif(GetProfessionInfo(prof2) == (N.locale == "deDE" and "K\195\188rschnerei" or 'Skinning')) then
 						print('|cff00B4FFBasic|rUI: |cffFF0000Skinning has no options!|r')
-				elseif(GetProfessionInfo(prof2) == (B.locale == "deDE" and "Bergbau" or 'Mining')) then
-					if(B.locale == "deDE") then
+				elseif(GetProfessionInfo(prof2) == (N.locale == "deDE" and "Bergbau" or 'Mining')) then
+					if(N.locale == "deDE") then
 						CastSpellByName("Verh\195\188ttung")
 					else
 						CastSpellByName("Smelting")

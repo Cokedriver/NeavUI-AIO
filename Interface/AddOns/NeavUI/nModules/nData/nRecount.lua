@@ -114,22 +114,28 @@ if C['nData'].recount and C['nData'].recount > 0 then
 		end
 		GameTooltip:Show()
 	end)
+	
 	RecountDPS:SetScript("OnMouseUp", function(self, button)
-		if button == "RightButton" then
-			if not IsShiftKeyDown() then
-				Recount:ShowReset()
-			else
-				Recount:ShowConfig()
+		if IsAddOnLoaded("Recount") then
+			if button == "RightButton" then
+				if not IsShiftKeyDown() then
+					Recount:ShowReset()
+				else
+					Recount:ShowConfig()
+				end
+			elseif button == "LeftButton" then
+				if Recount.MainWindow:IsShown() then
+					Recount.MainWindow:Hide()
+				else
+					Recount.MainWindow:Show()
+					Recount:RefreshMainWindow()
+				end
 			end
-		elseif button == "LeftButton" then
-			if Recount.MainWindow:IsShown() then
-				Recount.MainWindow:Hide()
-			else
-				Recount.MainWindow:Show()
-				Recount:RefreshMainWindow()
-			end
-		end
+		else
+			return
+		end				
 	end)
+	
 	RecountDPS:SetScript("OnEvent", OnEvent)
 	RecountDPS:SetScript("OnLeave", function() GameTooltip:Hide() end)
 	RecountDPS:SetScript("OnUpdate", function(self, t)
@@ -140,4 +146,5 @@ if C['nData'].recount and C['nData'].recount > 0 then
 			int = 1
 		end
 	end)
+
 end
