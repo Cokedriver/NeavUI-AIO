@@ -364,9 +364,15 @@ local function CreateRaidLayout(self, unit)
         }
     })
 	self:CreateBeautyBorder(10)
-	self:SetBeautyBorderPadding(5)
-	self:SetBeautyBorderTexture('white')		
-
+	self:SetBeautyBorderPadding(5)		
+	self:SetBeautyBorderTexture('white')
+	if C['nMedia'].border == "Default" then
+		self:SetBeautyBorderColor(0.38, 0.38, 0.38)		
+	elseif C['nMedia'].border == "Classcolor" then
+		self:SetBeautyBorderColor(N.ccolor.r, N.ccolor.g, N.ccolor.b)
+	elseif C['nMedia'].border == "Custom" then
+		self:SetBeautyBorderColor(C['nMedia'].color.r, C['nMedia'].color.g, C['nMedia'].color.b)		
+	end	
     self:SetBackdropColor(0, 0, 0, 1)
 
         -- Health bar
@@ -633,11 +639,14 @@ local function CreateRaidLayout(self, unit)
 		if (UnitIsUnit('target', self.unit)) then
 			self:SetBeautyBorderColor( 1, 1, 1)
 		else
-			if C['nMedia'].classcolor ~= true then
-				self:SetBeautyBorderColor(C['nMedia'].color.r, C['nMedia'].color.g, C['nMedia'].color.b)
-			else
+			self:SetBeautyBorderTexture('white')
+			if C['nMedia'].border == "Default" then
+				self:SetBeautyBorderColor(0.38, 0.38, 0.38)		
+			elseif C['nMedia'].border == "Classcolor" then
 				self:SetBeautyBorderColor(N.ccolor.r, N.ccolor.g, N.ccolor.b)
-			end
+			elseif C['nMedia'].border == "Custom" then
+				self:SetBeautyBorderColor(C['nMedia'].color.r, C['nMedia'].color.g, C['nMedia'].color.b)		
+			end	
 		end
 	end)		
         -- Range check

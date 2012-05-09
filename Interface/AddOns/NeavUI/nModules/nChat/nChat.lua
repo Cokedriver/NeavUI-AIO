@@ -121,7 +121,7 @@ ChatFrame1EditBox:SetBackdrop({
 })
 
 ChatFrame1EditBox:SetBackdropColor(0, 0, 0, 0.5)
-ChatFrame1EditBox:CreateBeautyBorder(11)
+ChatFrame1EditBox:CreateBeautyBorder(12)
 ChatFrame1EditBox:SetBeautyBorderPadding(-2, -1, -2, -1, -2, -1, -2, -1)
 
 if (C['nChat'].enableBorderColoring) then
@@ -146,10 +146,12 @@ if C['nChat'].chatBorder == true then
 				cf:CreateBeautyBorder(12)
 				cf:SetBeautyBorderPadding( 5, 5, 5, 5, 5, 8, 5, 8)
 				cf:SetBeautyBorderTexture('white')
-				if C['nMedia'].classcolor ~= true then
-					cf:SetBeautyBorderColor(C['nMedia'].color.r, C['nMedia'].color.g, C['nMedia'].color.b)
-				else
+				if C['nMedia'].border == "Default" then
+					cf:SetBeautyBorderColor(0.38, 0.38, 0.38)		
+				elseif C['nMedia'].border == "Classcolor" then
 					cf:SetBeautyBorderColor(N.ccolor.r, N.ccolor.g, N.ccolor.b)
+				elseif C['nMedia'].border == "Custom" then
+					cf:SetBeautyBorderColor(C['nMedia'].color.r, C['nMedia'].color.g, C['nMedia'].color.b)		
 				end	
 			end
 		end
@@ -159,10 +161,12 @@ if C['nChat'].chatBorder == true then
 			ct:CreateBeautyBorder(12)
 			ct:SetBeautyBorderPadding(5, 29, 5, 29, 5, 8, 5, 8)
 			ct:SetBeautyBorderTexture('white')
-			if C['nMedia'].classcolor ~= true then
-				ct:SetBeautyBorderColor(C['nMedia'].color.r, C['nMedia'].color.g, C['nMedia'].color.b)
-			else
+			if C['nMedia'].border == "Default" then
+				ct:SetBeautyBorderColor(0.38, 0.38, 0.38)		
+			elseif C['nMedia'].border == "Classcolor" then
 				ct:SetBeautyBorderColor(N.ccolor.r, N.ccolor.g, N.ccolor.b)
+			elseif C['nMedia'].border == "Custom" then
+				ct:SetBeautyBorderColor(C['nMedia'].color.r, C['nMedia'].color.g, C['nMedia'].color.b)		
 			end			
 		end
 	end
@@ -365,7 +369,7 @@ local function ModChat(self)
     if (C['nChat'].enableBottomButton) then
         buttonBottom:Hide()
         buttonBottom:ClearAllPoints()
-        buttonBottom:SetPoint('BOTTOMLEFT', chat, -1, -3)
+        buttonBottom:SetPoint('BOTTOMRIGHT', chat, 1, 3)
         buttonBottom:HookScript('OnClick', function(self)
             self:Hide()
         end)

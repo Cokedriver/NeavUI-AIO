@@ -10,8 +10,16 @@ f:RegisterEvent('PLAYER_ENTERING_WORLD')
 f:SetScript('OnEvent', function(self)
     if (IsAddOnLoaded('Omen')) then
         if (not OmenBarList.beautyBorder) then
-            OmenBarList:CreateBeautyBorder(11)
+            OmenBarList:CreateBeautyBorder(12)
             OmenBarList:SetBeautyBorderPadding(3)
+			OmenBarList:SetBeautyBorderTexture('white')
+			if C['nMedia'].border == "Default" then
+				OmenBarList:SetBeautyBorderColor(0.38, 0.38, 0.38)		
+			elseif C['nMedia'].border == "Classcolor" then
+				OmenBarList:SetBeautyBorderColor(N.ccolor.r, N.ccolor.g, N.ccolor.b)
+			elseif C['nMedia'].border == "Custom" then
+				OmenBarList:SetBeautyBorderColor(C['nMedia'].color.r, C['nMedia'].color.g, C['nMedia'].color.b)		
+			end				
         end
     end
 
@@ -29,7 +37,7 @@ f:SetScript('OnEvent', function(self)
                 PitBull4_Frames_targettarget,
             }) do
                 if (pitframe:IsShown()) then
-                    pitframe:CreateBeautyBorder(11)
+                    pitframe:CreateBeautyBorder(12)
                     pitframe:SetBeautyBorderPadding(2)
                 end
             end
@@ -62,7 +70,15 @@ f:SetScript('OnEvent', function(self)
                 name:SetFont(C['nMedia'].font, 15)
 
                 tbar:SetHeight(24)
-                tbar:CreateBeautyBorder(10)
+                tbar:CreateBeautyBorder(12)
+				tbar:SetBeautyBorderTexture('white')
+				if C['nMedia'].border == "Default" then
+					tbar:SetBeautyBorderColor(0.38, 0.38, 0.38)		
+				elseif C['nMedia'].border == "Classcolor" then
+					tbar:SetBeautyBorderColor(N.ccolor.r, N.ccolor.g, N.ccolor.b)
+				elseif C['nMedia'].border == "Custom" then
+					tbar:SetBeautyBorderColor(C['nMedia'].color.r, C['nMedia'].color.g, C['nMedia'].color.b)		
+				end					
                 tbar:SetBeautyBorderPadding(tbar:GetHeight() + 3, 2, 2, 2, tbar:GetHeight() + 3, 2, 2, 2)
                 tbar:SetBackdrop({bgFile = 'Interface\\Buttons\\WHITE8x8'})
                 tbar:SetBackdropColor(0, 0, 0, 0.5)
@@ -87,8 +103,16 @@ f:SetScript('OnEvent', function(self)
 
     if (IsAddOnLoaded('TinyDPS')) then
         if (not tdpsFrame.beautyBorder) then
-            tdpsFrame:CreateBeautyBorder(11)
+            tdpsFrame:CreateBeautyBorder(12)
             tdpsFrame:SetBeautyBorderPadding(2)
+			tdpsFrame:SetBeautyBorderTexture('white')
+			if C['nMedia'].border == "Default" then
+				tdpsFrame:SetBeautyBorderColor(0.38, 0.38, 0.38)		
+			elseif C['nMedia'].border == "Classcolor" then
+				tdpsFrame:SetBeautyBorderColor(N.ccolor.r, N.ccolor.g, N.ccolor.b)
+			elseif C['nMedia'].border == "Custom" then
+				tdpsFrame:SetBeautyBorderColor(C['nMedia'].color.r, C['nMedia'].color.g, C['nMedia'].color.b)		
+			end				
             tdpsFrame:SetBackdrop({
                 bgFile = 'Interface\\Buttons\\WHITE8x8',
                 insets = { left = 0, right = 0, top = 0, bottom = 0 },
@@ -100,6 +124,14 @@ f:SetScript('OnEvent', function(self)
     if (IsAddOnLoaded('Recount')) then
         if (not Recount.MainWindow.beautyBorder) then
             Recount.MainWindow:CreateBeautyBorder(12)
+			Recount.MainWindow:SetBeautyBorderTexture('white')
+			if C['nMedia'].border == "Default" then
+				Recount.MainWindow:SetBeautyBorderColor(0.38, 0.38, 0.38)		
+			elseif C['nMedia'].border == "Classcolor" then
+				Recount.MainWindow:SetBeautyBorderColor(N.ccolor.r, N.ccolor.g, N.ccolor.b)
+			elseif C['nMedia'].border == "Custom" then
+				Recount.MainWindow:SetBeautyBorderColor(C['nMedia'].color.r, C['nMedia'].color.g, C['nMedia'].color.b)		
+			end				
             Recount.MainWindow:SetBeautyBorderPadding(2, -10, 2, -10, 2, 2, 2, 2)
             Recount.MainWindow:SetBackdrop({
                 bgFile = 'Interface\\Buttons\\WHITE8x8',

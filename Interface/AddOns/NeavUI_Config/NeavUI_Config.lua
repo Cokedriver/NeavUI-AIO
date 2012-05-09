@@ -79,23 +79,23 @@ function NeavUIConfig:SetupOptions()
 	
 		-- The ordering here matters, it determines the order in the Blizzard Interface Options
 	local ACD3 = LibStub("AceConfigDialog-3.0")
-	self.optionsFrames = {}
-	self.optionsFrames.NeavUIConfig = ACD3:AddToBlizOptions("NeavUIConfig", "|cffCC3333N|r|cffE53300e|r|cffFF4D00a|r|cffFF6633v|r|cffffd200UI|r", nil, "nGeneral")
-	self.optionsFrames.nMedia = ACD3:AddToBlizOptions("NeavUIConfig", L["|cffCC3333n|r|cffffd200Media|r"], "|cffCC3333N|r|cffE53300e|r|cffFF4D00a|r|cffFF6633v|rUI", "nMedia")
-	self.optionsFrames.nCore = ACD3:AddToBlizOptions("NeavUIConfig", L["|cffCC3333n|r|cffffd200Core|r"], "|cffCC3333N|r|cffE53300e|r|cffFF4D00a|r|cffFF6633v|rUI", "nCore")
-	self.optionsFrames.nBuff = ACD3:AddToBlizOptions("NeavUIConfig", L["|cffCC3333n|r|cffffd200Buff|r"], "|cffCC3333N|r|cffE53300e|r|cffFF4D00a|r|cffFF6633v|rUI", "nBuff")
-	self.optionsFrames.nChat = ACD3:AddToBlizOptions("NeavUIConfig", L["|cffCC3333n|r|cffffd200Chat|r"], "|cffCC3333N|r|cffE53300e|r|cffFF4D00a|r|cffFF6633v|rUI", "nChat")
-	self.optionsFrames.nData = ACD3:AddToBlizOptions("NeavUIConfig", L["|cffCC3333n|r|cffffd200Data|r"], "|cffCC3333N|r|cffE53300e|r|cffFF4D00a|r|cffFF6633v|rUI", "nData")
-	self.optionsFrames.nMainbar = ACD3:AddToBlizOptions("NeavUIConfig", L["|cffCC3333n|r|cffffd200Mainbar|r"], "|cffCC3333N|r|cffE53300e|r|cffFF4D00a|r|cffFF6633v|rUI", "nMainbar")
-	self.optionsFrames.nMinimap = ACD3:AddToBlizOptions("NeavUIConfig", L["|cffCC3333n|r|cffffd200Minimap|r"], "|cffCC3333N|r|cffE53300e|r|cffFF4D00a|r|cffFF6633v|rUI", "nMinimap")
-	self.optionsFrames.nPlates = ACD3:AddToBlizOptions("NeavUIConfig", L["|cffCC3333n|r|cffffd200Plates|r"], "|cffCC3333N|r|cffE53300e|r|cffFF4D00a|r|cffFF6633v|rUI", "nPlates")
-	self.optionsFrames.nPower = ACD3:AddToBlizOptions("NeavUIConfig", L["|cffCC3333n|r|cffffd200Power|r"], "|cffCC3333N|r|cffE53300e|r|cffFF4D00a|r|cffFF6633v|rUI", "nPower")
-	self.optionsFrames.nTooltip = ACD3:AddToBlizOptions("NeavUIConfig", L["|cffCC3333n|r|cffffd200Tooltip|r"], "|cffCC3333N|r|cffE53300e|r|cffFF4D00a|r|cffFF6633v|rUI", "nTooltip")
-	self.optionsFrames.nUnitframes = ACD3:AddToBlizOptions("NeavUIConfig", L["|cffffd200oUF|r_|cffCC3333N|r|cffE53300e|r|cffFF4D00a|r|cffFF6633v|r"], "|cffCC3333N|r|cffE53300e|r|cffFF4D00a|r|cffFF6633v|rUI", "nUnitframes")
-	self.optionsFrames.nRaidframes = ACD3:AddToBlizOptions("NeavUIConfig", L["|cffffd200oUF|r_|cffCC3333N|r|cffE53300e|r|cffFF4D00a|r|cffFF6633v|r|cffffd200Raid|r"], "|cffCC3333N|r|cffE53300e|r|cffFF4D00a|r|cffFF6633v|rUI", "nRaidframes")
+	self.optionsFrame = {}
+	self.optionsFrame.NeavUIConfig = ACD3:AddToBlizOptions("NeavUIConfig", "|cffCC3333N|r|cffE53300e|r|cffFF4D00a|r|cffFF6633v|r|cffffd200UI|r", nil, "nGeneral")
+	self.optionsFrame.nMedia = ACD3:AddToBlizOptions("NeavUIConfig", L["|cffCC3333n|r|cffffd200Media|r"], "|cffCC3333N|r|cffE53300e|r|cffFF4D00a|r|cffFF6633v|rUI", "nMedia")
+	self.optionsFrame.nCore = ACD3:AddToBlizOptions("NeavUIConfig", L["|cffCC3333n|r|cffffd200Core|r"], "|cffCC3333N|r|cffE53300e|r|cffFF4D00a|r|cffFF6633v|rUI", "nCore")
+	self.optionsFrame.nBuff = ACD3:AddToBlizOptions("NeavUIConfig", L["|cffCC3333n|r|cffffd200Buff|r"], "|cffCC3333N|r|cffE53300e|r|cffFF4D00a|r|cffFF6633v|rUI", "nBuff")
+	self.optionsFrame.nChat = ACD3:AddToBlizOptions("NeavUIConfig", L["|cffCC3333n|r|cffffd200Chat|r"], "|cffCC3333N|r|cffE53300e|r|cffFF4D00a|r|cffFF6633v|rUI", "nChat")
+	self.optionsFrame.nData = ACD3:AddToBlizOptions("NeavUIConfig", L["|cffCC3333n|r|cffffd200Data|r"], "|cffCC3333N|r|cffE53300e|r|cffFF4D00a|r|cffFF6633v|rUI", "nData")
+	self.optionsFrame.nMainbar = ACD3:AddToBlizOptions("NeavUIConfig", L["|cffCC3333n|r|cffffd200Mainbar|r"], "|cffCC3333N|r|cffE53300e|r|cffFF4D00a|r|cffFF6633v|rUI", "nMainbar")
+	self.optionsFrame.nMinimap = ACD3:AddToBlizOptions("NeavUIConfig", L["|cffCC3333n|r|cffffd200Minimap|r"], "|cffCC3333N|r|cffE53300e|r|cffFF4D00a|r|cffFF6633v|rUI", "nMinimap")
+	self.optionsFrame.nPlates = ACD3:AddToBlizOptions("NeavUIConfig", L["|cffCC3333n|r|cffffd200Plates|r"], "|cffCC3333N|r|cffE53300e|r|cffFF4D00a|r|cffFF6633v|rUI", "nPlates")
+	self.optionsFrame.nPower = ACD3:AddToBlizOptions("NeavUIConfig", L["|cffCC3333n|r|cffffd200Power|r"], "|cffCC3333N|r|cffE53300e|r|cffFF4D00a|r|cffFF6633v|rUI", "nPower")
+	self.optionsFrame.nTooltip = ACD3:AddToBlizOptions("NeavUIConfig", L["|cffCC3333n|r|cffffd200Tooltip|r"], "|cffCC3333N|r|cffE53300e|r|cffFF4D00a|r|cffFF6633v|rUI", "nTooltip")
+	self.optionsFrame.nUnitframes = ACD3:AddToBlizOptions("NeavUIConfig", L["|cffffd200oUF|r_|cffCC3333N|r|cffE53300e|r|cffFF4D00a|r|cffFF6633v|r"], "|cffCC3333N|r|cffE53300e|r|cffFF4D00a|r|cffFF6633v|rUI", "nUnitframes")
+	self.optionsFrame.nRaidframes = ACD3:AddToBlizOptions("NeavUIConfig", L["|cffffd200oUF|r_|cffCC3333N|r|cffE53300e|r|cffFF4D00a|r|cffFF6633v|r|cffffd200 Raid|r"], "|cffCC3333N|r|cffE53300e|r|cffFF4D00a|r|cffFF6633v|rUI", "nRaidframes")
 	--self.optionsFrames.SpellFilter = ACD3:AddToBlizOptions("NeavUIConfig", L["|cffCC3333n|rFilters"], "|cffCC3333N|r|cffE53300e|r|cffFF4D00a|r|cffFF6633v|rUI", "spellfilter")
 	--self.optionsFrames.Others = ACD3:AddToBlizOptions("NeavUIConfig", L["|cffCC3333n|rMisc"], "|cffCC3333N|r|cffE53300e|r|cffFF4D00a|r|cffFF6633v|rUI", "others")
-	self.optionsFrames.Profiles = ACD3:AddToBlizOptions("NeavUIProfiles", L["|cffCC3333n|r|cffffd200Profiles|r"], "|cffCC3333N|r|cffE53300e|r|cffFF4D00a|r|cffFF6633v|rUI")
+	self.optionsFrame.Profiles = ACD3:AddToBlizOptions("NeavUIProfiles", L["|cffCC3333n|r|cffffd200Profiles|r"], "|cffCC3333N|r|cffE53300e|r|cffFF4D00a|r|cffFF6633v|rUI")	
 	self.SetupOptions = nil
 end
 
@@ -122,7 +122,7 @@ function NeavUIConfig.GenerateOptionsInternal()
 	NeavUIConfig.Options = {
 		type = "group",
 		name = "|cffCC3333N|r|cffE53300e|r|cffFF4D00a|r|cffFF6633v|rUI",
-		childGroups = "tab",
+		childGroups = "tree",
 		args = {
 			nGeneral = {
 				order = 0,
@@ -181,7 +181,7 @@ function NeavUIConfig.GenerateOptionsInternal()
 				set = function(info, value) db.nMedia[ info[#info] ] = value; StaticPopup_Show("CFG_RELOAD") end,				
 				args = {
 					font = {						
-						name = L["|cffCC3333n|rFont"],
+						name = L["Font Style"],
 						--desc = L["The font that the core of the UI will use"],
 						order = 1,
 						type = 'select',
@@ -189,7 +189,7 @@ function NeavUIConfig.GenerateOptionsInternal()
 						values = AceGUIWidgetLSMlists.font,	
 					},
 					fontSize = {						
-						name = L["|cffCC3333n|rFont Size"],
+						name = L["Font Size"],
 						--desc = L["Controls the Size of the Game Font"],
 						order = 2,
 						type = "range",
@@ -200,17 +200,17 @@ function NeavUIConfig.GenerateOptionsInternal()
 						type = "description",
 						name = " ",						
 					},					
-					classcolor = {
-						order = 3,
-						type = "toggle",
-						name = L["Class Color"],
-						desc = L["Use your classcolor for border and some text color."],						
+					border = {						
+						name = L["Beauty Border Color"],
+						--desc = L["The font that the core of the UI will use"],
+						order = 4,
+						type = 'select',					
+						values = N.bordercolor,	
 					},
 					color = {
-						name = L["UI Border Color"],
-						desc = L["Picks the UI Border Color if Class Color is not used."],
-						order = 4,
-						disabled = function() return db.nMedia.classcolor end,
+						name = L["Custom"],
+						desc = L["If Custom Border is selected this is the color it will use."],
+						order = 5,
 						type = "color",						
 						get = function(info)
 							local rc = db.nMedia[ info[#info] ]
@@ -222,6 +222,20 @@ function NeavUIConfig.GenerateOptionsInternal()
 							rc.r, rc.g, rc.b = r, g, b
 							StaticPopup_Show("CFG_RELOAD")
 						end,										
+					},
+					sep2 = {
+						order = 6,
+						type = "description",
+						name = " ",						
+					},
+					warnsound = {
+						order = 7,
+						name = L["Warning Sound"],
+						desc = L["Pick the MP3 you want for your Warning Sound."],
+						disabled = function() return not db.nCore.selfbuffs.enable end,
+						type = "select",
+						dialogControl = 'LSM30_Sound', --Select your widget here
+						values = AceGUIWidgetLSMlists.sound,
 					},					
 				},
 			},			
@@ -233,11 +247,6 @@ function NeavUIConfig.GenerateOptionsInternal()
 				get = function(info) return db.nCore[ info[#info] ] end,
 				set = function(info, value) db.nCore[ info[#info] ] = value; StaticPopup_Show("CFG_RELOAD") end,				
 				args = {
-					intro = {
-						order = 1,
-						type = "description",
-						name = L["Options for |cffCC3333n|rCore."],
-					},
 					altbuy = {
 						order = 2,
 						name = L["Alt Buy"],
@@ -246,7 +255,7 @@ function NeavUIConfig.GenerateOptionsInternal()
 					},
 					autogreed = {
 						order = 2,
-						name = L["Cooldown"],
+						name = L["Autogreed"],
 						--desc = L["Enables Automatically rolling greed on green items when in a instance."],
 						type = "toggle",						
 					},
@@ -256,6 +265,86 @@ function NeavUIConfig.GenerateOptionsInternal()
 						--desc = L["Enables NeavUi Borde for Chat Bubbles"],
 						type = "toggle",						
 					},
+					BlackBook = {								
+						name = L["|cffCC3333n|rBlackBook"],
+						desc = L["Enables Send Mail Drop Down Menu. (Barrowed from Postal) "],
+						order = 3,							
+						type = "group",								
+						guiInline = true,
+						get = function(info) return db.nCore.BlackBook[ info[#info] ] end,
+						set = function(info, value) db.nCore.BlackBook[ info[#info] ] = value; StaticPopup_Show("CFG_RELOAD") end,
+						args = {					
+							enable = {
+								name = L["Enable"],
+								desc = L["Enables BlackBook Module"],
+								order = 1,
+								type = "toggle",								
+							},
+							AutoFill = {										
+								name = L["Auto Fill"],
+								desc = L["AutoFill Names"],
+								order = 2,
+								disabled = function() return not db.nCore.BlackBook.enable end,
+								type = "toggle",										
+							},
+							AutoCompleteAlts = {									
+								name = L["Auto Complete Alts"],
+								desc = L["Mailing list of Alts."],
+								order = 3,
+								disabled = function() return not db.nCore.BlackBook.enable end,
+								type = "toggle",																				
+							},
+							AutoCompleteRecent = {										
+								name = L["Auto Complete Recent"],
+								desc = L["Mailing list of Recently Mailed People."],
+								order = 4,
+								disabled = function() return not db.nCore.BlackBook.enable end,
+								type = "toggle",										
+							},
+							AutoCompleteContacts = {										
+								name = L["Auto Complete Contacts"],
+								desc = L["Mailing list of Contacts."],
+								order = 5,
+								disabled = function() return not db.nCore.BlackBook.enable end,
+								type = "toggle",										
+							},
+							AutoCompleteFriends = {
+								order = 6,
+								name = L["Auto Complete Friends"],
+								desc = L["Mailing list of Friends."],
+								type = "toggle",
+								disabled = function() return not db.nCore.BlackBook.enable end,
+							},
+							AutoCompleteGuild = {
+								order = 7,
+								name = L["Auto Complete Guild"],
+								desc = L["Mailing list of Guildies."],
+								type = "toggle",
+								disabled = function() return not db.nCore.BlackBook.enable end,
+							},
+							ExcludeRandoms = {
+								order = 8,
+								name = L["Exclude Randoms"],
+								desc = L["Mailing list of Random People."],
+								type = "toggle",
+								disabled = function() return not db.nCore.BlackBook.enable end,
+							},
+							DisableBlizzardAutoComplete = {
+								order = 9,
+								name = L["Disable Blizzard Auto Complete"],
+								desc = L["Disable blizzards Auto Complete when Typing."],
+								type = "toggle",
+								disabled = function() return not db.nCore.BlackBook.enable end,
+							},
+							UseAutoComplete = {
+								order = 10,
+								name = L["Use Auto Complete"],
+								desc = L["Enable Auto Complete when Typing"],
+								type = "toggle",
+								disabled = function() return not db.nCore.BlackBook.enable end,
+							},
+						},
+					},					
 					coords = {
 						order = 2,
 						name = L["Coords"],
@@ -267,7 +356,7 @@ function NeavUIConfig.GenerateOptionsInternal()
 						name = L["Durability"],
 						--desc = L["Enables Durability on Charactor Frame."],
 						type = "toggle",
-					},	
+					},					
 					mail = {
 						order = 2,
 						name = L["Mail"],
@@ -285,6 +374,7 @@ function NeavUIConfig.GenerateOptionsInternal()
 						args = {			
 							enable = {
 								type = "toggle",
+								width = "full",
 								order = 1,
 								name = L["Enable |cffCC3333n|rMerchant"],
 								desc = L["Enable Merchant Settings"],							
@@ -331,7 +421,8 @@ function NeavUIConfig.GenerateOptionsInternal()
 								order = 1,
 								name = L["Enable |cffCC3333n|rQuest"],
 								desc = L["Enables Quest Module"],
-								type = "toggle",							
+								type = "toggle",
+								width = "full",
 							},					
 							autocomplete = {
 								order = 2,
@@ -361,7 +452,8 @@ function NeavUIConfig.GenerateOptionsInternal()
 								order = 1,
 								name = L["Enable |cffCC3333n|rSelfbuffs"],
 								desc = L["Enables Selfbuff Module"],
-								type = "toggle",							
+								type = "toggle",
+								width = "full",								
 							},					
 							playsound = {
 								order = 2,
@@ -369,15 +461,6 @@ function NeavUIConfig.GenerateOptionsInternal()
 								desc = L["Play's a warning sound when a players class buff is not applied."],
 								type = "toggle",
 								disabled = function() return not db.nCore.selfbuffs.enable end,
-							},
-							sound = {
-								order = 4,
-								name = L["Warning Sound"],
-								desc = L["Pick the MP3 you want for your Warning Sound."],
-								disabled = function() return not db.nCore.selfbuffs.enable end,
-								type = "select",
-								dialogControl = 'LSM30_Sound', --Select your widget here
-								values = AceGUIWidgetLSMlists.sound,
 							},				
 						},
 					},					
@@ -534,7 +617,8 @@ function NeavUIConfig.GenerateOptionsInternal()
 						order = 2,
 						name = L["Enable |cffCC3333n|rChat"],
 						--desc = L["Enables Chat Module."],
-						type = "toggle",							
+						type = "toggle",
+						width = "full",
 					},					
 					disableFade = {
 						order = 3,
@@ -556,13 +640,6 @@ function NeavUIConfig.GenerateOptionsInternal()
 						--desc = L["Outlines the chat Text."],
 						type = "toggle",
 						disabled = function() return not db.nChat.enable end,
-					},
-					chatBorderClassColor = {
-						order = 6,
-						name = L["Class Color Border"],
-						--desc = L["Outlines the chat Text."],
-						type = "toggle",
-						disabled = function() return not db.nChat.chatBorder or not db.nChat.enable end,
 					},
 					enableBottomButton = {
 						order = 7,
@@ -892,8 +969,8 @@ function NeavUIConfig.GenerateOptionsInternal()
 					enable = {
 						type = "toggle",
 						order = 2,
-						
-						name = L["Enable"],
+						width = "full",
+						name = L["Enable |cffCC3333n|rMainbar"],
 						--desc = L["Enable Nameplate Settings"],							
 					},
 					showPicomenu = {
@@ -1530,8 +1607,8 @@ function NeavUIConfig.GenerateOptionsInternal()
 					enable = {
 						type = "toggle",
 						order = 2,
-						
-						name = L["Enable"],
+						width = "full",
+						name = L["Enable |cffCC3333n|rMinimap"],
 						--desc = L["Enable Nameplate Settings"],							
 					},
 					tab = {
@@ -1629,8 +1706,8 @@ function NeavUIConfig.GenerateOptionsInternal()
 					enable = {
 						type = "toggle",
 						order = 2,
-						
-						name = L["Enable"],
+						width = "full",
+						name = L["Enable |cffCC3333n|rPlates"],
 						--desc = L["Enable Nameplate Settings"],							
 					},
 					enableTankMode = {
@@ -1706,8 +1783,8 @@ function NeavUIConfig.GenerateOptionsInternal()
 					},			
 					enable = {
 						order = 2,
-						name = L["Enable"],
-						
+						name = L["Enable |cffCC3333n|rPower"],
+						width = "full",
 						--desc = L["Enables Powerbar Module"],
 						type = "toggle",							
 					},					
@@ -1967,9 +2044,10 @@ function NeavUIConfig.GenerateOptionsInternal()
 					},			
 					enable = {
 						order = 2,
-						name = L["Enable"],
+						name = L["Enable |cffCC3333n|rTooltip"],
 						--desc = L["Enables Tooltip Module"],
-						type = "toggle",							
+						type = "toggle",
+						width = "full",
 					},
 					fontOutline = {
 						order = 3,
@@ -2208,16 +2286,18 @@ function NeavUIConfig.GenerateOptionsInternal()
 				order = 9,
 				type = "group",
 				childGroups = "select",
-				name = L["oUF_|cffCC3333N|r|cffE53300e|r|cffFF4D00a|r|cffFF6633v|r (Please select which Unitframe you wish to change)."],
+				name = L["oUF_|cffCC3333N|r|cffE53300e|r|cffFF4D00a|r|cffFF6633v|r"],
+				width = "full",
 				--desc = L["Options for custom tooltip."],
 				get = function(info) return db.nUnitframes[ info[#info] ] end,
 				set = function(info, value) db.nUnitframes[ info[#info] ] = value; StaticPopup_Show("CFG_RELOAD") end,	
-				args = {		
+				args = {			
 					enable = {
 						order = 2,
-						name = L["Enable"],
+						name = L["Enable oUF_|cffCC3333N|r|cffE53300e|r|cffFF4D00a|r|cffFF6633v|r"],
 						--desc = L["Enables Tooltip Module"],
-						type = "toggle",							
+						type = "toggle",
+						width = "full",
 					},
 					show = {
 						type = "group",
@@ -2300,7 +2380,7 @@ function NeavUIConfig.GenerateOptionsInternal()
 								disabled = function() return not db.nUnitframes.enable end,
 							},
 						},
-					},							
+					},					
 					player = {
 						type = "group",
 						order = 1,
@@ -3410,21 +3490,14 @@ function NeavUIConfig.GenerateOptionsInternal()
 								disabled = function() return not db.nUnitframes.enable end,
 								get = function(info) return db.nUnitframes.units.boss.castbar[ info[#info] ] end,
 								set = function(info, value) db.nUnitframes.units.boss.castbar[ info[#info] ] = value; StaticPopup_Show("CFG_RELOAD") end,						
-								args = {
-									show = {
-										order = 0,
-										name = L["Show Castbar"],
-										--desc = L["Use the Custom Color you have chosen."],
-										type = "toggle",
-										disabled = function() return not db.nUnitframes.enable end,
-									},								
+								args = {							
 									color = {
 										order = 1,
 										type = "color",
 										name = L["Castbar Color"],
 										--desc = L["Picks a Custom Color for the tooltip border."],
 										hasAlpha = false,
-										disabled = function() return not db.nUnitframes.units.boss.castbar.show or not db.nUnitframes.enable end,
+										disabled = function() return not db.nUnitframes.enable end,
 										get = function(info)
 											local bcc = db.nUnitframes.units.boss.castbar[ info[#info] ]
 											return bcc.r, bcc.g, bcc.b
@@ -3633,9 +3706,10 @@ function NeavUIConfig.GenerateOptionsInternal()
 				args = {		
 					enable = {
 						order = 2,
-						name = L["Enable"],
+						name = L["Enable oUF_|cffCC3333N|r|cffE53300e|r|cffFF4D00a|r|cffFF6633v|r Raid"],
 						--desc = L["Enables Tooltip Module"],
-						type = "toggle",							
+						type = "toggle",
+						width = "full",
 					},
 					font = {
 						type = "group",
@@ -3909,661 +3983,4 @@ function NeavUIConfig.GenerateOptionsInternal()
 		},
 	}
 
-end
-
-function NeavUIConfig:SetDefaultOptions()
-	local N, _, _ = unpack(NeavUI)
-	local addon = self.db.profile;
-	addon.nMedia = {
-		font = "Express Freeway",
-		fontSmall = "Small",
-		fontThick = "Thick",	
-		fontVisitor = "Visitor",	
-		fontNumber = "Number",	
-	}	
-	addon.nBuff = {
-		enable = true,
-		buffSize = 36,
-		buffScale = 1,
-		buffBorderColor = {r = 1, g = 1, b = 1}, 
-
-		buffFontSize = 14,
-		buffCountSize = 16,
-
-		borderBuff = 'Interface\\AddOns\\NeavUI\\nMedia\\nTextures\\BuffOverlay',
-		borderDebuff = 'Interface\\AddOns\\NeavUI\\nMedia\\nTextures\\BuffDebuff',
-
-		debuffSize = 36,
-		debuffScale = 1,
-
-		debuffFontSize = 14,
-		debuffCountSize = 16,
-
-		paddingX = 7,
-		paddingY = 7,
-		buffPerRow = 8,
-	}	
-	addon.nChat = {
-		enable = true,
-		disableFade = false,
-		chatOutline = false,
-		chatBorder = true,
-		chatBorderClassColor = true,
-
-		enableBottomButton = false, 
-		enableHyperlinkTooltip = false, 
-		enableBorderColoring = true,
-
-		tab = {
-			fontSize = 15,
-			fontOutline = true, 
-			normalColor = { r = 1, g = 1, b = 1 },
-			specialColor = { r = 1, g = 0, b = 1 },
-			selectedColor = { r = 0, g = 0.75, b = 1 },
-		},		
-	}
-	addon.nCore = {
-		altbuy = true,
-		autogreed = true,
-		bubbles = true,
-		coords = true,
-		durability = true,
-		mail = true,
-		omnicc = true,
-		quicky = true,
-		skins = true,
-		spellid = true,
-		warning = true,
-		watchframe = true,
-	}
-	addon.nMainbar = {	
-		enable = true,
-		
-		showPicomenu = true,
-
-		button = { 
-			showVehicleKeybinds = true,
-			showKeybinds = false,
-			showMacronames = false,
-
-			countFontsize = 19,
-			
-			macronameFontsize = 17,
-			
-			hotkeyFontsize = 18,
-		},
-
-		color = {   -- Red, Green, Blue
-			Normal = { r = 1, g = 1, b = 1 },
-			IsEquipped = { r = 0, g = 1, b = 0 },
-			
-			OutOfRange = { r = 0.9, g = 0, b = 0 },
-			OutOfMana = { r = 0.3, g = 0.3, b = 1 },
-			
-			NotUsable = { r = 0.35, g = 0.35, b = 0.35 },
-			
-			HotKeyText = { r = 0.6, g = 0.6, b = 0.6 },
-			MacroText = { r = 1, g = 1, b = 1 },
-			CountText = { r = 1, g = 1, b = 1 },
-		},
-
-		expBar = {
-			mouseover = true,
-			fontsize = 14,
-		},
-
-		repBar = {
-			mouseover = true,
-			fontsize = 14,
-		},
-
-		MainMenuBar = {
-			scale = 1,
-			hideGryphons = false,
-			
-			shortBar = false,
-			skinButton = true,
-			
-			moveableExtraBars = false,      -- Make the pet, possess, shapeshift and totembar moveable, even when the mainmenubar is not "short"
-		},
-
-		vehicleBar = {
-			scale = 0.8,
-		},
-
-		petBar = {
-			mouseover = false,
-			scale = 1,
-			alpha = 1,
-			vertical = false,
-		},
-
-		possessBar = {
-			scale = 1,
-			alpha = 1,
-		},
-
-		stanceBar = {
-			mouseover = false,
-			hide = false,
-			scale = 1,
-			alpha = 1,
-		},
-
-		multiBarLeft = {
-			mouseover = true,
-			alpha = 1,
-			orderHorizontal = false,
-		},
-
-		multiBarRight = {
-			mouseover = true,
-			alpha = 1,
-			orderHorizontal = false,
-		},
-
-		multiBarBottomLeft = {
-			mouseover = false,
-			alpha = 1,
-		},
-
-		multiBarBottomRight = {
-			mouseover = false,
-			alpha = 1,
-			orderVertical = false,
-			verticalPosition = 'LEFT', -- 'LEFT' or 'RIGHT'
-		},
-
-		totemManager = {
-			scale = 1,
-			alpha = 1,
-			hideRecallButton = false,
-		},	
-	}	
-	addon.nMinimap = {
-		enable = true,
-		tab = {
-			show = true,
-			showAlways = false,
-
-			alphaMouseover = 1,
-			alphaNoMouseover = 0.5,
-
-			showBelowMinimap = false,
-		},
-
-		mouseover = {
-			zoneText = true,
-			instanceDifficulty = false,
-		},
-	}
-	addon.nPlates = {
-		enable = true,
-		enableTankMode = true,              -- Color the nameplate threat border green, if you have no aggro
-		colorNameWithThreat = true,         -- The name has the same color as the threat of the unit (better visibility)
-
-		showFullHP = true,
-		showLevel = true,
-		showTargetBorder = true,
-		showEliteBorder = true,
-		showTotemIcon = true,
-		abbrevLongNames = true,
-	}	
-	addon.nPower = {
-		enable = true,
-		position = {
-			selfAnchor = 'CENTER',
-			frameParent = UIParent,
-			offSetX = 0,
-			offSetY = -100
-		},
-		sizeWidth = 200,
-		
-		showCombatRegen = true, 
-
-		activeAlpha = 1,
-		inactiveAlpha = 0.3,
-		emptyAlpha = 0,
-		
-		valueAbbrev = true,
-			
-		valueFontSize = 20,
-		valueFontOutline = true,
-		valueFontAdjustmentX = 0,
-
-		showSoulshards = true,
-		showHolypower = true,
-		showMana = true,
-		showFocus = true,
-		showRage = true,
-		
-		extraFontSize = 16,                             -- The fontsiz for the holypower and soulshard number
-		extraFontOutline = true,                        
-			
-		
-		energy = {
-			show = true,
-			showComboPoints = true,
-			comboPointsBelow = false,
-			
-			comboFontSize = 16,
-			comboFontOutline = true,
-		},
-		
-		
-		rune = {
-			show = true,
-			showRuneCooldown = false,
-		   
-			runeFontSize = 16,
-			runeFontOutline = true,
-		},
-	}
-	addon.nTooltip = {											
-		enable = true,
-		fontSize = 15,
-		fontOutline = false,
-
-		position = {
-			selfAnchor = 'BOTTOMRIGHT',
-			frameParent = UIParent,
-			relAnchor = 'BOTTOMRIGHT',
-			offSetX = -27.35,
-			offSetY = 27.35,
-		},
-
-		disableFade = false,                        -- Can cause errors or a buggy tooltip!
-		showOnMouseover = false,
-
-		reactionBorderColor = true,
-		itemqualityBorderColor = true,
-
-		abbrevRealmNames = false, 
-		showPlayerTitles = true,
-		showUnitRole = true,
-		showPVPIcons = false,                       -- Show pvp icons instead of just a prefix
-		showMouseoverTarget = true,
-		showItemLevel = true,
-
-		healthbar = {
-			showHealthValue = false,
-
-			healthFormat = '$cur/$max',			-- Possible: $cur, $max, $deficit, $perc, $smartperc, $smartcolorperc, $colorperc
-			healthFullFormat = '$cur',              -- if the tooltip unit has 100% hp 
-
-			fontSize = 13,
-			showOutline = true,
-			textPos = 'CENTER',                     -- Possible 'TOP' 'BOTTOM' 'CENTER'
-
-			reactionColoring = true,               -- Overrides customColor 
-			customColor = {
-				apply = false, 
-				color = {r = 0, g = 1, b = 1},
-			} 
-		},			
-	}
-	addon.nUnitframes = {
-		enable = true,
-		show = {
-			castbars = true,
-			pvpicons = true,
-			classPortraits = false,
-			threeDPortraits = false,                                                            -- 3DPortraits; Overrides classPortraits
-			disableCooldown = false,                                                            -- Disable custom cooldown text to use addons like omnicc
-			portraitTimer = true,
-		},
-
-		font = { 
-			normalSize = 13,
-			normalBigSize = 14,
-		},
-
-		units = {
-			['player'] = {
-				scale = 1.193,
-				style = 'NORMAL',                                                               -- 'NORMAL' 'RARE' 'ELITE' 'CUSTOM'
-
-				mouseoverText = false,
-				healthTag = '$cur/$max',
-				healthTagFull = '$cur',
-				powerTag = '$cur/$max',
-				powerTagFull = '$cur',
-				powerTagNoMana = '$cur',
-
-				showVengeance = false,                                                          -- Attention: vengeance and swingtimer will overlap eachother, 
-				showSwingTimer = false,                                                         -- Change the pos in the NeavUI file if you want both
-				showStatusFlash = true,
-				showCombatFeedback = false,
-
-				position = {
-					selfAnchor ='TOPLEFT',
-					frameParent = UIParent,
-					offSetX = 34, 
-					offSetY = -30,
-				},
-
-				castbar = {
-					show = true, 
-
-					width = 220,
-					height = 19,
-					scale = 0.93,
-
-					showLatency = true, 
-					showSafezone = true,
-					safezoneColor = { r = 1, g = 0, b = 1 },
-
-					classcolor = true,
-					color = { r = 1, g = 0.7, b = 0 },
-
-					icon = {
-						show = false,
-						position = 'LEFT',                                                      -- 'LEFT' 'RIGHT'
-						positionOutside = true,
-					},
-
-					position = {
-						selfAnchor = 'BOTTOM',
-						frameParent = UIParent,
-						relAnchor = 'BOTTOM',
-						offSetX = 0,
-						offSetY = 200,
-					},				
-				},
-			},
-
-			['pet'] = {
-				scale = 1.193,
-
-				auraSize = 22,
-
-				mouseoverText = true,
-				healthTag = '$cur/$max',
-				healthTagFull = '$cur',
-				powerTag = '$cur/$max',
-				powerTagFull = '$cur',
-				powerTagNoMana = '$cur',
-
-				showPowerPercent = false,
-
-				position = {
-					offSetX = 43,
-					offSetY = -20
-				},
-
-				castbar = {
-					show = true, 
-
-					width = 220,
-					height = 19,
-					scale = 0.93,
-
-					color = { r = 0, g = 0.65, b = 1},
-
-					icon = {
-						show = false,
-						position = 'LEFT',                                                      -- 'LEFT' 'RIGHT'
-						positionOutside = true,
-					},
-
-					position = {
-						selfAnchor = 'TOP',
-						frameParent = oUF_Neav_Player,
-						relAnchor = 'BOTTOM',
-						offSetX = 0,
-						offSetY = -50,
-					},				
-
-					ignoreSpells = true,                                                        -- Hides castbar for spells listed in 'ignoreList'
-					ignoreList = {
-						3110,   -- firebolt (imp)
-						31707,  -- waterbolt (water elemental)
-					},
-				},
-			},
-
-			['target'] = {
-				scale = 1.193,
-
-				numBuffs = 20,
-				numDebuffs = 20,
-				colorPlayerDebuffsOnly = true,
-				showAllTimers = false,                                                          -- If false, only the player debuffs have timer
-				disableAura = false,                                                            -- Disable Auras on this unitframe
-
-				showComboPoints = true,
-				showComboPointsAsNumber = false,
-				numComboPointsColor = { r = 0.9, g = 0, b = 0 },                                              -- Textcolor of the combopoints if showComboPointsAsNumber = true
-
-				mouseoverText = false,
-				healthTag = '$cur/$max',
-				healthTagFull = '$cur',
-				powerTag = '$cur/$max',
-				powerTagFull = '$cur',
-				powerTagNoMana = '$cur',
-
-				showCombatFeedback = false,
-
-				position = {
-					selfAnchor = 'TOPLEFT',
-					frameParent = UIParent,
-					offSetX = 300,
-					offSetY = -30,
-				},			
-
-				castbar = {
-					show = true, 
-
-					width = 220,
-					height = 19,
-					scale = 0.93,
-
-					color = { r = 0.9, g = 0.1, b = 0.1},
-					interruptColor = { r = 1, g = 0, b = 1},
-
-					icon = {
-						show = false,
-						position = 'LEFT',                                                      -- 'LEFT' 'RIGHT'
-						positionOutside = false,
-					},
-
-					position = {
-						selfAnchor = 'BOTTOM',
-						frameParent = UIParent,
-						relAnchor = 'BOTTOM',
-						offSetX = 0,
-						offSetY = 380,
-					},				
-				},
-			},
-
-			['targettarget'] = {
-				scale = 1.193,
-				disableAura = false,                                                             -- Disable Auras on this unitframe
-
-				mouseoverText = false,
-				healthTag = '$perc',
-				healthTagFull = '',
-		   },
-
-			['focus'] = {
-				scale = 1.193,
-
-				numDebuffs = 6,
-				
-				mouseoverText = false,
-				healthTag = '$cur/$max',
-				healthTagFull = '$cur',
-				powerTag = '$cur/$max',
-				powerTagFull = '$cur',
-				powerTagNoMana = '$cur',
-
-				showPowerPercent = false,
-
-				showCombatFeedback = false,
-
-				enableFocusToggleKeybind = true,
-				focusToggleKey = 'type4',                                                       -- type1, type2 (mousebutton 1 or 2, 3, 4, 5 etc. works too)
-
-				castbar = {
-					show = true, 
-
-					width = 176,
-					height = 19,
-					scale = 0.93,
-
-					color = { r = 0, g = 0.65, b = 1},
-					interruptColor = { r = 1, g = 0, b = 1 },
-
-					icon = {
-						show = false,
-						position = 'LEFT',   -- 'LEFT' or 'RIGHT'
-						positionOutside = true,
-					},
-				},
-			},
-
-			['focustarget'] = {
-				scale = 1.193,
-
-				mouseoverText = false,
-				healthTag = '$perc',
-				healthTagFull = '',
-			},
-
-			['party'] = {
-				scale = 1.11,
-				show = false,
-				hideInRaid = true,
-
-				mouseoverText = true,
-				healthTag = '$cur/$max',
-				healthTagFull = '$cur',
-				powerTag = '$cur/$max',
-				powerTagFull = '$cur',
-				powerTagNoMana = '$cur',
-
-				position = {
-					selfAnchor = 'TOPLEFT',
-					frameParent = UIParent,
-					offSetX = 25,
-					offSetY = -200,
-				},			
-			},
-
-			['boss'] = {
-				scale = 1,
-
-				mouseoverText = true,
-				healthTag = '$cur/$max',
-				healthTagFull = '$cur',
-				powerTag = '$cur/$max',
-				powerTagFull = '$cur',
-				powerTagNoMana = '$cur',
-
-				position = {
-					selfAnchor = 'TOPRIGHT',
-					frameParent = UIParent,
-					relAnchor = 'TOPRIGHT',
-					offSetX = -50,
-					offSetY = -250,
-				},			
-
-				castbar = {
-					color = { r = 1, g = 0, b = 0 },
-
-					icon = {
-						size = 22,
-						show = false,                       
-						position = 'LEFT'   -- 'LEFT' or 'RIGHT' 
-					},
-				},
-			},
-
-			['arena'] = {
-				show = true,
-				scale = 1,
-
-				auraSize = 22,
-
-				mouseoverText = true,
-				healthTag = '$cur/$max',
-				healthTagFull = '$cur',
-				powerTag = '$cur/$max',
-				powerTagFull = '$cur',
-				powerTagNoMana = '$cur',
-
-				position = {
-					selfAnchor = 'TOPRIGHT',
-					frameParent = UIParent,
-					relAnchor = 'TOPRIGHT',
-					offSetX = -80,
-					offSetY = -300,
-				},			
-
-				castbar = {
-					icon = {
-						size = 22,
-					},
-
-					color = { r = 1, g = 0, b = 0 },
-				},
-			},
-		},
-	}
-	addon.nRaidframes = {
-		enable = false,
-		media = {
-			statusbar = 'Interface\\AddOns\\NeavUI\\nMedia\\nTextures\\statusbarTexture',                 -- Health- and Powerbar texture
-		},
-
-		font = {
-			fontSmallSize = 11,
-			fontBigSize = 12,
-		},
-
-		units = {
-			['raid'] = {
-				showSolo = true,
-				showParty = false,
-
-				nameLength = 4,
-
-				width = 42,
-				height = 40,
-				scale = 1.1, 
-
-				layout = {
-					frameSpacing = 7,
-					numGroups = 8,
-
-					initialAnchor = 'TOPLEFT',                                                  -- 'TOPLEFT' 'BOTTOMLEFT' 'TOPRIGHT' 'BOTTOMRIGHT'
-					orientation = 'HORIZONTAL',                                                 -- 'VERTICAL' 'HORIZONTAL'
-				},
-
-				smoothUpdates = true,                                                           -- Enable smooth updates for all bars
-				showThreatText = false,                                                         -- Show a red 'AGGRO' text on the raidframes in addition to the glow
-				showRolePrefix = false,                                                         -- A simple role abbrev..tanks = '>'..healer = '+'..dds = '-'
-				showNotHereTimer = true,                                                        -- A afk and offline timer
-				showMainTankIcon = true,                                                        -- A little shield on the top of a raidframe if the unit is marked as maintank
-				showResurrectText = true,                                                       -- Not working atm. just a placeholder
-				showMouseoverHighlight = true,
-
-				showTargetBorder = true,                                                        -- Ahows a little border on the raid/party frame if this unit is your target
-				targetBorderColor = { r = 1, g = 1, b = 1 },
-
-				iconSize = 22,                                                                  -- The size of the debufficon
-				indicatorSize = 7,
-
-				horizontalHealthBars = false,
-				deficitThreshold = 0.95,
-
-				manabar = {
-					show = true,
-					horizontalOrientation = false,
-				},
-			},
-		},
-	}
-	
 end

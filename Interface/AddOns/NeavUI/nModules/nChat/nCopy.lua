@@ -16,11 +16,15 @@ f:SetPoint('BOTTOMRIGHT', ChatFrame1EditBox, 'TOPRIGHT', -3, 10)
 f:SetFrameStrata('DIALOG')
 f:CreateBeautyBorder(12)
 f:SetBeautyBorderTexture('white')
-if C['nMedia'].classcolor ~= true then
-	f:SetBeautyBorderColor(C['nMedia'].color.r, C['nMedia'].color.g, C['nMedia'].color.b)
-else
+
+if C['nMedia'].border == "Default" then
+	f:SetBeautyBorderColor(0.38, 0.38, 0.38)		
+elseif C['nMedia'].border == "Classcolor" then
 	f:SetBeautyBorderColor(N.ccolor.r, N.ccolor.g, N.ccolor.b)
-end	
+elseif C['nMedia'].border == "Custom" then
+	f:SetBeautyBorderColor(C['nMedia'].color.r, C['nMedia'].color.g, C['nMedia'].color.b)		
+end
+	
 f:SetBackdrop({
     bgFile = 'Interface\\DialogFrame\\UI-DialogBox-Background',
     edgeFile = '',

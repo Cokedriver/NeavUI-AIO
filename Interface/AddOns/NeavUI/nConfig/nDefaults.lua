@@ -2,11 +2,16 @@ local N, C, DB = unpack(select(2, ...)) -- Import:  N - function; C - config; DB
 
 -- Below are the Default Settings for NeavUI
 
+
+-----------------
+-- nMedia Options
+-----------------	
 DB["nMedia"] = {
-	classcolor = true,
+	border = "Default",
 	color = { r = 1, g = 1, b = 1, 1},
 	font = "Express Freeway",
 	fontSize = 14,	
+	warnsound = "Warning",
 }
 
 ---------------
@@ -43,8 +48,8 @@ DB['nChat'] = {
     chatOutline = false,
 	chatBorder = true,
 
-    enableBottomButton = false, 
-    enableHyperlinkTooltip = false, 
+    enableBottomButton = true, 
+    enableHyperlinkTooltip = true, 
     enableBorderColoring = true,
 
     tab = {
@@ -63,8 +68,23 @@ DB['nCore'] = {
 	altbuy = true,
 	autogreed = true,
 	bubbles = true,
+	BlackBook = {
+		enable = true,
+		AutoFill = true,
+		contacts = {},
+		recent = {},
+		AutoCompleteAlts = true,
+		AutoCompleteRecent = true,
+		AutoCompleteContacts = true,
+		AutoCompleteFriends = true,
+		AutoCompleteGuild = true,
+		ExcludeRandoms = true,
+		DisableBlizzardAutoComplete = false,
+		UseAutoComplete = true,
+	},		
 	coords = true,
 	durability = true,
+	-- FacePaint is still a W.I.P.
 	facepaint = {
 		enable = true,
 		custom = {
@@ -74,7 +94,7 @@ DB['nCore'] = {
 			topalpha = 1,									-- top gradient alpha (global if gradient = false)
 			bottomalpha = 1,								-- bottom gradient alpha (not used if gradient = false)
 		},
-	},	
+	},
 	font = true,
 	mail = true,
 	merchant = {
@@ -91,8 +111,7 @@ DB['nCore'] = {
 	quicky = true,
 	selfbuffs = {
 		enable = true,
-		playsound = true,
-		sound = "Warning",		
+		playsound = true,	
 	},
 	skins = true,
 	spellid = true,
@@ -167,7 +186,6 @@ DB['nMainbar'] = {
     },
 
     color = {   -- Red, Green, Blue
-        Normal = { r = 1, g = 1, b = 1 },
         IsEquipped = { r = 0, g = 1, b = 0 },
         
         OutOfRange = { r = 0.9, g = 0, b = 0 },
@@ -689,7 +707,7 @@ DB['nUnitframes'] = {
         },
 
         ['boss'] = {
-            scale = 1,
+            scale = 1.1,
 
             mouseoverText = true,
 
@@ -702,11 +720,11 @@ DB['nUnitframes'] = {
             powerTagNoMana = '$cur',
 
 			position = {
-				selfAnchor = 'TOPRIGHT',
+				selfAnchor = 'RIGHT',
 				frameParent = UIParent,
-				relAnchor = 'TOPRIGHT',
-				offSetX = -50,
-				offSetY = -250,
+				relAnchor = 'RIGHT',
+				offSetX = -125,
+				offSetY = 125,
 			},			
 
             castbar = {
@@ -738,11 +756,11 @@ DB['nUnitframes'] = {
             powerTagNoMana = '$cur',
 
 			position = {
-				selfAnchor = 'TOPRIGHT',
+				selfAnchor = 'RIGHT',
 				frameParent = UIParent,
-				relAnchor = 'TOPRIGHT',
-				offSetX = -80,
-				offSetY = -300,
+				relAnchor = 'RIGHT',
+				offSetX = -125,
+				offSetY = 125,
 			},			
 
             castbar = {

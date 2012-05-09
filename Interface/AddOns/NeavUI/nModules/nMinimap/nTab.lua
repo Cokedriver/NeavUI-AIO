@@ -105,12 +105,14 @@ f:SetFrameStrata('BACKGROUND')
 f:SetFrameLevel(Minimap:GetFrameLevel() - 1)
 f:SetHeight(30)
 f:SetAlpha(C['nMinimap'].tab.alphaNoMouseover)
-f:CreateBeautyBorder(11)
+f:CreateBeautyBorder(12)
 f:SetBeautyBorderTexture('white')
-if C['nMedia'].classcolor ~= true then
-	f:SetBeautyBorderColor(C['nMedia'].color.r, C['nMedia'].color.g, C['nMedia'].color.b)
-else
+if C['nMedia'].border == "Default" then
+	f:SetBeautyBorderColor(0.38, 0.38, 0.38)		
+elseif C['nMedia'].border == "Classcolor" then
 	f:SetBeautyBorderColor(N.ccolor.r, N.ccolor.g, N.ccolor.b)
+elseif C['nMedia'].border == "Custom" then
+	f:SetBeautyBorderColor(C['nMedia'].color.r, C['nMedia'].color.g, C['nMedia'].color.b)		
 end	
 f:SetBackdrop({bgFile = 'Interface\\Buttons\\WHITE8x8'})
 f:SetBackdropColor(0, 0, 0, 0.6)

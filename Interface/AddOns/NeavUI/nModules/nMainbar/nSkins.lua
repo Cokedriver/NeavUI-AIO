@@ -54,10 +54,12 @@ hooksecurefunc('PetActionBar_Update', function()
                     normal:ClearAllPoints()
                     normal:SetPoint('TOPRIGHT', button, 1.5, 1.5)
                     normal:SetPoint('BOTTOMLEFT', button, -1.5, -1.5)
-					if C['nMedia'].classcolor ~= true then
-						normal:SetVertexColor(C['nMedia'].color.r, C['nMedia'].color.g, C['nMedia'].color.b)
-					else
+					if C['nMedia'].border == "Default" then
+						normal:SetVertexColor(0.38, 0.38, 0.38, 1)		
+					elseif C['nMedia'].border == "Classcolor" then
 						normal:SetVertexColor(N.ccolor.r, N.ccolor.g, N.ccolor.b)
+					elseif C['nMedia'].border == "Custom" then
+						normal:SetVertexColor(C['nMedia'].color.r, C['nMedia'].color.g, C['nMedia'].color.b, 1)		
 					end					
 
                     local icon = _G[name..i..'Icon']
@@ -84,7 +86,7 @@ hooksecurefunc('PetActionBar_Update', function()
                         buttonBg:ClearAllPoints()
                         buttonBg:SetPoint('TOPRIGHT', button, 5, 5)
                         buttonBg:SetPoint('BOTTOMLEFT', button, -5, -5)
-                        buttonBg:SetTexture(path..'MainbarShadow')
+                        buttonBg:SetTexture(path..'MainbarShadow')						
                         buttonBg:SetVertexColor(0, 0, 0, 1)
                         button.Shadow = true
                     else
@@ -92,7 +94,7 @@ hooksecurefunc('PetActionBar_Update', function()
                         button.Shadow:SetParent(button)  
                         button.Shadow:SetPoint('TOPRIGHT', normal, 4, 4)
                         button.Shadow:SetPoint('BOTTOMLEFT', normal, -4, -4)
-                        button.Shadow:SetTexture(path..'MainbarShadow')
+                        button.Shadow:SetTexture(path..'MainbarShadow')							
                         button.Shadow:SetVertexColor(0, 0, 0, 1)
                     end
                 end
@@ -145,7 +147,13 @@ hooksecurefunc('ActionButton_Update', function(self)
                 normal:ClearAllPoints()
                 normal:SetPoint('TOPRIGHT', button, 1, 1)
                 normal:SetPoint('BOTTOMLEFT', button, -1, -1)
-                normal:SetVertexColor(C['nMainbar'].color.Normal.r, C['nMainbar'].color.Normal.g, C['nMainbar'].color.Normal.b, 1)
+				if C['nMedia'].border == "Default" then
+					normal:SetVertexColor(0.38, 0.38, 0.38, 1)		
+				elseif C['nMedia'].border == "Classcolor" then
+					normal:SetVertexColor(N.ccolor.r, N.ccolor.g, N.ccolor.b)
+				elseif C['nMedia'].border == "Custom" then
+					normal:SetVertexColor(C['nMedia'].color.r, C['nMedia'].color.g, C['nMedia'].color.b, 1)		
+				end	
                 -- normal:SetDrawLayer('ARTWORK')
             end
 
@@ -161,7 +169,7 @@ hooksecurefunc('ActionButton_Update', function(self)
             button:GetHighlightTexture():SetAllPoints(normal)
 
             local icon = _G[self:GetName()..'Icon']
-            icon:SetTexCoord(0.05, 0.95, 0.05, 0.95)
+			icon:SetTexCoord(0.05, 0.95, 0.05, 1)
             -- icon:SetPoint('TOPRIGHT', button, -1, -1)
             -- icon:SetPoint('BOTTOMLEFT', button, 1, 1)
             -- icon:SetDrawLayer('BORDER')
@@ -230,12 +238,13 @@ end)
 hooksecurefunc('ActionButton_ShowGrid', function(self)
     local normal = _G[self:GetName()..'NormalTexture']
     if (normal) then
-		if C['nMedia'].classcolor ~= true then
-			normal:SetVertexColor(C['nMedia'].color.r, C['nMedia'].color.g, C['nMedia'].color.b)
-		else
-			normal:SetVertexColor(N.ccolor.r, N.ccolor.g, N.ccolor.b)
-		end			
-		
+		if C['nMedia'].border == "Default" then
+			normal:SetVertexColor(0.38, 0.38, 0.38, 1)		
+		elseif C['nMedia'].border == "Classcolor" then
+			normal:SetVertexColor(N.ccolor.r, N.ccolor.g, N.ccolor.b, 1)
+		elseif C['nMedia'].border == "Custom" then
+			normal:SetVertexColor(C['nMedia'].color.r, C['nMedia'].color.g, C['nMedia'].color.b, 1)		
+		end
     end
 end)
 
@@ -246,11 +255,13 @@ hooksecurefunc('ActionButton_UpdateUsable', function(self)
 
     local normal = _G[self:GetName()..'NormalTexture']
     if (normal) then
-		if C['nMedia'].classcolor ~= true then
-			normal:SetVertexColor(C['nMedia'].color.r, C['nMedia'].color.g, C['nMedia'].color.b)
-		else
+		if C['nMedia'].border == "Default" then
+			normal:SetVertexColor(0.38, 0.38, 0.38)		
+		elseif C['nMedia'].border == "Classcolor" then
 			normal:SetVertexColor(N.ccolor.r, N.ccolor.g, N.ccolor.b)
-		end	
+		elseif C['nMedia'].border == "Custom" then
+			normal:SetVertexColor(C['nMedia'].color.r, C['nMedia'].color.g, C['nMedia'].color.b)		
+		end
     end
 
     local isUsable, notEnoughMana = IsUsableAction(self.action)

@@ -4,5 +4,4 @@ local LSM = LibStub("LibSharedMedia-3.0")
 -- Load All SharedMedia
 
 C['nMedia'].font = LSM:Fetch("font", C['nMedia'].font)
-
-C['nCore'].selfbuffs.sound = LSM:Fetch("sound", C['nCore'].selfbuffs.sound)
+C['nMedia'].warnsound = LSM:Fetch("sound", C['nMedia'].warnsound)

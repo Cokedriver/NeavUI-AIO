@@ -1011,8 +1011,16 @@ local function CreateUnitLayout(self, unit)
             self.Swing.textureBG = 'Interface\\AddOns\\NeavUI\\nMedia\\nTextures\\statusbarTexture'
             self.Swing.colorBG = {0, 0, 0, 0.55}
 
-            self.Swing:CreateBeautyBorder(11)
+            self.Swing:CreateBeautyBorder(12)
             self.Swing:SetBeautyBorderPadding(3)
+			self.Swing:SetBeautyBorderTexture('white')
+			if C['nMedia'].border == "Default" then
+				self.Swing:SetBeautyBorderColor(0.38, 0.38, 0.38)		
+			elseif C['nMedia'].border == "Classcolor" then
+				self.Swing:SetBeautyBorderColor(N.ccolor.r, N.ccolor.g, N.ccolor.b)
+			elseif C['nMedia'].border == "Custom" then
+				self.Swing:SetBeautyBorderColor(C['nMedia'].color.r, C['nMedia'].color.g, C['nMedia'].color.b)		
+			end
 
             self.Swing.f = CreateFrame('Frame', nil, self.Swing)
             self.Swing.f:SetFrameStrata('HIGH')       
@@ -1036,8 +1044,16 @@ local function CreateUnitLayout(self, unit)
             self.Vengeance:SetStatusBarTexture('Interface\\AddOns\\NeavUI\\nMedia\\nTextures\\statusbarTexture')
             self.Vengeance:SetStatusBarColor(1, 0, 0)
 
-            self.Vengeance:CreateBeautyBorder(11)
+            self.Vengeance:CreateBeautyBorder(12)
             self.Vengeance:SetBeautyBorderPadding(3)
+			self.Vengeance:SetBeautyBorderTexture('white')
+			if C['nMedia'].border == "Default" then
+				self.Vengeance:SetBeautyBorderColor(0.38, 0.38, 0.38)		
+			elseif C['nMedia'].border == "Classcolor" then
+				self.Vengeance:SetBeautyBorderColor(N.ccolor.r, N.ccolor.g, N.ccolor.b)
+			elseif C['nMedia'].border == "Custom" then
+				self.Vengeance:SetBeautyBorderColor(C['nMedia'].color.r, C['nMedia'].color.g, C['nMedia'].color.b)		
+			end
 
             self.Vengeance.Bg = self.Vengeance:CreateTexture(nil, 'BACKGROUND')
             self.Vengeance.Bg:SetAllPoints(self.Vengeance)

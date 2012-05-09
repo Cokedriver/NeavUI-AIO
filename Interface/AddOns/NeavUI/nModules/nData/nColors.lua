@@ -13,13 +13,13 @@ if C['nData'].enable ~= true then return end
 ---------------------------------------------------
 -- Color system for Data Created by Hydra 
 ---------------------------------------------------
-if C['nMedia'].classcolor ~= true then
-	local r, g, b = C['nMedia'].color.r, C['nMedia'].color.g, C['nMedia'].color.b
-	hexa = ("|cff%.2x%.2x%.2x"):format(r * 255, g * 255, b * 255)
-	hexb = "|r"
-else
+if C['nMedia'].border == "Default" then
+	hexa = ("|cff%.2x%.2x%.2x"):format(0.38 * 255, 0.38 * 255, 0.38 * 255)
+	hexb = "|r"	
+elseif C['nMedia'].border == "Classcolor" then
 	hexa = ("|cff%.2x%.2x%.2x"):format(N.ccolor.r * 255, N.ccolor.g * 255, N.ccolor.b * 255)
 	hexb = "|r"
-end
-
-
+elseif C['nMedia'].border == "Custom" then
+	hexa = ("|cff%.2x%.2x%.2x"):format(C['nMedia'].color.r * 255, C['nMedia'].color.g * 255, C['nMedia'].color.b * 255)
+	hexb = "|r"		
+end	

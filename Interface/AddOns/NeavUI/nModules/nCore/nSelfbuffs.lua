@@ -112,7 +112,7 @@ if (buffs and buffs[1]) then
 			end
 			self:Show()
 			if C['nCore'].selfbuffs.playsound == true and sound == true then
-				PlaySoundFile(C['nCore'].selfbuffs.sound)
+				PlaySoundFile(C['nMedia'].warnsound)
 				sound = false
 			end
 		else
@@ -127,11 +127,13 @@ if (buffs and buffs[1]) then
 	frame:CreateBeautyBorder(12)
 	frame:SetBeautyBorderTexture('white')
 	
-	if C['nMedia'].classcolor ~= true then
-		frame:SetBeautyBorderColor(C['nMedia'].color.r, C['nMedia'].color.g, C['nMedia'].color.b)
-	else
+	if C['nMedia'].border == "Default" then
+		frame:SetBeautyBorderColor(0.38, 0.38, 0.38)		
+	elseif C['nMedia'].border == "Classcolor" then
 		frame:SetBeautyBorderColor(N.ccolor.r, N.ccolor.g, N.ccolor.b)
-	end
+	elseif C['nMedia'].border == "Custom" then
+		frame:SetBeautyBorderColor(C['nMedia'].color.r, C['nMedia'].color.g, C['nMedia'].color.b)		
+	end	
 	
 	frame:Hide()
 	
@@ -215,7 +217,7 @@ if (enchants and enchants[1]) then
 			end
 			self:Show()
 			if C['nCore'].selfbuffs.playsound == true and sound == true then
-				PlaySoundFile(C['nCore'].selfbuffs.sound)
+				PlaySoundFile(C['nMedia'].warnsound)
 				sound = false
 			end
 		else
@@ -230,11 +232,13 @@ if (enchants and enchants[1]) then
 	frame:CreateBeautyBorder(12)
 	frame:SetBeautyBorderTexture('white')
 	
-	if C['nMedia'].classcolor ~= true then
-		frame:SetBeautyBorderColor(C['nMedia'].color.r,C['nMedia'].color.g,C['nMedia'].color.b)
-	else
+	if C['nMedia'].border == "Default" then
+		frame:SetBeautyBorderColor(0.38, 0.38, 0.38)		
+	elseif C['nMedia'].border == "Classcolor" then
 		frame:SetBeautyBorderColor(N.ccolor.r, N.ccolor.g, N.ccolor.b)
-	end
+	elseif C['nMedia'].border == "Custom" then
+		frame:SetBeautyBorderColor(C['nMedia'].color.r, C['nMedia'].color.g, C['nMedia'].color.b)		
+	end	
 	
 	frame:Hide()
 	

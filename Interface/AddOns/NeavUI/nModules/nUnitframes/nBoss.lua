@@ -171,8 +171,16 @@ local function CreateBossLayout(self, unit)
         self.Castbar.Bg:SetAllPoints(self.Castbar)
         self.Castbar.Bg:SetVertexColor(C['nUnitframes'].units.boss.castbar.color.r*0.3, C['nUnitframes'].units.boss.castbar.color.g*0.3, C['nUnitframes'].units.boss.castbar.color.b*0.3, 0.8)
 
-        self.Castbar:CreateBeautyBorder(11)
+        self.Castbar:CreateBeautyBorder(12)
         self.Castbar:SetBeautyBorderPadding(3)
+		self.Castbar:SetBeautyBorderTexture('white')
+		if C['nMedia'].border == "Default" then
+			self.Castbar:SetBeautyBorderColor(0.38, 0.38, 0.38)		
+		elseif C['nMedia'].border == "Classcolor" then
+			self.Castbar:SetBeautyBorderColor(N.ccolor.r, N.ccolor.g, N.ccolor.b)
+		elseif C['nMedia'].border == "Custom" then
+			self.Castbar:SetBeautyBorderColor(C['nMedia'].color.r, C['nMedia'].color.g, C['nMedia'].color.b)		
+		end		
 
         N.CreateCastbarStrings(self, true)
 
@@ -194,7 +202,7 @@ oUF:Factory(function(self)
         if (i == 1) then
             boss[i]:SetPoint(C['nUnitframes'].units.boss.position.selfAnchor , C['nUnitframes'].units.boss.position.frameParent , C['nUnitframes'].units.boss.position.relAnchor , C['nUnitframes'].units.boss.position.offSetX , C['nUnitframes'].units.boss.position.offSetY)
         else
-            boss[i]:SetPoint('TOPLEFT', boss[i-1], 'BOTTOMLEFT', 0, (C['nUnitframes'].units.boss.castbar.show and -80) or -50)
+            boss[i]:SetPoint('TOPLEFT', boss[i-1], 'BOTTOMLEFT', 0, (C['nUnitframes'].units.boss.castbar.show and -40) or -10)
         end
     end
 end)

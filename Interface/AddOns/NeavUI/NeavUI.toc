@@ -56,6 +56,7 @@ nModules\nChat\nWhisper.lua
 <! -- nCore -- >
 nModules\nCore\nAltbuy.lua
 nModules\nCore\nAutogreed.lua
+nModules\nCore\nBlackBook.lua
 nModules\nCore\nBubbles.lua
 nModules\nCore\nCoords.lua
 nModules\nCore\nDurability.lua

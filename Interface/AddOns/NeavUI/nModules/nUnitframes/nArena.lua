@@ -196,8 +196,16 @@ local function CreateArenaLayout(self, unit)
         self.Castbar.Bg:SetAllPoints(self.Castbar)
         self.Castbar.Bg:SetVertexColor(C['nUnitframes'].units.arena.castbar.color.r*0.3, C['nUnitframes'].units.arena.castbar.color.g*0.3, C['nUnitframes'].units.arena.castbar.color.b*0.3, 0.8)
 
-        self.Castbar:CreateBeautyBorder(11)
+        self.Castbar:CreateBeautyBorder(12)
         self.Castbar:SetBeautyBorderPadding(3)
+		self.Castbar:SetBeautyBorderTexture('white')
+		if C['nMedia'].border == "Default" then
+			self.Castbar:SetBeautyBorderColor(0.38, 0.38, 0.38)		
+		elseif C['nMedia'].border == "Classcolor" then
+			self.Castbar:SetBeautyBorderColor(N.ccolor.r, N.ccolor.g, N.ccolor.b)
+		elseif C['nMedia'].border == "Custom" then
+			self.Castbar:SetBeautyBorderColor(C['nMedia'].color.r, C['nMedia'].color.g, C['nMedia'].color.b)		
+		end	
 
         self.Castbar.Icon = self.Castbar:CreateTexture(nil, 'BACKGROUND')
         self.Castbar.Icon:SetSize(C['nUnitframes'].units.arena.castbar.icon.size, C['nUnitframes'].units.arena.castbar.icon.size)

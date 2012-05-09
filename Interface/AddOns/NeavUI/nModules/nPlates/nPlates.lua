@@ -15,7 +15,7 @@ local UnitName = UnitName
 local UnitCastingInfo = UnitCastingInfo
 local UnitChannelInfo = UnitChannelInfo
 
-local borderColor = {0.47, 0.47, 0.47}
+local borderColor = {0.38, 0.38, 0.38}
 local noThreatColor = {0, 1, 0}
 
 local nameplateFlashTexture = 'Interface\\TargetingFrame\\UI-TargetingFrame-Flash'

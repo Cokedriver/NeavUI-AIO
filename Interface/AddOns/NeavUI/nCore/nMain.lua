@@ -32,6 +32,7 @@ N.LorR = {['LEFT'] = L['LEFT'], ['RIGHT'] = L['RIGHT']}
 N.type = {['type1'] = L['type1'], ['type2'] = L['type2'], ['type3'] = L['type3'], ['type4'] = L['type4'], ['type5'] = L['type5'], ['type6'] = L['type6'], ['type7'] = L['type7'], ['type8'] = L['type8'], ['type9'] = L['type9'], ['type0'] = L['type0'], ['mousebutton1'] = L['mousebutton1'], ['mousebutton2'] = L['mousebutton2'], ['mousebutton3'] = L['mousebutton3'], ['mousebutton4'] = L['mousebutton4'], ['mousebutton5'] = L['mousebutton5']}
 N.orientation = {['VERTICAL'] = L['VERTICAL'], ['HORIZONTAL'] = L['HORIZONTAL']}
 N.border = {['Blizzard'] = L['Blizzard'], ['Neav'] = L['Neav']}
+N.bordercolor = {['Default'] = L['Default'], ['Classcolor'] = L['Classcolor'], ['Custom'] = L['Custom']}
 
 --Check Player's Role
 local RoleUpdater = CreateFrame("Frame")

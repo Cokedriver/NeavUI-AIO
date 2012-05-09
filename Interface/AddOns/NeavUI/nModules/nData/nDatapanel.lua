@@ -92,7 +92,14 @@ elseif C['nData'].databorder == 'Neav' then
 		edgeSize = 25
 	})		
 	DataPanel:CreateBeautyBorder(12)
-	DataPanel:SetBackdropBorderColor(N.ccolor.r, N.ccolor.g, N.ccolor.b, 1)
+	DataPanel:SetBeautyBorderTexture('white')
+	if C['nMedia'].border == "Default" then
+		DataPanel:SetBeautyBorderColor(0.38, 0.38, 0.38)		
+	elseif C['nMedia'].border == "Classcolor" then
+		DataPanel:SetBeautyBorderColor(N.ccolor.r, N.ccolor.g, N.ccolor.b)
+	elseif C['nMedia'].border == "Custom" then
+		DataPanel:SetBeautyBorderColor(C['nMedia'].color.r, C['nMedia'].color.g, C['nMedia'].color.b)		
+	end	
 end
 
 

@@ -3,6 +3,7 @@ local N, C, DB = unpack(select(2, ...)) -- Import:  N - function; C - config; DB
 if C['nUnitframes'].enable ~= true then return end
 
 local function UpdateCastbarColor(self, unit, config)
+	local config = C['nUnitframes'].units[N.cUnit(unit)].castbar
     if (self.interrupt) then
         N.ColorBorder(self, 'white', config.interruptColor.r, config.interruptColor.g, config.interruptColor.b)
 
@@ -62,8 +63,16 @@ function N.CreateCastbars(self, unit)
             end
         end
 
-        self.Castbar:CreateBeautyBorder(11)
+        self.Castbar:CreateBeautyBorder(12)
         self.Castbar:SetBeautyBorderPadding(2.66)
+		self.Castbar:SetBeautyBorderTexture('white')
+		if C['nMedia'].border == "Default" then
+			self.Castbar:SetBeautyBorderColor(0.38, 0.38, 0.38)		
+		elseif C['nMedia'].border == "Classcolor" then
+			self.Castbar:SetBeautyBorderColor(N.ccolor.r, N.ccolor.g, N.ccolor.b)
+		elseif C['nMedia'].border == "Custom" then
+			self.Castbar:SetBeautyBorderColor(C['nMedia'].color.r, C['nMedia'].color.g, C['nMedia'].color.b)		
+		end	
 
         N.CreateCastbarStrings(self)
 
@@ -81,8 +90,16 @@ function N.CreateCastbars(self, unit)
             if (config.icon.positionOutside) then
                 self.Castbar.IconOverlay = CreateFrame('Frame', nil, self.Castbar)
                 self.Castbar.IconOverlay:SetAllPoints(self.Castbar.Icon)
-                self.Castbar.IconOverlay:CreateBeautyBorder(10)
+                self.Castbar.IconOverlay:CreateBeautyBorder(12)
                 self.Castbar.IconOverlay:SetBeautyBorderPadding(2)
+				self.Castbar.IconOverlay:SetBeautyBorderTexture('white')
+				if C['nMedia'].border == "Default" then
+					self.Castbar.IconOverlay:SetBeautyBorderColor(0.38, 0.38, 0.38)		
+				elseif C['nMedia'].border == "Classcolor" then
+					self.Castbar.IconOverlay:SetBeautyBorderColor(N.ccolor.r, N.ccolor.g, N.ccolor.b)
+				elseif C['nMedia'].border == "Custom" then
+					self.Castbar.IconOverlay:SetBeautyBorderColor(C['nMedia'].color.r, C['nMedia'].color.g, C['nMedia'].color.b)		
+				end					
             else
                 if (config.icon.position == 'LEFT') then
                     self.Castbar:SetBeautyBorderPadding(4 + config.height, 3, 3, 3, 4 + config.height, 3, 3, 3, 3)
@@ -164,8 +181,16 @@ for i = 1, MIRRORTIMER_NUMTIMERS do
     bar:SetScale(1.132)
     bar:SetSize(220, 18)
     
-    bar:CreateBeautyBorder(11)
+    bar:CreateBeautyBorder(12)
     bar:SetBeautyBorderPadding(3)
+	bar:SetBeautyBorderTexture('white')
+	if C['nMedia'].border == "Default" then
+		bar:SetBeautyBorderColor(0.38, 0.38, 0.38)		
+	elseif C['nMedia'].border == "Classcolor" then
+		bar:SetBeautyBorderColor(N.ccolor.r, N.ccolor.g, N.ccolor.b)
+	elseif C['nMedia'].border == "Custom" then
+		bar:SetBeautyBorderColor(C['nMedia'].color.r, C['nMedia'].color.g, C['nMedia'].color.b)		
+	end	
 
     if (i > 1) then
         local p1, p2, p3, p4, p5 = bar:GetPoint()
@@ -215,8 +240,16 @@ f:SetScript('OnEvent', function(self, event)
                 end
             end
 
-            bar:CreateBeautyBorder(11)
+            bar:CreateBeautyBorder(12)
             bar:SetBeautyBorderPadding(3)
+			bar:SetBeautyBorderTexture('white')
+			if C['nMedia'].border == "Default" then
+				bar:SetBeautyBorderColor(0.38, 0.38, 0.38)		
+			elseif C['nMedia'].border == "Classcolor" then
+				bar:SetBeautyBorderColor(N.ccolor.r, N.ccolor.g, N.ccolor.b)
+			elseif C['nMedia'].border == "Custom" then
+				bar:SetBeautyBorderColor(C['nMedia'].color.r, C['nMedia'].color.g, C['nMedia'].color.b)		
+			end	
             bar:SetStatusBarTexture('Interface\\AddOns\\NeavUI\\nMedia\\nTextures\\statusbarTexture')
 
             local backdrop = select(1, bar:GetRegions())

@@ -108,13 +108,15 @@ function GetMinimapShape()
 end
 
 Minimap:SetMaskTexture('Interface\\ChatFrame\\ChatFrameBackground')
-Minimap:CreateBeautyBorder(11)
+Minimap:CreateBeautyBorder(12)
 Minimap:SetBeautyBorderPadding(1)
 Minimap:SetBeautyBorderTexture('white')
-if C['nMedia'].classcolor ~= true then
-	Minimap:SetBeautyBorderColor(C['nMedia'].color.r, C['nMedia'].color.g, C['nMedia'].color.b)
-else
+if C['nMedia'].border == "Default" then
+	Minimap:SetBeautyBorderColor(0.38, 0.38, 0.38)		
+elseif C['nMedia'].border == "Classcolor" then
 	Minimap:SetBeautyBorderColor(N.ccolor.r, N.ccolor.g, N.ccolor.b)
+elseif C['nMedia'].border == "Custom" then
+	Minimap:SetBeautyBorderColor(C['nMedia'].color.r, C['nMedia'].color.g, C['nMedia'].color.b)		
 end	
 
     -- Enable mousewheel zooming
@@ -154,6 +156,14 @@ TicketStatusFrameButton:HookScript('OnShow', function(self)
     })
     self:SetBackdropColor(0, 0, 0, 0.5)
     self:CreateBeautyBorder(12)
+	self:SetBeautyBorderTexture('white')
+	if C['nMedia'].border == "Default" then
+		self:SetBeautyBorderColor(0.38, 0.38, 0.38)		
+	elseif C['nMedia'].border == "Classcolor" then
+		self:SetBeautyBorderColor(N.ccolor.r, N.ccolor.g, N.ccolor.b)
+	elseif C['nMedia'].border == "Custom" then
+		self:SetBeautyBorderColor(C['nMedia'].color.r, C['nMedia'].color.g, C['nMedia'].color.b)		
+	end		
 end)
 
 local function GetZoneColor()

@@ -257,10 +257,12 @@ hooksecurefunc('AuraButton_Update', function(self, index)
                 button.texture:SetTexture(C['nBuff'].borderBuff)
                 button.texture:SetPoint('TOPRIGHT', button, 1, 1)
                 button.texture:SetPoint('BOTTOMLEFT', button, -1, -1)
-				if C['nMedia'].classcolor ~= true then
-					button.texture:SetVertexColor(C['nMedia'].color.r, C['nMedia'].color.g, C['nMedia'].color.b)
-				else
+				if C['nMedia'].border == "Default" then
+					button.texture:SetVertexColor(0.38, 0.38, 0.38)		
+				elseif C['nMedia'].border == "Classcolor" then
 					button.texture:SetVertexColor(N.ccolor.r, N.ccolor.g, N.ccolor.b)
+				elseif C['nMedia'].border == "Custom" then
+					button.texture:SetVertexColor(C['nMedia'].color.r, C['nMedia'].color.g, C['nMedia'].color.b)		
 				end					
             end
         end
