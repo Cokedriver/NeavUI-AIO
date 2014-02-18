@@ -9,69 +9,64 @@ end })
 --Constants
 local m = 768/string.match(GetCVar("gxResolution"), "%d+x(%d+)")/min(2, max(.64, 768/string.match(({GetScreenResolutions()})[GetCurrentResolution()], "%d+x(%d+)")));
 
-N.scale = function(v) return m * floor(v/m+.5) end;
-N.dummy = function() return end
-N.toc = select(4, GetBuildInfo())
-N.myname, _ = UnitName("player")
-N.myrealm = GetRealmName()
-_, N.myclass = UnitClass("player")
-N.version = GetAddOnMetadata("NeavUI", "Version")
-N.patch = GetBuildInfo()
-N.level = UnitLevel("player")
-N.locale = GetLocale()
-N.resolution = GetCurrentResolution()
-N.getscreenresolution = select(N.resolution, GetScreenResolutions())
-N.getscreenheight = tonumber(string.match(({GetScreenResolutions()})[GetCurrentResolution()], "%d+x(%d+)"))
-N.getscreenwidth = tonumber(string.match(({GetScreenResolutions()})[GetCurrentResolution()], "(%d+)x+%d"))
-N.ccolor = RAID_CLASS_COLORS[select(2, UnitClass("player"))]
-N.regions = {['TOPLEFT'] = L['TOPLEFT'], ['TOP'] = L['TOP'], ['TOPRIGHT'] = L['TOPRIGHT'], ['LEFT'] = L['LEFT'], ['CENTER'] = L['CENTER'], ['RIGHT'] = L['RIGHT'], ['BOTTOMLEFT'] = L['BOTTOMLEFT'], ['BOTTOM'] = L['BOTTOM'], ['BOTTOMRIGHT'] = L['BOTTOMRIGHT']}
-N.healthTag = {['$cur'] = L['$cur'], ['$max'] = L['$max'], ['$deficit'] = L['$deficit'], ['$perc'] = L['$perc'], ['$smartperc'] = L['$smartperc'], ['$smartcolorperc'] = L['$smartcolorperc'], ['$colorperc'] = L['$colorperc']}
-N.healthFormat = {['$cur/$max'] = L['$cur/$max'], ['$cur-$max'] = L['$cur-$max']}
-N.style = {['NORMAL'] = L['NORMAL'], ['RARE'] = L['RARE'], ['ELITE'] = L['ELITE'], ['CUSTOM'] = L['CUSTOM']}
-N.LorR = {['LEFT'] = L['LEFT'], ['RIGHT'] = L['RIGHT']}
-N.type = {['type1'] = L['type1'], ['type2'] = L['type2'], ['type3'] = L['type3'], ['type4'] = L['type4'], ['type5'] = L['type5'], ['type6'] = L['type6'], ['type7'] = L['type7'], ['type8'] = L['type8'], ['type9'] = L['type9'], ['type0'] = L['type0'], ['mousebutton1'] = L['mousebutton1'], ['mousebutton2'] = L['mousebutton2'], ['mousebutton3'] = L['mousebutton3'], ['mousebutton4'] = L['mousebutton4'], ['mousebutton5'] = L['mousebutton5']}
-N.orientation = {['VERTICAL'] = L['VERTICAL'], ['HORIZONTAL'] = L['HORIZONTAL']}
-N.border = {['Blizzard'] = L['Blizzard'], ['Neav'] = L['Neav']}
-N.bordercolor = {['Default'] = L['Default'], ['Classcolor'] = L['Classcolor'], ['Custom'] = L['Custom']}
 
 --Check Player's Role
-local RoleUpdater = CreateFrame("Frame")
-local function CheckRole(self, event, unit)
-	local tree = GetPrimaryTalentTree()
-	local resilience
-	local resilperc = GetCombatRatingBonus(COMBAT_RATING_RESILIENCE_PLAYER_DAMAGE_TAKEN)
-	if resilperc > GetDodgeChance() and resilperc > GetParryChance() then
-		resilience = true
-	else
-		resilience = false
-	end
-	if ((N.myclass == "PALADIN" and tree == 2) or 
-	(N.myclass == "WARRIOR" and tree == 3) or 
-	(N.myclass == "DEATHKNIGHT" and tree == 1)) and
-	resilience == false or
-	(N.myclass == "DRUID" and tree == 2 and GetBonusBarOffset() == 3) then
-		N.Role = "Tank"
-	else
-		local playerint = select(2, UnitStat("player", 4))
-		local playeragi	= select(2, UnitStat("player", 2))
-		local base, posBuff, negBuff = UnitAttackPower("player");
-		local playerap = base + posBuff + negBuff;
+local classRoles = {
+	PALADIN = {
+		[1] = "Caster",
+		[2] = "Tank",
+		[3] = "Melee",
+	},
+	PRIEST = "Caster",
+	WARLOCK = "Caster",
+	WARRIOR = {
+		[1] = "Melee",
+		[2] = "Melee",
+		[3] = "Tank",	
+	},
+	HUNTER = "Melee",
+	SHAMAN = {
+		[1] = "Caster",
+		[2] = "Melee",
+		[3] = "Caster",	
+	},
+	ROGUE = "Melee",
+	MAGE = "Caster",
+	DEATHKNIGHT = {
+		[1] = "Tank",
+		[2] = "Melee",
+		[3] = "Melee",	
+	},
+	DRUID = {
+		[1] = "Caster",
+		[2] = "Melee",
+		[3] = "Tank",	
+		[4] = "Caster"
+	},
+	MONK = {
+		[1] = "Tank",
+		[2] = "Caster",
+		[3] = "Melee",	
+	},
+}
 
-		if (((playerap > playerint) or (playeragi > playerint)) and not (N.myclass == "SHAMAN" and tree ~= 1 and tree ~= 3) and not (UnitBuff("player", GetSpellInfo(24858)) or UnitBuff("player", GetSpellInfo(65139)))) or N.myclass == "ROGUE" or N.myclass == "HUNTER" or (N.myclass == "SHAMAN" and tree == 2) then
-			N.Role = "Melee"
-		else
-			N.Role = "Caster"
-		end
+local _, playerClass = UnitClass("player")
+local function CheckRole()
+	local talentTree = GetSpecialization()
+
+	if(type(classRoles[playerClass]) == "string") then
+		N.Role = classRoles[playerClass]
+	elseif(talentTree) then
+		N.Role = classRoles[playerClass][talentTree]
 	end
-end	
-RoleUpdater:RegisterEvent("PLAYER_ENTERING_WORLD")
-RoleUpdater:RegisterEvent("ACTIVE_TALENT_GROUP_CHANGED")
-RoleUpdater:RegisterEvent("PLAYER_TALENT_UPDATE")
-RoleUpdater:RegisterEvent("CHARACTER_POINTS_CHANGED")
-RoleUpdater:RegisterEvent("UNIT_INVENTORY_CHANGED")
-RoleUpdater:RegisterEvent("UPDATE_BONUS_ACTIONBAR")
-RoleUpdater:SetScript("OnEvent", CheckRole)
-CheckRole()
+end
+
+local eventHandler = CreateFrame("Frame")
+eventHandler:RegisterEvent("PLAYER_ENTERING_WORLD")
+eventHandler:RegisterEvent("ACTIVE_TALENT_GROUP_CHANGED")
+eventHandler:RegisterEvent("PLAYER_TALENT_UPDATE")
+eventHandler:RegisterEvent("CHARACTER_POINTS_CHANGED")
+eventHandler:SetScript("OnEvent", CheckRole)
 
 N.SetFontString = function(parent, fontName, fontHeight, fontStyle)
 	local fs = parent:CreateFontString(nil, 'OVERLAY')
@@ -116,12 +111,12 @@ EventFrame:RegisterEvent("PLAYER_LOGIN")
 EventFrame:SetScript("OnEvent", function(self,event,...) 
 	if type(NeavDBPerCharacter) ~= "number" then
 		NeavDBPerCharacter = 1
-		ChatFrame1:AddMessage('Welcome to Azeroth '..N.myname..". I do believe this is the first time we've met. Nice to meet you! You're using |cff00B4FFNeavUI v"..N.version..'|r.')
+		ChatFrame1:AddMessage('Welcome to Azeroth '..N.myname..". I do believe this is the first time we've met. Nice to meet you! You're using |cffCC3333N|r|cffE53300e|r|cffFF4D00a|r|cffFF6633v|r|cffffd200UI-AIO v"..N.version..'|r.')
 	else
 		if NeavDBPerCharacter == 1 then
-			ChatFrame1:AddMessage('Welcome to Azeroth '..N.myname..". How nice to see you again. You're using |cff00B4FFNeavUI v"..N.version..'|r.')
+			ChatFrame1:AddMessage('Welcome to Azeroth '..N.myname..". How nice to see you again. You're using |cffCC3333N|r|cffE53300e|r|cffFF4D00a|r|cffFF6633v|r|cffffd200UI-AIO v"..N.version..'|r.')
 		else
-			ChatFrame1:AddMessage('Welcome to Azeroth '..N.myname..". How nice to see you again. You're using |cff00B4FFNeavUI v"..N.version..'|r.')
+			ChatFrame1:AddMessage('Welcome to Azeroth '..N.myname..". How nice to see you again. You're using |cffCC3333N|r|cffE53300e|r|cffFF4D00a|r|cffFF6633v|r|cffffd200UI-AIO v"..N.version..'|r.')
 		end
 		NeavDBPerCharacter = NeavDBPerCharacter + 1
 	end
@@ -208,7 +203,7 @@ local function GetFormattedText(text, cur, max, alt)
         text = gsub(text, '$alt', ((alt > 0) and format('%s', FormatValue(alt)) or ''))
     end
 
-    local r, g, b = oUF.ColorGradient(cur/max, unpack(oUF.smoothGradient or oUF.colors.smooth))
+    local r, g, b = oUF.ColorGradient(cur, max, unpack(oUF.smoothGradient or oUF.colors.smooth))
     text = gsub(text, '$cur', format('%s', (cur > 0 and FormatValue(cur)) or ''))
     text = gsub(text, '$max', format('%s', FormatValue(max)))
     text = gsub(text, '$deficit', format('%s', DeficitValue(max-cur)))
@@ -430,7 +425,7 @@ function N.CreateCastbarStrings(self, size)
     self.Castbar.Time:SetParent(self.Castbar)
 
     self.Castbar.Text = self.Castbar:CreateFontString(nil, 'OVERLAY')
-    self.Castbar.Text:SetFont(C['nMedia'].font, C['nUnitframes'].font.normalSize)
+    self.Castbar.Text:SetFont(C['nMedia'].font, 15)
     self.Castbar.Text:SetPoint('LEFT', self.Castbar, 4, 0)  
 
     if (size) then
@@ -502,11 +497,11 @@ N.PostUpdateIcon = function(icons, unit, icon, index, offset)
 
     if (C['nUnitframes'].units.target.colorPlayerDebuffsOnly) then
         if (unit == 'target') then 
-            if (icon.debuff) then
+            if (icon.isDebuff) then
                 if (not IsMine(icon.owner)) then
-                    -- icon.overlay:SetVertexColor(0.45, 0.45, 0.45)
+                    icon.overlay:SetVertexColor(0.45, 0.45, 0.45)
                     icon.icon:SetDesaturated(true)
-                    icon:SetAlpha(0.55)
+                    -- icon:SetAlpha(0.55)
                 else
                     icon.icon:SetDesaturated(false)
                     icon:SetAlpha(1)
@@ -516,7 +511,7 @@ N.PostUpdateIcon = function(icons, unit, icon, index, offset)
     end
 
     if (icon.remaining) then
-        if (unit == 'target' and icon.debuff and not IsMine(icon.owner) and (not UnitIsFriend('player', unit) and UnitCanAttack(unit, 'player') and not UnitPlayerControlled(unit)) and not C['nUnitframes'].units.target.showAllTimers ) then
+        if (unit == 'target' and icon.isDebuff and not IsMine(icon.owner) and (not UnitIsFriend('player', unit) and UnitCanAttack(unit, 'player') and not UnitPlayerControlled(unit)) and not C['nUnitframes'].units.target.showAllTimers ) then
             if (icon.remaining:IsShown()) then
                 icon.remaining:Hide()
             end
@@ -547,10 +542,11 @@ N.UpdateAuraIcons = function(auras, button)
 
         button:SetFrameLevel(1)
 
-        button.icon:SetTexCoord(0.07, 0.93, 0.07, 0.93)
-        button.icon:ClearAllPoints()
-        button.icon:SetPoint('CENTER', button)
-        button.icon:SetSize(size, size)
+        -- XXX: Borked in oUF v1.6+, button:GetSize() returns 0
+		--button.icon:SetTexCoord(0.07, 0.93, 0.07, 0.93)
+        --button.icon:ClearAllPoints()
+        --button.icon:SetPoint('CENTER', button)
+        --button.icon:SetSize(size, size)
 
         button.overlay:SetTexture('Interface\\AddOns\\NeavUI\\nMedia\\nTextures\\borderBackground')
         button.overlay:SetTexCoord(0, 1, 0, 1)

@@ -13,13 +13,14 @@ if C['nData'].enable ~= true then return end
 ---------------------------------------------------
 -- Color system for Data Created by Hydra 
 ---------------------------------------------------
-if C['nMedia'].border == "Default" then
+if C['nData'].fontColor == "Default" then
 	hexa = ("|cff%.2x%.2x%.2x"):format(0.38 * 255, 0.38 * 255, 0.38 * 255)
 	hexb = "|r"	
-elseif C['nMedia'].border == "Classcolor" then
+elseif C['nData'].fontColor == "Classcolor" then
 	hexa = ("|cff%.2x%.2x%.2x"):format(N.ccolor.r * 255, N.ccolor.g * 255, N.ccolor.b * 255)
 	hexb = "|r"
-elseif C['nMedia'].border == "Custom" then
+elseif C['nData'].fontColor == "Custom" then
 	hexa = ("|cff%.2x%.2x%.2x"):format(C['nMedia'].color.r * 255, C['nMedia'].color.g * 255, C['nMedia'].color.b * 255)
 	hexb = "|r"		
 end	
+

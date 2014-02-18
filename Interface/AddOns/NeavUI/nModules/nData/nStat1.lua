@@ -67,20 +67,6 @@ if C['nData'].stat1 and C['nData'].stat1 > 0 then
 		
 			GameTooltip:AddDoubleLine(STAT_HIT_CHANCE, format(modifierString, hit, hitBonus), 1, 1, 1)
 			
-			--Hunters don't use expertise
-			if N.myclass ~= "HUNTER" then
-				local expertisePercent, offhandExpertisePercent = GetExpertisePercent()
-				expertisePercent = format("%.2f", expertisePercent)
-				offhandExpertisePercent = format("%.2f", offhandExpertisePercent)
-				
-				local expertisePercentDisplay
-				if IsDualWielding() then
-					expertisePercentDisplay = expertisePercent.."% / "..offhandExpertisePercent.."%"
-				else
-					expertisePercentDisplay = expertisePercent.."%"
-				end
-				GameTooltip:AddDoubleLine(COMBAT_RATING_NAME24, format('%d (+%s)', GetCombatRating(CR_EXPERTISE), expertisePercentDisplay), 1, 1, 1)
-			end
 			
 			local haste = N.myclass == "HUNTER" and GetCombatRating(CR_HASTE_RANGED) or GetCombatRating(CR_HASTE_MELEE)
 			local hasteBonus = N.myclass == "HUNTER" and GetCombatRatingBonus(CR_HASTE_RANGED) or GetCombatRatingBonus(CR_HASTE_MELEE)
@@ -89,17 +75,17 @@ if C['nData'].stat1 and C['nData'].stat1 > 0 then
 		end
 		
 		local masteryspell
-		if GetCombatRating(CR_MASTERY) ~= 0 and GetPrimaryTalentTree() then
+		if GetCombatRating(CR_MASTERY) ~= 0 and GetSpecialization () then
 			if N.myclass == "DRUID" then
 				if N.Role == "Melee" then
-					masteryspell = select(2, GetTalentTreeMasterySpells(GetPrimaryTalentTree()))
+					masteryspell = select(2, GetSpecializationMasterySpells(GetSpecialization ()))
 				elseif N.Role == "Tank" then
-					masteryspell = select(1, GetTalentTreeMasterySpells(GetPrimaryTalentTree()))
+					masteryspell = select(1, GetSpecializationMasterySpells(GetSpecialization ()))
 				else
-					masteryspell = GetTalentTreeMasterySpells(GetPrimaryTalentTree())
+					masteryspell = GetSpecializationMasterySpells(GetSpecialization ())
 				end
 			else
-				masteryspell = GetTalentTreeMasterySpells(GetPrimaryTalentTree())
+				masteryspell = GetSpecializationMasterySpells(GetSpecialization ())
 			end
 			
 

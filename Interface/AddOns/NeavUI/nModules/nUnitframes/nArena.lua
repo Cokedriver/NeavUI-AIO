@@ -14,7 +14,7 @@ end
 
 SetCVar('showArenaEnemyFrames', 0)
 
-local function ColorNameBackground(self)
+local function ColorNameBackground(self, unit)
     local _, class = UnitClass(unit)
     local classColor = RAID_CLASS_COLORS[class]
     self.Name.Bg:SetVertexColor(classColor.r, classColor.g, classColor.b)
@@ -164,7 +164,7 @@ local function CreateArenaLayout(self, unit)
         self.Buffs.PostUpdateIcon = N.PostUpdateIcon
 
         self.Buffs.CustomFilter = function(icons, unit, icon, name, rank, texture, count, dtype, duration, timeLeft, caster)
-            if (N.buffList[name]) then
+            if (C['nUnitframes'].units.arena.buffList and C['nUnitframes'].units.arena.buffList[name]) then
                 return true
             end
         end

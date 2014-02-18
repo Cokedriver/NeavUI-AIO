@@ -28,8 +28,8 @@ if C['nData'].threatbar == true then
 		 
 
 	local function OnEvent(self, event, ...)
-		local party = GetNumPartyMembers()
-		local raid = GetNumRaidMembers()
+		local party = GetNumSubgroupMembers ()
+		local raid = GetNumGroupMembers()
 		local pet = select(1, HasPetUI())
 		if event == "PLAYER_ENTERING_WORLD" then
 			self:Hide()

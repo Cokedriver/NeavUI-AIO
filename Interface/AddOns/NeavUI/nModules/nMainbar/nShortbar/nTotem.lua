@@ -2,7 +2,7 @@ local N, C, DB = unpack(select(2, ...)) -- Import:  N - function; C - config; DB
 
 if C['nMainbar'].enable ~= true then return end
 
-if (not C['nMainbar'].MainMenuBar.shortBar and not C['nMainbar'].MainMenuBar.moveableExtraBars) then
+if (not C['nMainbar'].shortBar and not C['nMainbar'].moveableExtraBars) then
     return
 end
 

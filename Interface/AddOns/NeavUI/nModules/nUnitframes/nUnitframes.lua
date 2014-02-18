@@ -160,6 +160,23 @@ local function CreateFocusButton(self)
     end)
 end
 
+local function UpdateThreat(self)
+    local _, status, scaledPercent, _, _ = UnitDetailedThreatSituation('player', 'target')
+
+    if (scaledPercent) then
+        local red, green, blue = GetThreatStatusColor(status)
+        self.NumericalThreat.bg:SetStatusBarColor(red, green, blue)
+        self.NumericalThreat.value:SetText(math.ceil(scaledPercent)..'%')
+        if (not self.NumericalThreat:IsVisible()) then
+            self.NumericalThreat:Show()
+        end
+    else
+        if (self.NumericalThreat:IsVisible()) then
+            self.NumericalThreat:Hide()
+        end
+    end
+end
+
 local function PlayerToVehicleTexture(self, event, unit)
     self.Texture:SetSize(240, 121)
     self.Texture:SetPoint('CENTER', self, 0, -8)
@@ -198,6 +215,8 @@ local function PlayerToVehicleTexture(self, event, unit)
     self.MasterLooter:SetPoint('TOPLEFT', self.Texture, 74, -14)
     self.RaidIcon:SetPoint('CENTER', self.Portrait, 'TOP', 0, -5)
     self.T[1]:SetPoint('BOTTOM', self.Name, 'TOP', 0, 8)
+	
+	securecall('PlayerFrame_ShowVehicleTexture')
 end
 
 local function VehicleToPlayerTexture(self, event, unit)
@@ -241,6 +260,8 @@ local function VehicleToPlayerTexture(self, event, unit)
     self.MasterLooter:SetPoint('TOPRIGHT', self.Portrait, -3, 3)
     self.RaidIcon:SetPoint('CENTER', self.Portrait, 'TOP', 0, -1)
     self.T[1]:SetPoint('BOTTOM', self.Name.Bg, 'TOP', -1, 0)
+	
+	securecall('PlayerFrame_HideVehicleTexture')
 end
 
 local function CreateTab(self, text)
@@ -376,7 +397,7 @@ local function UpdatePortraitColor(self, unit, min, max)
         self.Portrait:SetVertexColor(0.35, 0.35, 0.35, 0.7)
     elseif (UnitIsGhost(unit)) then
         self.Portrait:SetVertexColor(0.3, 0.3, 0.9, 0.7)
-    elseif (min/max * 100 < 25) then
+    elseif (max == 0 or min/max * 100 < 25) then
         if (UnitIsPlayer(unit)) then
             if (unit ~= 'player') then
                 self.Portrait:SetVertexColor(1, 0, 0, 0.7)
@@ -502,7 +523,39 @@ local function CreateUnitLayout(self, unit)
         self.Health:SetSize(70, 7) 
     end
 
-        -- Health text
+        -- Heal prediction, new healcomm
+
+    local myBar = CreateFrame('StatusBar', nil, self)
+    myBar:SetFrameLevel(self:GetFrameLevel() - 1)
+    myBar:SetStatusBarTexture('Interface\\AddOns\\NeavUI\\nMedia\\nTextures\\statusbarTexture', 'OVERLAY')
+    myBar:SetStatusBarColor(0, 1, 0.3, 0.5)
+
+    myBar.Smooth = true
+
+    myBar:SetOrientation('HORIZONTAL')
+    myBar:SetPoint('TOPLEFT', self.Health:GetStatusBarTexture(), 'TOPRIGHT')
+    myBar:SetPoint('BOTTOMLEFT', self.Health:GetStatusBarTexture(), 'BOTTOMRIGHT')
+    myBar:SetWidth(self.Health:GetWidth())
+
+    local otherBar = CreateFrame('StatusBar', nil, self)
+    otherBar:SetFrameLevel(self:GetFrameLevel() - 1)
+    otherBar:SetStatusBarTexture('Interface\\AddOns\\NeavUI\\nMedia\\nTextures\\statusbarTexture', 'OVERLAY')
+    otherBar:SetStatusBarColor(0, 1, 0, 0.35)
+
+    otherBar.Smooth = true
+
+    otherBar:SetOrientation('HORIZONTAL')
+    otherBar:SetPoint('TOPLEFT', myBar:GetStatusBarTexture(), 'TOPRIGHT')
+    otherBar:SetPoint('BOTTOMLEFT', myBar:GetStatusBarTexture(), 'BOTTOMRIGHT')
+    otherBar:SetWidth(self.Health:GetWidth())
+
+    self.HealPrediction = {
+        myBar = myBar,
+        otherBar = otherBar,
+        maxOverflow = 1.0,
+    }
+	
+		-- Health text
 
     self.Health.Value = self:CreateFontString(nil, 'OVERLAY')
     self.Health.Value:SetShadowOffset(1, -1)
@@ -748,27 +801,29 @@ local function CreateUnitLayout(self, unit)
         -- Threat textures
 
     self.ThreatGlow = self:CreateTexture(nil, 'BACKGROUND')
-
-    if (unit == 'player') then
-        self.ThreatGlow:SetSize(241, 92)
-        self.ThreatGlow:SetPoint('TOPLEFT', self.Texture, 14, 0)
-        self.ThreatGlow:SetTexture(tarTexPath..'UI-TargetingFrame-Flash')
-        self.ThreatGlow:SetTexCoord(0.9453125, 0, 0 , 0.182)
-    elseif (unit == 'pet') then
-        self.ThreatGlow:SetSize(129, 64)
-        self.ThreatGlow:SetPoint('TOPLEFT', self.Texture, -5, 13)
-        self.ThreatGlow:SetTexture(tarTexPath..'UI-PartyFrame-Flash')
-        self.ThreatGlow:SetTexCoord(0, 1, 1, 0)
-    elseif (unit == 'target' or unit == 'focus') then
-        self.ThreatGlow:SetSize(239, 92)
-        self.ThreatGlow:SetPoint('TOPLEFT', self.Texture, -23, 0)
-        self.ThreatGlow:SetTexture(tarTexPath..'UI-TargetingFrame-Flash')
-        self.ThreatGlow:SetTexCoord(0, 0.9453125, 0, 0.182)
-    elseif (self.IsPartyFrame) then
-        self.ThreatGlow:SetSize(128, 63)
-        self.ThreatGlow:SetPoint('TOPLEFT', self.Texture, -3, 4)
-        self.ThreatGlow:SetTexture(tarTexPath..'UI-PartyFrame-Flash')
-    end
+	
+	if C['nUnitframes'].units.showThreat == true then
+		if (unit == 'player') then
+			self.ThreatGlow:SetSize(241, 92)
+			self.ThreatGlow:SetPoint('TOPLEFT', self.Texture, 14, 0)
+			self.ThreatGlow:SetTexture(tarTexPath..'UI-TargetingFrame-Flash')
+			self.ThreatGlow:SetTexCoord(0.9453125, 0, 0 , 0.182)
+		elseif (unit == 'pet') then
+			self.ThreatGlow:SetSize(129, 64)
+			self.ThreatGlow:SetPoint('TOPLEFT', self.Texture, -5, 13)
+			self.ThreatGlow:SetTexture(tarTexPath..'UI-PartyFrame-Flash')
+			self.ThreatGlow:SetTexCoord(0, 1, 1, 0)
+		elseif (unit == 'target' or unit == 'focus') then
+			self.ThreatGlow:SetSize(239, 92)
+			self.ThreatGlow:SetPoint('TOPLEFT', self.Texture, -23, 0)
+			self.ThreatGlow:SetTexture(tarTexPath..'UI-TargetingFrame-Flash')
+			self.ThreatGlow:SetTexCoord(0, 0.9453125, 0, 0.182)
+		elseif (self.IsPartyFrame) then
+			self.ThreatGlow:SetSize(128, 63)
+			self.ThreatGlow:SetPoint('TOPLEFT', self.Texture, -3, 4)
+			self.ThreatGlow:SetTexture(tarTexPath..'UI-PartyFrame-Flash')
+		end
+	end
 
         -- Lfd role icon
 
@@ -800,13 +855,32 @@ local function CreateUnitLayout(self, unit)
             -- Warlock soulshard bar
 
         if (playerClass == 'WARLOCK') then
-            ShardBarFrame:SetParent(oUF_Neav_Player)
+            WarlockPowerFrame:SetParent(oUF_Neav_Player)
+            WarlockPowerFrame:SetScale(C['nUnitframes'].units.player.scale * 0.8)
+            WarlockPowerFrame_OnLoad(WarlockPowerFrame)
+            WarlockPowerFrame:SetFrameLevel(1)
+
             ShardBarFrame:SetScale(C['nUnitframes'].units.player.scale * 0.8)
-            ShardBar_OnLoad(ShardBarFrame)
             ShardBarFrame:ClearAllPoints()
-            ShardBarFrame:SetPoint('TOP', oUF_Neav_Player, 'BOTTOM', 30, -1)
-            ShardBarFrame:Show()
+            ShardBarFrame:SetPoint('TOP', oUF_Neav_Player, 'BOTTOM', 30, -2)
+
+            BurningEmbersBarFrame:SetScale(C['nUnitframes'].units.player.scale * 0.8)
+            BurningEmbersBarFrame:ClearAllPoints()
+            BurningEmbersBarFrame:SetPoint('TOP', oUF_Neav_Player, 'BOTTOM', 30, 0)
+
+            DemonicFuryBarFrame:SetScale(C['nUnitframes'].units.player.scale * 0.8)
+            DemonicFuryBarFrame:ClearAllPoints()
+            DemonicFuryBarFrame:SetPoint('TOP', oUF_Neav_Player, 'BOTTOM', 35, 12)
         end
+		
+            -- Priest bar
+
+        if (playerClass == 'PRIEST') then
+            PriestBarFrame:SetParent(oUF_Neav_Player)
+            PriestBarFrame_OnLoad(PriestBarFrame)
+            PriestBarFrame:ClearAllPoints()
+            PriestBarFrame:SetPoint('TOP', oUF_Neav_Player, 'BOTTOM', 33, 0)
+        end		
 
             -- Holy power bar
 
@@ -818,6 +892,16 @@ local function CreateUnitLayout(self, unit)
             PaladinPowerBar:SetPoint('TOP', oUF_Neav_Player, 'BOTTOM', 25, 2)
             PaladinPowerBar:Show()
         end
+		
+            -- Monk harmony bar
+
+        if (playerClass == 'MONK') then
+            MonkHarmonyBar:SetParent(oUF_Neav_Player)
+            MonkHarmonyBar:SetScale(C['nUnitframes'].units.player.scale * 0.81)
+            MonkHarmonyBar_OnLoad(MonkHarmonyBar)
+            MonkHarmonyBar:ClearAllPoints()
+            MonkHarmonyBar:SetPoint('TOP', oUF_Neav_Player, 'BOTTOM', 30, 18)
+        end		
 
             -- Deathknight runebar
 
@@ -834,7 +918,7 @@ local function CreateUnitLayout(self, unit)
             TotemFrame:SetScale(C['nUnitframes'].units.player.scale * 0.65)
             TotemFrame:Show()
 
-            for i = 1, 4 do
+            for i = 1, MAX_TOTEMS do
                 _G['TotemFrameTotem'..i]:SetFrameStrata('LOW')
 
                 _G['TotemFrameTotem'..i..'IconCooldown']:SetAlpha(0)
@@ -944,7 +1028,7 @@ local function CreateUnitLayout(self, unit)
 
         local function UpdatePartyTab(self)
             for i = 1, MAX_RAID_MEMBERS do
-                if (GetNumRaidMembers() > 0) then
+                if (GetNumGroupMembers() > 0) then
                     local unitName, _, groupNumber = GetRaidRosterInfo(i)
                     if (unitName == UnitName('player')) then
                         self.T:FadeIn(0.5, 0.65)
@@ -959,8 +1043,7 @@ local function CreateUnitLayout(self, unit)
         CreateTab(self)
         UpdatePartyTab(self) 
 
-        self:RegisterEvent('RAID_ROSTER_UPDATE', UpdatePartyTab)
-        self:RegisterEvent('PARTY_MEMBER_CHANGED', UpdatePartyTab)
+		self:RegisterEvent('GROUP_ROSTER_UPDATE', UpdatePartyTab)
 
             -- Resting/combat status flashing
 
@@ -1248,9 +1331,36 @@ local function CreateUnitLayout(self, unit)
             self.Auras.numBuffs = C['nUnitframes'].units.target.numBuffs
             self.Auras.numDebuffs = C['nUnitframes'].units.target.numDebuffs
             self.Auras.spacing = 4.5
-
-            self.Auras.customBreak = true
+			self.Auras.customBreak = true
         end
+		
+        if (C['nUnitframes'].units.target.showThreatValue) then
+            self.NumericalThreat = CreateFrame('Frame', nil, self)
+            self.NumericalThreat:SetSize(49, 18)
+            self.NumericalThreat:SetPoint('BOTTOM', self, 'TOP', 0, 0)
+            self.NumericalThreat:Hide()
+
+            self.NumericalThreat.value = self.NumericalThreat:CreateFontString(nil, 'OVERLAY', 'GameFontHighlight')
+            self.NumericalThreat.value:SetPoint('TOP', 0, -4)
+
+            self.NumericalThreat.bg = CreateFrame('StatusBar', nil, self.NumericalThreat)
+            self.NumericalThreat.bg:SetStatusBarTexture('Interface\\AddOns\\NeavUI\\nMedia\\nTextures\\statusbarTexture')
+            self.NumericalThreat.bg:SetFrameStrata('LOW')
+            self.NumericalThreat.bg:SetPoint('TOP', 0, -3)
+            self.NumericalThreat.bg:SetSize(37, 14)
+
+            self.NumericalThreat.texture = self.NumericalThreat:CreateTexture(nil, 'ARTWORK')
+            self.NumericalThreat.texture:SetPoint('TOP', 0, 0)
+            self.NumericalThreat.texture:SetTexture('Interface\\TargetingFrame\\NumericThreatBorder')
+            self.NumericalThreat.texture:SetTexCoord(0, 0.765625, 0, 0.5625)
+            self.NumericalThreat.texture:SetSize(49, 18)
+
+            self:RegisterEvent('UNIT_THREAT_LIST_UPDATE', UpdateThreat)
+            self:RegisterEvent('UNIT_THREAT_SITUATION_UPDATE', UpdateThreat)
+            self:RegisterEvent('PLAYER_REGEN_DISABLED', UpdateThreat)
+            self:RegisterEvent('PLAYER_REGEN_ENABLED', UpdateThreat)
+            self:RegisterEvent('PLAYER_TARGET_CHANGED', UpdateThreat)
+        end		
     end
 
     if (unit == 'focus') then

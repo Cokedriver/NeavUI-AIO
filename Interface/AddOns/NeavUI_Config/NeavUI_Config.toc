@@ -1,4 +1,4 @@
-## Interface: 40300
+## Interface: 50400
 ## Title: |cffCC3333N|r|cffE53300e|r|cffFF4D00a|r|cffFF6633v|rUI Config
 ## Notes: Ace Config for NeavUI
 ## Author: Neav / Cokedrivers

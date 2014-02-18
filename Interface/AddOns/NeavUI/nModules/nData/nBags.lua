@@ -138,13 +138,13 @@ if C['nData'].bags and C['nData'].bags > 0 then
 			Text:SetText(hexa.."Bags: "..hexb.. freeSlots.. '/' ..totalSlots)
 				if freeSlots < 6 then
 					Text:SetTextColor(1,0,0)
-					N.Flash(Text, .5)
+					--N.Flash(Text, .5)
 				elseif freeSlots < 10 then
 					Text:SetTextColor(1,0,0)
-					N.Flash(Text, 1)
+					--N.Flash(Text, 1)
 				elseif freeSlots > 10 then
 					Text:SetTextColor(1,1,1)
-					N.SFlash(Text)
+					--N.SFlash(Text)
 				end
 			self:SetAllPoints(Text)
 			

@@ -151,7 +151,6 @@ local function GetItemLevel(unit)
         'Trinket1',
         'MainHand',
         'SecondaryHand',
-        'Ranged',
     }) do
         local slot = GetInventoryItemLink(unit, GetInventorySlotInfo(v..'Slot'))
         if (slot ~= nil) then
@@ -225,6 +224,9 @@ end
 
 local function GetFormattedUnitString(unit) 
     if (UnitIsPlayer(unit)) then
+		if (not UnitRace(unit)) then		 
+			return nil		 
+		end	
         return GetFormattedUnitLevel(unit)..UnitRace(unit)..GetFormattedUnitClass(unit)
     else
         return GetFormattedUnitLevel(unit)..GetFormattedUnitClassification(unit)..GetFormattedUnitType(unit)
@@ -307,12 +309,12 @@ local function AddMouseoverTarget(self, unit)
 
     if (UnitExists(unit..'target')) then
         if (UnitName('player') == unitTargetName) then   
-            self:AddLine(format('   '..GetUnitRaidIcon(unit..'target')..'|cffff00ff%s|r', string.upper(YOU)), 1, 1, 1)
+            self:AddLine(format('|cffFFFF00Target|r: '..GetUnitRaidIcon(unit..'target')..'|cffff00ff%s|r', string.upper("** YOU **")), 1, 1, 1)
         else
             if (UnitIsPlayer(unit..'target')) then
-                self:AddLine(format('   '..GetUnitRaidIcon(unit..'target')..'|cff%02x%02x%02x%s|r', unitTargetClassColor.r*255, unitTargetClassColor.g*255, unitTargetClassColor.b*255, unitTargetName:sub(1, 40)), 1, 1, 1)
+                self:AddLine(format('|cffFFFF00Target|r: '..GetUnitRaidIcon(unit..'target')..'|cff%02x%02x%02x%s|r', unitTargetClassColor.r*255, unitTargetClassColor.g*255, unitTargetClassColor.b*255, unitTargetName:sub(1, 40)), 1, 1, 1)
             else
-                self:AddLine(format('   '..GetUnitRaidIcon(unit..'target')..'|cff%02x%02x%02x%s|r', unitTargetReactionColor.r*255, unitTargetReactionColor.g*255, unitTargetReactionColor.b*255, unitTargetName:sub(1, 40)), 1, 1, 1)                 
+                self:AddLine(format('|cffFFFF00Target|r: '..GetUnitRaidIcon(unit..'target')..'|cff%02x%02x%02x%s|r', unitTargetReactionColor.r*255, unitTargetReactionColor.g*255, unitTargetReactionColor.b*255, unitTargetName:sub(1, 40)), 1, 1, 1)                 
             end
         end
     end
@@ -454,6 +456,39 @@ GameTooltip:HookScript('OnTooltipCleared', function(self)
         self:SetBeautyBorderColor(1, 1, 1)
     end
 end)
+
+    -- Hide coalesced/interactive realm information
+
+
+if (C['nTooltip'].hideRealmText) then
+    local COALESCED_REALM_TOOLTIP1 = string.split(FOREIGN_SERVER_LABEL, COALESCED_REALM_TOOLTIP)
+    local INTERACTIVE_REALM_TOOLTIP1 = string.split(INTERACTIVE_SERVER_LABEL, INTERACTIVE_REALM_TOOLTIP)
+    -- Dirty checking of the coalesced realm text because it's added
+    -- after the initial OnShow
+    GameTooltip:HookScript('OnUpdate', function(self)
+        for i = 3, self:NumLines() do
+            local row = _G['GameTooltipTextLeft'..i]
+            local rowText = row:GetText()
+
+
+            if (rowText) then
+                if (rowText:find(COALESCED_REALM_TOOLTIP1) or rowText:find(INTERACTIVE_REALM_TOOLTIP1)) then
+                    row:SetText(nil)
+                    row:Hide()
+
+
+                    local previousRow = _G['GameTooltipTextLeft'..(i - 1)]
+                    previousRow:SetText(nil)
+                    previousRow:Hide()
+
+
+                    self:Show()
+                end
+            end
+        end
+    end)
+end
+
 
 hooksecurefunc('GameTooltip_SetDefaultAnchor', function(self, parent)
     if (C['nTooltip'].showOnMouseover) then

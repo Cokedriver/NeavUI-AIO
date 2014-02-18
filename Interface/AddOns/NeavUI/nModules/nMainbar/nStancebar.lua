@@ -2,15 +2,14 @@ local N, C, DB = unpack(select(2, ...)) -- Import:  N - function; C - config; DB
 
 if C['nMainbar'].enable ~= true then return end
 
-ShapeshiftBarFrame:SetFrameStrata('HIGH')
+StanceBarFrame:SetFrameStrata('HIGH')
 
-ShapeshiftBarFrame:SetScale(C['nMainbar'].stanceBar.scale)
-ShapeshiftBarFrame:SetAlpha(C['nMainbar'].stanceBar.alpha)
-
+StanceBarFrame:SetScale(C['nMainbar'].stanceBar.scale)
+StanceBarFrame:SetAlpha(C['nMainbar'].stanceBar.alpha)
 
 if (C['nMainbar'].stanceBar.hide) then
-    for i = 1, NUM_SHAPESHIFT_SLOTS do
-        local button = _G['ShapeshiftButton'..i]
+    for i = 1, NUM_STANCE_SLOTS do
+        local button = _G['StanceButton'..i]
         button:SetAlpha(0)
         button.SetAlpha = function() end
 

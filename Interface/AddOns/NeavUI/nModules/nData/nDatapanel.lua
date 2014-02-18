@@ -15,13 +15,39 @@ local PanelCenter = CreateFrame('Frame', 'PanelCenter', UIParent)
 local PanelRight = CreateFrame('Frame', 'PanelRight', UIParent)
 local BattleGroundPanel = CreateFrame('Frame', 'BattleGroundPanel', UIParent)
 	
-if not C['nMainbar'].MainMenuBar.shortBar then
+	
+
+if C['nMainbar'].shortBar == true then	
+	DataPanel:SetPoint('BOTTOM', UIParent, 0, 0)
+	DataPanel:SetHeight(35)
+	DataPanel:SetWidth(725)
+	DataPanel:SetFrameStrata('LOW')
+	DataPanel:SetFrameLevel(0)
+	
+	-- Left Panel
+	PanelLeft:SetPoint('LEFT', DataPanel, 5, 0)
+	PanelLeft:SetHeight(35)
+	PanelLeft:SetWidth(725 / 2)
+	PanelLeft:SetFrameStrata('LOW')
+	PanelLeft:SetFrameLevel(1)				
+
+	-- Right panel
+	PanelRight:SetPoint('RIGHT', DataPanel, -5, 0)
+	PanelRight:SetHeight(35)
+	PanelRight:SetWidth(725 / 2)
+	PanelRight:SetFrameStrata('LOW')
+	PanelRight:SetFrameLevel(1)		
+
+	-- Battleground Panel
+	BattleGroundPanel:SetAllPoints(PanelLeft)
+	BattleGroundPanel:SetFrameStrata('LOW')
+	BattleGroundPanel:SetFrameLevel(1)
+else
 	DataPanel:SetPoint('BOTTOM', UIParent, 0, 0)
 	DataPanel:SetHeight(35)
 	DataPanel:SetWidth(1200)
 	DataPanel:SetFrameStrata('LOW')
 	DataPanel:SetFrameLevel(0)
-	DataPanel:SetBackdropColor(0, 0, 0, 1)
 	
 	-- Left Panel
 	PanelLeft:SetPoint('LEFT', DataPanel, 5, 0)
@@ -47,34 +73,7 @@ if not C['nMainbar'].MainMenuBar.shortBar then
 	-- Battleground Panel
 	BattleGroundPanel:SetAllPoints(PanelLeft)
 	BattleGroundPanel:SetFrameStrata('LOW')
-	BattleGroundPanel:SetFrameLevel(1)
-	
-else 
-	DataPanel:SetPoint('BOTTOM', UIParent, 0, 0)
-	DataPanel:SetHeight(35)
-	DataPanel:SetWidth(725)
-	DataPanel:SetFrameStrata('LOW')
-	DataPanel:SetFrameLevel(0)
-	DataPanel:SetBackdropColor(0, 0, 0, 1)
-	
-	-- Left Panel
-	PanelLeft:SetPoint('LEFT', DataPanel, 5, 0)
-	PanelLeft:SetHeight(35)
-	PanelLeft:SetWidth(725 / 2)
-	PanelLeft:SetFrameStrata('LOW')
-	PanelLeft:SetFrameLevel(1)				
-
-	-- Right panel
-	PanelRight:SetPoint('RIGHT', DataPanel, -5, 0)
-	PanelRight:SetHeight(35)
-	PanelRight:SetWidth(725 / 2)
-	PanelRight:SetFrameStrata('LOW')
-	PanelRight:SetFrameLevel(1)		
-
-	-- Battleground Panel
-	BattleGroundPanel:SetAllPoints(PanelLeft)
-	BattleGroundPanel:SetFrameStrata('LOW')
-	BattleGroundPanel:SetFrameLevel(1)		
+	BattleGroundPanel:SetFrameLevel(1)	
 	
 end
 
@@ -106,13 +105,13 @@ end
 local bottom = function() end
 if C['nData'].databorder == 'Neav' then
 	MainMenuBar:ClearAllPoints() MainMenuBar:SetPoint("BOTTOM", DataPanel, "TOP", 0, 0) MainMenuBar.ClearAllPoints = bottom MainMenuBar.SetPoint = bottom
-	VehicleMenuBar:ClearAllPoints() VehicleMenuBar:SetPoint("BOTTOM", DataPanel, "TOP", 0, 4) VehicleMenuBar.ClearAllPoints = bottom VehicleMenuBar.SetPoint = bottom
+	OverrideActionBar:ClearAllPoints() OverrideActionBar:SetPoint("BOTTOM", DataPanel, "TOP", 0, 4) OverrideActionBar.ClearAllPoints = bottom OverrideActionBar.SetPoint = bottom
 	PetActionBarFrame:ClearAllPoints() PetActionBarFrame:SetPoint("BOTTOM", MainMenuBar, "TOP", 40, 47) PetActionBarFrame.ClearAllPoints = bottom PetActionBarFrame.SetPoint = bottom	
 	WorldStateAlwaysUpFrame:ClearAllPoints() WorldStateAlwaysUpFrame:SetPoint('TOP', -20, -40) WorldStateAlwaysUpFrame.ClearAllpoints = bottom WorldStateAlwaysUpFrame.Setpoint = bottom
 	BuffFrame:ClearAllPoints() BuffFrame:SetPoint('TOP', MinimapCluster, -110, -15) BuffFrame.ClearAllPoints = bottom BuffFrame.SetPoint = bottom
 else
 	MainMenuBar:ClearAllPoints() MainMenuBar:SetPoint("BOTTOM", DataPanel, "TOP", 0, -3) MainMenuBar.ClearAllPoints = bottom MainMenuBar.SetPoint = bottom
-	VehicleMenuBar:ClearAllPoints() VehicleMenuBar:SetPoint("BOTTOM", DataPanel, "TOP", 0, -3) VehicleMenuBar.ClearAllPoints = bottom VehicleMenuBar.SetPoint = bottom
+	OverrideActionBar:ClearAllPoints() OverrideActionBar:SetPoint("BOTTOM", DataPanel, "TOP", 0, -3) OverrideActionBar.ClearAllPoints = bottom OverrideActionBar.SetPoint = bottom
 	PetActionBarFrame:ClearAllPoints() PetActionBarFrame:SetPoint("BOTTOM", MainMenuBar, "TOP", 40, 47) PetActionBarFrame.ClearAllPoints = bottom PetActionBarFrame.SetPoint = bottom		
 	WorldStateAlwaysUpFrame:ClearAllPoints() WorldStateAlwaysUpFrame:SetPoint('TOP', -20, -40) WorldStateAlwaysUpFrame.ClearAllpoints = bottom WorldStateAlwaysUpFrame.Setpoint = bottom
 	BuffFrame:ClearAllPoints() BuffFrame:SetPoint('TOP', MinimapCluster, -110, -15) BuffFrame.ClearAllPoints = bottom BuffFrame.SetPoint = bottom
@@ -133,7 +132,7 @@ CONTAINER_OFFSET_Y = 70;
 CONTAINER_OFFSET_X = 0;
 
  
-function updateContainerFrameAnchors()
+function UpdateContainerFrameAnchors()
 	local _, xOffset, yOffset, _, _, _, _;
 	local containerScale = 1;
 	screenHeight = GetScreenHeight() / containerScale;

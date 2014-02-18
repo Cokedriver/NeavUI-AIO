@@ -10,7 +10,7 @@ DB["nMedia"] = {
 	border = "Default",
 	color = { r = 1, g = 1, b = 1, 1},
 	font = "Express Freeway",
-	fontSize = 14,	
+	fontSize = 15,	
 	warnsound = "Warning",
 }
 
@@ -48,9 +48,10 @@ DB['nChat'] = {
     chatOutline = false,
 	chatBorder = true,
 
-    enableBottomButton = true, 
+    enableBottomButton = false, 
     enableHyperlinkTooltip = true, 
     enableBorderColoring = true,
+	showInputBoxAbove = true,  -- Show the chat input box above the chat window
 
     tab = {
         fontSize = 15,
@@ -81,8 +82,10 @@ DB['nCore'] = {
 		ExcludeRandoms = true,
 		DisableBlizzardAutoComplete = false,
 		UseAutoComplete = true,
-	},		
+	},
+	btsw = true,	
 	coords = true,
+	cbop = true,
 	durability = true,
 	-- FacePaint is still a W.I.P.
 	facepaint = {
@@ -109,10 +112,6 @@ DB['nCore'] = {
 		autocomplete = false,	
 	},
 	quicky = true,
-	selfbuffs = {
-		enable = true,
-		playsound = true,	
-	},
 	skins = true,
 	spellid = true,
 	warning = true,
@@ -125,25 +124,27 @@ DB['nCore'] = {
 DB['nData'] = {
 	
 	enable = true,
-	databorder = 'Blizzard',	
-	fontsize = 15,                                  	-- font size for panels.
+	--shortbar = true,
+	databorder = 'Blizzard',
+	fontsize = 15,										-- font size for panels.
+	fontColor = 'Classcolor',
 	bags = 9,                                       	-- show space used in bags on panel.
 	system = 0,                                     	-- show total memory and others systems info (FPS/MS) on panel.
 	wowtime = 0,                                    	-- show time on panel.
-	guild = 0,                                      	-- show number on guildmate connected on panel.
+	guild = 4,                                      	-- show number on guildmate connected on panel.
 	dur = 8,                                        	-- show your equipment durability on panel.
-	friends = 7,                                    	-- show number of friends connected.
+	friends = 6,                                    	-- show number of friends connected.
 	dps_text = 0,                                   	-- show a dps meter on panel.
 	hps_text = 0,                                   	-- show a heal meter on panel.
 	spec = 5,											-- show your current spec on panel.
 	zone = 0,											-- show your current zone on panel.
 	coords = 0,											-- show your current coords on panel.
-	pro = 4,											-- shows your professions and tradeskills
+	pro = 7,											-- shows your professions and tradeskills
 	stat1 = 1,											-- Stat Based on your Role (Avoidance-Tank, AP-Melee, SP/HP-Caster)
 	stat2 = 3,											-- Stat Based on your Role (Armor-Tank, Crit-Melee, Crit-Caster)
 	recount = 2,										-- Stat Based on Recount"s DPS
 	recountraiddps = false,								-- Enables tracking or Recounts Raid DPS
-	calltoarms = 6,										-- Show Current Call to Arms.
+	calltoarms = 0,										-- Show Current Call to Arms.
 	
 	battleground = true,                            	-- enable 3 stats in battleground only that replace stat1,stat2,stat3.
 
@@ -172,6 +173,11 @@ DB['nMainbar'] = {
 	enable = true,
 	
     showPicomenu = true,
+    scale = 1,
+    hideGryphons = false,       
+    shortBar = false,
+    skinButton = true,   
+	moveableExtraBars = false,      -- Make the pet, possess, shapeshift and totembar moveable, even when the mainmenubar is not "short"	
 
     button = { 
         showVehicleKeybinds = true,
@@ -186,6 +192,7 @@ DB['nMainbar'] = {
     },
 
     color = {   -- Red, Green, Blue
+		Normal = { r = 1, g = 1, b = 1},
         IsEquipped = { r = 0, g = 1, b = 0 },
         
         OutOfRange = { r = 0.9, g = 0, b = 0 },
@@ -209,13 +216,6 @@ DB['nMainbar'] = {
     },
 
     MainMenuBar = {
-        scale = 1,
-        hideGryphons = false,
-        
-        shortBar = false,
-        skinButton = true,
-        
-        moveableExtraBars = false,      -- Make the pet, possess, shapeshift and totembar moveable, even when the mainmenubar is not "short"
     },
 
     vehicleBar = {
@@ -242,13 +242,13 @@ DB['nMainbar'] = {
     },
 
     multiBarLeft = {
-        mouseover = true,
+        mouseover = false,
         alpha = 1,
         orderHorizontal = false,
     },
 
     multiBarRight = {
-        mouseover = true,
+        mouseover = false,
         alpha = 1,
         orderHorizontal = false,
     },
@@ -278,7 +278,7 @@ DB['nMainbar'] = {
 DB['nMinimap'] = {
 	enable = true,
     tab = {
-        show = true,
+        show = false,
         showAlways = false,
 
         alphaMouseover = 1,
@@ -289,7 +289,7 @@ DB['nMinimap'] = {
 
     mouseover = {
         zoneText = true,
-        instanceDifficulty = false,
+        instanceDifficulty = true,
     },
 }
 
@@ -392,18 +392,19 @@ DB['nTooltip'] = {
     showPVPIcons = false,                       -- Show pvp icons instead of just a prefix
     showMouseoverTarget = true,
     showItemLevel = true,
+	hideRealmText = true,
 
     healthbar = {
-        showHealthValue = false,
+        showHealthValue = true,
 
         healthFormat = '$cur/$max',			-- Possible: $cur, $max, $deficit, $perc, $smartperc, $smartcolorperc, $colorperc
         healthFullFormat = '$cur',              -- if the tooltip unit has 100% hp 
 
-        fontSize = 13,
+        fontSize = 15,
         showOutline = true,
         textPos = 'CENTER',                     -- Possible 'TOP' 'BOTTOM' 'CENTER'
 
-        reactionColoring = true,               -- Overrides customColor 
+        reactionColoring = false,               -- Overrides customColor 
         customColor = {
             apply = false, 
             color = {r = 0, g = 1, b = 1},
@@ -450,18 +451,16 @@ DB['nUnitframes'] = {
 
     font = { 
         normalSize = 13,
-        normalBigSize = 14,
+        normalBigSize = 15,
     },
 
     units = {
         ['player'] = {
-            scale = 1.193,
+            scale = 1.1,
             style = 'NORMAL',                                                               -- 'NORMAL' 'RARE' 'ELITE' 'CUSTOM'
-
-            mouseoverText = false,
+			customTexture = 'Interface\\AddOns\\oUF_Neav\\media\\customFrameTexture',       -- Custom texture if style = 'CUSTOM'
 			
-			-- Tags are not Included on the In_Game Options. 
-			-- IF YOU WANT TO CHANGE TAGS THEY MUST BE CHANGED HERE IN THE LUA.
+            mouseoverText = false,
             healthTag = '$cur/$max',
             healthTagFull = '$cur',
             powerTag = '$cur/$max',
@@ -472,6 +471,7 @@ DB['nUnitframes'] = {
             showSwingTimer = false,                                                         -- Change the pos in the NeavUI file if you want both
             showStatusFlash = true,
             showCombatFeedback = false,
+			showThreat = false,
 
             position = {
 				selfAnchor ='TOPLEFT',
@@ -511,7 +511,7 @@ DB['nUnitframes'] = {
         },
 
         ['pet'] = {
-            scale = 1.193,
+            scale = 1.1,
 
             auraSize = 22,
 	
@@ -563,7 +563,7 @@ DB['nUnitframes'] = {
         },
 
         ['target'] = {
-            scale = 1.193,
+            scale = 1.1,
 
             numBuffs = 20,
             numDebuffs = 20,
@@ -621,7 +621,7 @@ DB['nUnitframes'] = {
         },
 
         ['targettarget'] = {
-            scale = 1.193,
+            scale = 1.1,
             disableAura = false,                                                             -- Disable Auras on this unitframe
 
             mouseoverText = false,
@@ -633,7 +633,7 @@ DB['nUnitframes'] = {
        },
 
         ['focus'] = {
-            scale = 1.193,
+            scale = 1.1,
 
             numDebuffs = 6,
             
@@ -673,7 +673,7 @@ DB['nUnitframes'] = {
         },
 
         ['focustarget'] = {
-            scale = 1.193,
+            scale = 1.1,
 
             mouseoverText = false,
 			
@@ -684,7 +684,7 @@ DB['nUnitframes'] = {
         },
 
         ['party'] = {
-            scale = 1.11,
+            scale = 1.1,
             show = false,
             hideInRaid = true,
 
@@ -771,6 +771,9 @@ DB['nUnitframes'] = {
                 },
 
             },
+            buffList = { -- A whitelist for buffs to display on arena frames
+                'Power Word: Shield',
+            },			
         },
     },
 }
@@ -780,7 +783,7 @@ DB['nUnitframes'] = {
 --------------------
 
 DB['nRaidframes'] = {
-	enable = false,
+	enable = true,
 
     font = {
         fontSmallSize = 11,
@@ -789,7 +792,7 @@ DB['nRaidframes'] = {
 
     units = {
         ['raid'] = {
-            showSolo = true,
+            showSolo = false,
             showParty = false,
 
             nameLength = 4,
@@ -825,7 +828,7 @@ DB['nRaidframes'] = {
 
             manabar = {
                 show = true,
-                horizontalOrientation = false,
+                horizontalOrientation = true,
             },
         },
     },

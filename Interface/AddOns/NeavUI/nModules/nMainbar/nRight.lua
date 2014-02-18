@@ -3,7 +3,7 @@ local N, C, DB = unpack(select(2, ...)) -- Import:  N - function; C - config; DB
 if C['nMainbar'].enable ~= true then return end
 
 MultiBarRight:SetAlpha(C['nMainbar'].multiBarRight.alpha)
-MultiBarRight:SetScale(C['nMainbar'].MainMenuBar.scale)
+MultiBarRight:SetScale(C['nMainbar'].scale)
 
 if (C['nMainbar'].multiBarRight.orderHorizontal) then
     for i = 2, 12 do

@@ -3,7 +3,6 @@ local N, C, DB = unpack(select(2, ...)) -- Import:  N - function; C - config; DB
 if C['nUnitframes'].enable ~= true then return end
 
 local function UpdateCastbarColor(self, unit, config)
-	local config = C['nUnitframes'].units[N.cUnit(unit)].castbar
     if (self.interrupt) then
         N.ColorBorder(self, 'white', config.interruptColor.r, config.interruptColor.g, config.interruptColor.b)
 

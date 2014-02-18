@@ -2,26 +2,15 @@ local N, C, DB = unpack(select(2, ...)) -- Import:  N - function; C - config; DB
 
 if C['nMainbar'].enable ~= true then return end
 
-if (not C['nMainbar'].MainMenuBar.shortBar and not C['nMainbar'].MainMenuBar.moveableExtraBars) then
+if (not C['nMainbar'].shortBar and not C['nMainbar'].moveableExtraBars) then
     return
-end
-
-function ShapeshiftBar_Update()
-    local numForms = GetNumShapeshiftForms()
-    if (numForms > 0) then
-        ShapeshiftBarFrame:Show()
-    else
-        ShapeshiftBarFrame:Hide()
-    end
-
-    securecall('ShapeshiftBar_UpdateState')
 end
 
     -- moveable bars
 
 for _, frame in pairs({        
     _G['PetActionBarFrame'],
-    _G['ShapeshiftBarFrame'],
+    _G['StanceBarFrame'],
     _G['PossessBarFrame'],
     _G['MultiCastActionBarFrame'],
 }) do
@@ -33,10 +22,10 @@ end
 for _, button in pairs({        
     _G['PossessButton1'],
     _G['PetActionButton1'],
-    _G['ShapeshiftButton1'],
+    _G['StanceButton1'],
 }) do
     button:ClearAllPoints()
-    button:SetPoint('CENTER', UIParent, -100)
+    button:SetPoint("BOTTOM", DataPanel, "TOP", -165, 140)
 
     button:SetMovable(true)
     button:SetUserPlaced(true)

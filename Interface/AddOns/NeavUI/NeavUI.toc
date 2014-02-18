@@ -1,11 +1,11 @@
-## Interface: 40300
+## Interface: 50400
 ## Author: Neav / Cokedriver
-## Version: 1.2
+## Version: 5.3.0
 ## Title: |cffCC3333N|r|cffE53300e|r|cffFF4D00a|r|cffFF6633v|rUI
 ## SavedVariables: NeavDB
 ## SavedVariablesPerCharacter: NeavDBPerCharacter
 ## RequiredDeps: NeavUI_Config
-## OptionalDeps: Blizzard_TimeManager
+## OptionalDeps: Blizzard_TimeManager, Blizzard_TradeSkillUI
 
 <! -- Ace Libs -- >
 nLibs\nLibs.xml
@@ -54,6 +54,8 @@ nModules\nChat\nUrlcopy.lua
 nModules\nChat\nWhisper.lua
 
 <! -- nCore -- >
+nModules\nCore\BiggerTradeskill.lua
+nModules\nCore\CBOP.lua
 nModules\nCore\nAltbuy.lua
 nModules\nCore\nAutogreed.lua
 nModules\nCore\nBlackBook.lua
@@ -66,7 +68,6 @@ nModules\nCore\nMerchant.lua
 nModules\nCore\nOmniCC.lua
 nModules\nCore\nQuest.lua
 nModules\nCore\nQuicky.lua
-nModules\nCore\nSelfbuffs.lua
 nModules\nCore\nSkins.lua
 nModules\nCore\nSpellid.lua
 nModules\nCore\nWarning.lua

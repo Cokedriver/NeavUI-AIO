@@ -6,8 +6,6 @@
 	<Include file="AceAddon-3.0\AceAddon-3.0.xml"/>
 	<Include file="AceEvent-3.0\AceEvent-3.0.xml"/>
 	<Include file="AceHook-3.0\AceHook-3.0.xml"/>
-	<Include file="LibCrayon-3.0\LibCrayon-3.0.xml"/>
-	<Include file="LibMounts-1.0\LibMounts-1.0.xml"/>
-	<Include file="LibQTip-1.0\LibQTip-1.0.xml"/>
 	<Include file="LibSharedMedia-3.0\LibSharedMedia-3.0.xml"/>
+		<Script file="LibStub\tekShiner.lua"/>
 </Ui>

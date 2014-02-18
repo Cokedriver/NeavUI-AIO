@@ -2,15 +2,10 @@ local N, C, DB = unpack(select(2, ...)) -- Import:  N - function; C - config; DB
 
 if C['nMainbar'].enable ~= true then return end
 
-if (not C['nMainbar'].MainMenuBar.shortBar) then
-    return
-end
 
 if (not C['nMainbar'].showPicomenu) then
     return
 end
-
--- INTERFACE_ACTION_BLOCKED = ''
 
 local x, x2, n = nil, false
 local v1, v2, v3, v4, v5, v6, v7, v8, v9, v10, v11
@@ -26,126 +21,176 @@ local menuList = {
     {
         text = CHARACTER_BUTTON,
         icon = 'Interface\\PaperDollInfoFrame\\UI-EquipmentManager-Toggle',
-        func = function() 
-            securecall(ToggleCharacter, 'PaperDollFrame') 
+        func = function()
+            securecall(ToggleCharacter, 'PaperDollFrame')
         end,
-                tooltipTitle = 'MOOO',
         notCheckable = true,
     },
     {
         text = SPELLBOOK_ABILITIES_BUTTON,
         icon = 'Interface\\MINIMAP\\TRACKING\\Class',
-        func = function() 
+        func = function()
             securecall(ToggleSpellBook, BOOKTYPE_SPELL)
         end,
+        tooltipTitle = securecall(MicroButtonTooltipText, SPELLBOOK_ABILITIES_BUTTON, 'TOGGLESPELLBOOK'),
+        tooltipText = NEWBIE_TOOLTIP_SPELLBOOK,
         notCheckable = true,
     },
     {
         text = TALENTS_BUTTON,
         icon = 'Interface\\MINIMAP\\TRACKING\\Ammunition',
-        -- icon = 'Interface\\AddOns\\NeavUI\\nMedia\\nTextures\\picomenuTalents',
-        func = function() 
-			if (not PlayerTalentFrame) then 
-                LoadAddOn('Blizzard_TalentUI') 
+        -- icon = 'Interface\\AddOns\\nMainbar\\media\\picomenu\\picomenuTalents',
+        func = function()
+            if (not PlayerTalentFrame) then
+                LoadAddOn('Blizzard_TalentUI')
             end
 
-			if (not GlyphFrame) then 
-                LoadAddOn('Blizzard_GlyphUI') 
-            end 
+            if (not GlyphFrame) then
+                LoadAddOn('Blizzard_GlyphUI')
+            end
 
-			PlayerTalentFrame_Toggle()
+            --PlayerTalentFrame_Toggle()
+            securecall(ToggleTalentFrame)
         end,
+        tooltipTitle = securecall(MicroButtonTooltipText, TALENTS_BUTTON, 'TOGGLETALENTS'),
+        tooltipText = NEWBIE_TOOLTIP_TALENTS,
         notCheckable = true,
     },
     {
         text = ACHIEVEMENT_BUTTON,
-        icon = 'Interface\\AddOns\\NeavUI\\nMedia\\nTextures\\picomenuAchievement',
-        func = function() 
-            securecall(ToggleAchievementFrame) 
+        icon = 'Interface\\AddOns\\nMainbar\\media\\picomenu\\picomenuAchievement',
+        func = function()
+            securecall(ToggleAchievementFrame)
         end,
+        tooltipTitle = securecall(MicroButtonTooltipText, ACHIEVEMENT_BUTTON, 'TOGGLEACHIEVEMENT'),
+        tooltipText = NEWBIE_TOOLTIP_ACHIEVEMENT,
         notCheckable = true,
     },
     {
         text = QUESTLOG_BUTTON,
         icon = 'Interface\\GossipFrame\\ActiveQuestIcon',
-        func = function() 
-            securecall(ToggleFrame, QuestLogFrame) 
+        func = function()
+            securecall(ToggleFrame, QuestLogFrame)
         end,
+        tooltipTitle = securecall(MicroButtonTooltipText, QUESTLOG_BUTTON, 'TOGGLEQUESTLOG'),
+        tooltipText = NEWBIE_TOOLTIP_QUESTLOG,
         notCheckable = true,
     },
     {
         text = GUILD,
         icon = 'Interface\\GossipFrame\\TabardGossipIcon',
         arg1 = IsInGuild('player'),
-        func = function() 
-            ToggleGuildFrame()
+        func = function()
+            if (IsTrialAccount()) then
+                UIErrorsFrame:AddMessage(ERR_RESTRICTED_ACCOUNT, 1, 0, 0)
+            else
+                securecall(ToggleGuildFrame)
+            end
         end,
         notCheckable = true,
     },
     {
         text = SOCIAL_BUTTON,
         icon = 'Interface\\FriendsFrame\\PlusManz-BattleNet',
-        func = function() 
-            securecall(ToggleFriendsFrame, 1) 
+        func = function()
+            securecall(ToggleFriendsFrame, 1)
         end,
         notCheckable = true,
     },
     {
         text = PLAYER_V_PLAYER,
         icon = 'Interface\\MINIMAP\\TRACKING\\BattleMaster',
-        func = function() 
-            securecall(ToggleFrame, PVPFrame) 
+        func = function()
+            if (not PVPUIFrame) then
+                securecall(PVP_LoadUI)
+            end
+            securecall(PVPUIFrame_ShowFrame)
         end,
+        tooltipTitle = securecall(MicroButtonTooltipText, PLAYER_V_PLAYER, 'TOGGLECHARACTER4'),
+        tooltipText = NEWBIE_TOOLTIP_PVP,
         notCheckable = true,
     },
     {
         text = DUNGEONS_BUTTON,
-        icon = 'Interface\\MINIMAP\\TRACKING\\None',
-        func = function() 
-            securecall(ToggleLFDParentFrame)
+        icon = 'Interface\\LFGFRAME\\BattleNetWorking0',
+        func = function()
+            securecall(PVEFrame_ToggleFrame, 'GroupFinderFrame', LFDParentFrame)
+        end,
+        tooltipTitle = securecall(MicroButtonTooltipText, DUNGEONS_BUTTON, 'TOGGLELFGPARENT'),
+        tooltipText = NEWBIE_TOOLTIP_LFGPARENT,
+        notCheckable = true,
+    },
+    {
+        text = CHALLENGES,
+        icon = 'Interface\\BUTTONS\\UI-GroupLoot-DE-Up',
+        func = function()
+            securecall(PVEFrame_ToggleFrame, 'ChallengesFrame')
         end,
         notCheckable = true,
     },
     {
         text = RAID_FINDER,
-        icon = 'Interface\\MINIMAP\\TRACKING\\None',
-        func = function() 
-            securecall(ToggleFrame, RaidParentFrame)
+        icon = 'Interface\\TARGETINGFRAME\\UI-TargetingFrame-Skull',
+        func = function()
+            securecall(PVEFrame_ToggleFrame, 'GroupFinderFrame', RaidFinderFrame)
         end,
         notCheckable = true,
     },
     {
         text = RAID,
         icon = 'Interface\\TARGETINGFRAME\\UI-TargetingFrame-Skull',
-        func = function() 
+        func = function()
             securecall(ToggleFriendsFrame, 4)
         end,
         notCheckable = true,
     },
     {
+        text = MOUNTS_AND_PETS,
+        icon = 'Interface\\MINIMAP\\TRACKING\\StableMaster',
+        func = function()
+            securecall(TogglePetJournal)
+        end,
+        tooltipTitle = securecall(MicroButtonTooltipText, MOUNTS_AND_PETS, 'TOGGLEPETJOURNAL'),
+        tooltipText = NEWBIE_TOOLTIP_MOUNTS_AND_PETS,
+        notCheckable = true,
+    },
+    {
         text = ENCOUNTER_JOURNAL,
         icon = 'Interface\\MINIMAP\\TRACKING\\Profession',
-        func = function() 
+        func = function()
             securecall(ToggleEncounterJournal)
         end,
+        tooltipTitle = securecall(MicroButtonTooltipText, ENCOUNTER_JOURNAL, 'TOGGLEENCOUNTERJOURNAL'),
+        tooltipText = NEWBIE_TOOLTIP_ENCOUNTER_JOURNAL,
         notCheckable = true,
     },
     {
         text = GM_EMAIL_NAME,
         icon = 'Interface\\CHATFRAME\\UI-ChatIcon-Blizz',
-        func = function() 
-            securecall(ToggleHelpFrame) 
+        func = function()
+            securecall(ToggleHelpFrame)
         end,
+        tooltipTitle = HELP_BUTTON,
+        tooltipText = NEWBIE_TOOLTIP_HELP,
         notCheckable = true,
     },
     {
         text = BATTLEFIELD_MINIMAP,
         colorCode = '|cff999999',
-        func = function() 
-            securecall(ToggleBattlefieldMinimap) 
+        func = function()
+            securecall(ToggleBattlefieldMinimap)
         end,
         notCheckable = true,
     },
+    {
+        text = BLIZZARD_STORE,
+        icon = 'Interface\\MINIMAP\\TRACKING\\Auctioneer',
+        func = function()
+            StoreMicroButton:Click()
+        end,
+        notCheckable = true,
+    }
+	
 }
 
 local addonMenuTable = {
@@ -154,22 +199,22 @@ local addonMenuTable = {
         isTitle = true,
         notCheckable = true,
     },
-    {   text = ADDONS, 
+    {   text = ADDONS,
         hasArrow = true,
         notCheckable = true,
         menuList = {
-            { 
-                text = ADDONS, 
+            {
+                text = ADDONS,
                 isTitle = true,
                 notCheckable = true,
             },
-        } 
+        }
     }
 }
 
 local function UpdateAddOnTable()
     if (IsAddOnLoaded('oUF_NeavRaid') and not v1) then
-        x = true      
+        x = true
         n = (#addonMenuTable[2].menuList)+1
         v1 = true
         addonMenuTable[2].menuList[n] = {
@@ -393,8 +438,6 @@ f:SetScript('OnMouseUp', function(self, button)
                 DropDownList1:Hide()
             else
                 securecall(EasyMenu, menuList, menuFrame, self, 27, 190, 'MENU', 8)
-                -- DropDownList1:ClearAllPoints()
-                -- DropDownList1:SetPoint('BOTTOMLEFT', self, 'TOPRIGHT')
             end
         end
     else

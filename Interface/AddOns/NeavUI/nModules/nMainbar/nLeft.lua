@@ -3,7 +3,7 @@ local N, C, DB = unpack(select(2, ...)) -- Import:  N - function; C - config; DB
 if C['nMainbar'].enable ~= true then return end
 
 MultiBarLeft:SetAlpha(C['nMainbar'].multiBarLeft.alpha)
-MultiBarLeft:SetScale(C['nMainbar'].MainMenuBar.scale)
+MultiBarLeft:SetScale(C['nMainbar'].scale)
 
 MultiBarLeft:SetParent(UIParent)
 
@@ -17,7 +17,7 @@ if (C['nMainbar'].multiBarLeft.orderHorizontal) then
     MultiBarLeftButton1:HookScript('OnShow', function(self)
         self:ClearAllPoints()
 
-        if (not C['nMainbar'].MainMenuBar.shortBar) then
+        if (not C['nMainbar'].shortBar) then
             self:SetPoint('BOTTOMLEFT', MultiBarBottomLeftButton1, 'TOPLEFT', 0, 6)
         else
             if (C['nMainbar'].multiBarRight.orderHorizontal) then

@@ -15,35 +15,17 @@ local UnitName = UnitName
 local UnitCastingInfo = UnitCastingInfo
 local UnitChannelInfo = UnitChannelInfo
 
-local borderColor = {0.38, 0.38, 0.38}
+local borderColor = {0.47, 0.47, 0.47}
 local noThreatColor = {0, 1, 0}
-
-local nameplateFlashTexture = 'Interface\\TargetingFrame\\UI-TargetingFrame-Flash'
 
 local glowTexture = 'Interface\\AddOns\\NeavUI\\nMedia\\nTextures\\NameplateNewGlow'
 local overlayTexture = 'Interface\\AddOns\\NeavUI\\nMedia\\nTextures\\NameplateOverlay'
 local whiteOverlay = 'Interface\\AddOns\\NeavUI\\nMedia\\nTextures\\NameplateIconOverlay'
 
-local total = -1
-local namePlate, frames
-
 local f = CreateFrame('Frame', nil, UIParent)
 
-f.elapsed = 0  
-f.elapsedLong = 0  
-
-
-f:RegisterEvent('PLAYER_TARGET_CHANGED')
-
---[[
-f:RegisterEvent('UNIT_TARGET')
-f:RegisterEvent('UNIT_THREAT_SITUATION_UPDATE')
-f:RegisterEvent('UNIT_THREAT_LIST_UPDATE')
-f:RegisterEvent('PLAYER_REGEN_ENABLED')
-f:RegisterEvent('PLAYER_REGEN_DISABLED')
-f:RegisterEvent('PLAYER_CONTROL_LOST')
-f:RegisterEvent('PLAYER_CONTROL_GAINED')
---]]
+f.elapsed = 0
+f.elapsedLong = 0
 
     -- Totem data and functions
 
@@ -58,27 +40,25 @@ local function TotemIcon(SpellID)
 end
 
 local totemData = {
+    -- Air
     [TotemName(8177)] = {TotemIcon(8177)}, -- Grounding Totem
-    [TotemName(8512)] = {TotemIcon(8512)}, -- Windfury Totem
-    [TotemName(3738)] = {TotemIcon(3738)}, -- Wrath of Air Totem
+    [TotemName(108269)] = {TotemIcon(108269)}, -- Capacitor Totem
+    [TotemName(120668)] = {TotemIcon(120668)}, -- Stormlash Totem
+    [TotemName(98009)] = {TotemIcon(98008)}, -- Spirit Link Totem
 
+    -- Earth
     [TotemName(2062)] = {TotemIcon(2062)}, -- Earth Elemental Totem
     [TotemName(2484)] = {TotemIcon(2484)}, -- Earthbind Totem
-    [TotemName(5730)] = {TotemIcon(5730)}, -- Stoneclaw Totem
-    [TotemName(8071)] = {TotemIcon(8071)}, -- Stoneskin Totem
-    [TotemName(8075)] = {TotemIcon(8075)}, -- Strength of Earth Totem
     [TotemName(8143)] = {TotemIcon(8143)}, -- Tremor Totem
 
+    -- Fire
     [TotemName(2894)] = {TotemIcon(2894)}, -- Fire Elemental Totem
-    [TotemName(8227)] = {TotemIcon(8227)}, -- Flametongue Totem
     [TotemName(8190)] = {TotemIcon(8190)}, -- Magma Totem
     [TotemName(3599)] = {TotemIcon(3599)}, -- Searing Totem
 
-    [TotemName(8184)] = {TotemIcon(8184)}, -- Elemental Resistance Totem
-    [TotemName(5394)] = {TotemIcon(5394)}, -- Healing Stream Totem
-    [TotemName(5675)] = {TotemIcon(5675)}, -- Mana Spring Totem
+    -- Water
     [TotemName(16190)] = {TotemIcon(16190)}, -- Mana Tide Totem
-    [TotemName(87718)] = {TotemIcon(87718)}, -- Totem of Tranquil Mind
+    [TotemName(5394)] = {TotemIcon(5394)}, -- Healing Stream Totem
 }
 
     -- Some general functions
@@ -95,10 +75,10 @@ end
 
 local function RGBHex(r, g, b)
     if (type(r) == 'table') then
-        if (r.r) then 
-            r, g, b = r.r, r.g, r.b 
-        else 
-            r, g, b = unpack(r) 
+        if (r.r) then
+            r, g, b = r.r, r.g, r.b
+        else
+            r, g, b = unpack(r)
         end
     end
 
@@ -123,7 +103,7 @@ local function GetUnitCombatStatus(r, g, b)
     return false
 end
 
-local function IsTarget(self) 
+local function IsTarget(self)
     local targetExists = UnitExists('target')
     if (not targetExists) then
         return false
@@ -138,15 +118,15 @@ local function IsTarget(self)
 end
 
 local function CanHaveThreat(r, g, b)
-    if (r < .01 and b < .01 and g > .99) then 
+    if (r < .01 and b < .01 and g > .99) then
         return false
-    elseif (r < .01 and b > .99 and g < .01) then 
+    elseif (r < .01 and b > .99 and g < .01) then
         return false
-    elseif (r > .99 and b < .01 and g > .99) then 
+    elseif (r > .99 and b < .01 and g > .99) then
         return false
-    elseif (r > .99 and b < .01 and g < .01) then 
+    elseif (r > .99 and b < .01 and g < .01) then
         return true
-    else 
+    else
         return true
     end
 end
@@ -162,8 +142,8 @@ local function UpdateTotemIcon(self)
 
         local icon = totemData[self.Name:GetText()]
         self.Icon:SetBackdrop({
-            bgFile = icon[1], 
-            edgeFile = 'Interface\\Buttons\\WHITE8x8', 
+            bgFile = icon[1],
+            edgeFile = 'Interface\\Buttons\\WHITE8x8',
             edgeSize = 1.5,
             insets = { top = -0, left = -0, bottom = -0, right = -0 },
         })
@@ -190,7 +170,7 @@ local function UpdateThreatColor(self)
     if (lowThreat and not self.Glow:IsVisible() and isEnemy and C['nPlates'].enableTankMode) then
         r, g, b = unpack(noThreatColor)
         self.NewGlow:SetVertexColor(r, g, b)
-        
+
         if (not self.NewGlow:IsVisible()) then
             self.NewGlow:Show()
         end
@@ -223,10 +203,10 @@ end
 local function UpdateHealthText(self)
     local min, max = self.Health:GetMinMaxValues()
     local currentValue = self.Health:GetValue()
-    local perc = (currentValue/max)*100	
+    local perc = (currentValue/max)*100
 
     if (perc >= 100 and currentValue > 5 and C['nPlates'].showFullHP) then
-        self.Health.Value:SetFormattedText('%s', FormatValue(currentValue))		
+        self.Health.Value:SetFormattedText('%s', FormatValue(currentValue))
     elseif (perc < 100 and currentValue > 5) then
         self.Health.Value:SetFormattedText('%s - %.0f%%', FormatValue(currentValue), perc-0.5)
     else
@@ -269,10 +249,10 @@ local function UpdateNameL(self)
     if (C['nPlates'].abbrevLongNames) then
         newName = (len(newName) > 20) and gsub(newName, '%s?(.[\128-\191]*)%S+%s', '%1. ') or newName
     end
-    
+
     self.NewName:SetTextColor(1, 1, 1)
     if (C['nPlates'].showLevel) then
-        local levelText = self.Level:GetText()
+        local levelText = self.Level:GetText() or ''
         local levelColor = RGBHex(self.Level:GetTextColor())
         local eliteTexture = self.EliteIcon:IsVisible()
 
@@ -320,18 +300,19 @@ local function UpdatePlate(self)
     self.Highlight:ClearAllPoints()
     self.Highlight:SetAllPoints(self.Health)
 
-    if (self.Castbar:IsVisible()) then     
-        self.Castbar:Hide() 
+    if (self.Castbar:IsVisible()) then
+        self.Castbar:Hide()
     end
 
     local r, g, b = self.Health:GetStatusBarColor()
     self.Castbar.IconOverlay:SetVertexColor(r, g, b)
 end
 
-local function SkinPlate(self)
+local function SkinPlate(self, nameFrame)
     self.Health, self.Castbar = self:GetChildren()
-    _, self.Castbar.Overlay, self.Castbar.Shield, self.Castbar.Icon = self.Castbar:GetRegions()
-    self.Glow, self.Overlay, self.Highlight, self.Name, self.Level, self.BossIcon, self.RaidIcon, self.EliteIcon = self:GetRegions()
+    self.Castbar.Overlay, self.Castbar.Shield, self.Castbar.Icon = select(2, self.Castbar:GetRegions())
+    self.Glow, self.Overlay, self.Highlight, self.Level, self.BossIcon, self.RaidIcon, self.EliteIcon = self:GetRegions()
+    self.Name = nameFrame:GetRegions()
 
         -- Hide some nameplate objects
 
@@ -345,15 +326,14 @@ local function SkinPlate(self)
 
         -- Modify the overlay
 
-    self.Overlay:SetTexCoord(0, 1, 1, 0)
+    self.Overlay:SetTexCoord(0, 1, 0, 1)
     self.Overlay:ClearAllPoints()
-    --self.Overlay:SetPoint('TOPRIGHT', self.Health, 35.66666667, 5.66666667)
-    --self.Overlay:SetPoint('BOTTOMLEFT', self.Health, -36.66666667, -5.66666667)
-    self.Overlay:SetPoint('TOPRIGHT', self.Health, 29.66666667, 4.66666667)
-    self.Overlay:SetPoint('BOTTOMLEFT', self.Health, -31.66666667, -4.66666667)	
+    self.Overlay:SetPoint('TOPRIGHT', self.Health, 35.66666667, 5.66666667)
+    self.Overlay:SetPoint('BOTTOMLEFT', self.Health, -36.66666667, -5.66666667)
+    --self.Overlay:SetPoint('TOPRIGHT', self.Health, 29.66666667, 4.66666667)
+    --self.Overlay:SetPoint('BOTTOMLEFT', self.Health, -31.66666667, -4.66666667)		
     self.Overlay:SetDrawLayer('BORDER')
     self.Overlay:SetTexture(overlayTexture)
-
 
         -- Healtbar and background
 
@@ -370,16 +350,16 @@ local function SkinPlate(self)
 
         -- Create health value font string
 
-    if (not self.Health.Value) then    
+    if (not self.Health.Value) then
         self.Health.Value = self.Health:CreateFontString(nil, 'OVERLAY')
         self.Health.Value:SetPoint('CENTER', self.Health, 0, 0)
-        self.Health.Value:SetFont(C['nMedia'].font, 12)
+        self.Health.Value:SetFont(C["nMedia"].font, 12)
         self.Health.Value:SetShadowOffset(1, -1)
     end
 
     if (not self.NewName) then
         self.NewName = self:CreateFontString(nil, 'ARTWORK')
-        self.NewName:SetFont(C['nMedia'].font, 11, 'THINOUTLINE')
+        self.NewName:SetFont(C["nMedia"].font, 15, 'THINOUTLINE')
         self.NewName:SetShadowOffset(0, 0)
         -- self.NewName:SetPoint('CENTER', self.Health, 'CENTER', 0, 9)
         self.NewName:SetPoint('BOTTOM', self.Health, 'TOP', 0, 2)
@@ -413,13 +393,13 @@ local function SkinPlate(self)
     self.Castbar.Overlay:ClearAllPoints()
     self.Castbar.Overlay:SetPoint('TOPRIGHT', self.Castbar, 35.66666667, 5.66666667)
     self.Castbar.Overlay:SetPoint('BOTTOMLEFT', self.Castbar, -36.66666667, -5.66666667)
-    
+
         -- Castbar casttime font string
 
-    if (not self.Castbar.CastTime) then   
+    if (not self.Castbar.CastTime) then
         self.Castbar.CastTime = self.Castbar:CreateFontString(nil, 'OVERLAY')
         self.Castbar.CastTime:SetPoint('RIGHT', self.Castbar, 1.6666667, 0)
-        self.Castbar.CastTime:SetFont(C['nMedia'].font, 16)   -- , 'THINOUTLINE')
+        self.Castbar.CastTime:SetFont(C["nMedia"].font, 16)   -- , 'THINOUTLINE')
         self.Castbar.CastTime:SetTextColor(1, 1, 1)
         self.Castbar.CastTime:SetShadowOffset(1, -1)
     end
@@ -430,7 +410,7 @@ local function SkinPlate(self)
         self.Castbar.Name = self.Castbar:CreateFontString(nil, 'OVERLAY')
         self.Castbar.Name:SetPoint('LEFT', self.Castbar, 1.5, 0)
         self.Castbar.Name:SetPoint('RIGHT', self.Castbar.CastTime, 'LEFT', -6, 0)
-        self.Castbar.Name:SetFont(C['nMedia'].font, 10)
+        self.Castbar.Name:SetFont(C["nMedia"].font, 10)
         self.Castbar.Name:SetTextColor(1, 1, 1)
         self.Castbar.Name:SetShadowOffset(1, -1)
         self.Castbar.Name:SetJustifyH('LEFT')
@@ -473,12 +453,8 @@ local function SkinPlate(self)
     self:SetScript('OnHide', function(self)
         self.Highlight:Hide()
     end)
-    
-    f:HookScript('OnUpdate', function(_, elapsed)
-        if (not self:IsVisible()) then
-            return
-        end
 
+    self:SetScript('OnUpdate', function(_, elapsed)
         f.elapsed = f.elapsed + elapsed
         if (f.elapsed >= 0.1) then
             if ((CanHaveThreat(self.Health:GetStatusBarColor()) and InCombatLockdown()) or self.NewGlow:IsShown()) then
@@ -504,7 +480,6 @@ local function SkinPlate(self)
                 end
             end
 
-            -- UpdateTargetBorder(self)
             f.elapsed = 0
         end
 
@@ -514,41 +489,35 @@ local function SkinPlate(self)
 
             f.elapsedLong = 0
         end
-    end)
 
-    --[[
-    f:HookScript('OnEvent', function(_, event)
-        if (CanHaveThreat(self.Health:GetStatusBarColor())) then
-            if (event == 'UNIT_THREAT_LIST_UPDATE' or event == 'UNIT_THREAT_SITUATION_UPDATE' or event == 'PLAYER_REGEN_ENABLED' or event == 'PLAYER_REGEN_DISABLED') then
-                UpdateThreatColor(self)
-            end
-        else
-            if (self.NewGlow:IsVisible()) then
-                self.NewGlow:Hide()
-            end
-        end
     end)
-    --]]
 end
 
     -- Scan the worldframe for nameplates
 
-local function IsNameplate(self)
-    -- local region = self:GetRegions()
-    -- return region region:GetObjectType() == 'Texture' and region:GetTexture() == nameplateFlashTexture
-    return self:GetName() and self:GetName():find('NamePlate(%d)')
-end
+local numFrames = 0
+local lastUpdate = 0
+local index = 1
+f:SetScript('OnUpdate', function(self, elapsed)
+    lastUpdate = lastUpdate + elapsed
 
-f:SetScript('OnUpdate', function()
-    frames = select('#', WorldFrame:GetChildren())
-    if (frames ~= total) then
-        for i = 1, frames do
-            namePlate = select(i, WorldFrame:GetChildren())
-            if (IsNameplate(namePlate) and not namePlate.NewName) then
-                SkinPlate(namePlate)
+    if (lastUpdate > 0.1) then
+        local newNumFrames = WorldFrame:GetNumChildren()
+
+        if (newNumFrames ~= numFrames) then
+            numFrames = newNumFrames
+
+            for i = index, numFrames do
+                local frame = select(i, WorldFrame:GetChildren())
+                local frameName = frame:GetName()
+
+                if (frameName and frameName:find('NamePlate') and not frame.NewName) then
+                    SkinPlate(frame:GetChildren())
+                    index = i
+                end
             end
-
-            total = frames
         end
+
+        lastUpdate = 0
     end
 end)

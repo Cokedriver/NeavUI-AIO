@@ -4,6 +4,29 @@ if C['nPower'].enable ~= true then return end
 
 local playerClass = select(2, UnitClass('player'))
 
+local format = string.format
+local floor = math.floor
+
+function FormatValue(self)
+    if (self >= 10000) then
+        return ('%.1fk'):format(self / 1e3)
+    else
+        return self
+    end
+end
+
+function Round(num, idp)
+	local mult = 10^(idp or 0)
+	return floor(num * mult + 0.5) / mult
+end
+
+function Fade(frame, timeToFade, startAlpha, endAlpha)
+	if (Round(frame:GetAlpha(), 1) ~= endAlpha) then
+		local mode = startAlpha > endAlpha and 'In' or 'Out'
+        securecall('UIFrameFade'..mode, frame, timeToFade, startAlpha, endAlpha)
+	end
+end
+
 local RuneColor = {
     [1] = {r = 0.7, g = 0.1, b = 0.1},
     [2] = {r = 0.7, g = 0.1, b = 0.1},
@@ -30,23 +53,32 @@ f:EnableMouse(false)
 f:RegisterEvent('PLAYER_REGEN_ENABLED')
 f:RegisterEvent('PLAYER_REGEN_DISABLED')
 f:RegisterEvent('PLAYER_ENTERING_WORLD')
-f:RegisterEvent('UNIT_COMBO_POINTS')
+f:RegisterUnitEvent('UNIT_COMBO_POINTS', 'player')
 f:RegisterEvent('PLAYER_TARGET_CHANGED')
 
 if (C['nPower'].rune.showRuneCooldown) then
     f:RegisterEvent('RUNE_TYPE_UPDATE')
 end
 
--- f:RegisterEvent('UNIT_DISPLAYPOWER')
--- f:RegisterEvent('UNIT_POWER')
--- f:RegisterEvent('UPDATE_SHAPESHIFT_FORM')
+f:RegisterUnitEvent('UNIT_DISPLAYPOWER', 'player')
+f:RegisterUnitEvent('UNIT_POWER_FREQUENT', 'player')
+f:RegisterEvent('UPDATE_SHAPESHIFT_FORM')
+
+if (C['nPower'].showCombatRegen) then
+    f:RegisterUnitEvent('UNIT_AURA', 'player')
+end
+
+f:RegisterUnitEvent('UNIT_ENTERED_VEHICLE', 'player')
+f:RegisterUnitEvent('UNIT_ENTERING_VEHICLE', 'player')
+f:RegisterUnitEvent('UNIT_EXITED_VEHICLE', 'player')
+f:RegisterUnitEvent('UNIT_EXITING_VEHICLE', 'player')
 
 if (C['nPower'].energy.showComboPoints) then
     f.ComboPoints = {}
 
     for i = 1, 5 do
         f.ComboPoints[i] = f:CreateFontString(nil, 'ARTWORK')
-        
+
         if (C['nPower'].energy.comboFontOutline) then
             f.ComboPoints[i]:SetFont(C['nMedia'].font, C['nPower'].energy.comboFontSize, 'THINOUTLINE')
             f.ComboPoints[i]:SetShadowOffset(0, 0)
@@ -54,13 +86,13 @@ if (C['nPower'].energy.showComboPoints) then
             f.ComboPoints[i]:SetFont(C['nMedia'].font, C['nPower'].energy.comboFontSize)
             f.ComboPoints[i]:SetShadowOffset(1, -1)
         end
-        
+
         f.ComboPoints[i]:SetParent(f)
         f.ComboPoints[i]:SetText(i)
         f.ComboPoints[i]:SetAlpha(0)
     end
 
-	local yOffset = C['nPower'].energy.comboPointsBelow and -35 or 0
+    local yOffset = C['nPower'].energy.comboPointsBelow and -35 or 0
     f.ComboPoints[1]:SetPoint('CENTER', -52, yOffset)
     f.ComboPoints[2]:SetPoint('CENTER', -26, yOffset)
     f.ComboPoints[3]:SetPoint('CENTER', 0, yOffset)
@@ -68,9 +100,33 @@ if (C['nPower'].energy.showComboPoints) then
     f.ComboPoints[5]:SetPoint('CENTER', 52, yOffset)
 end
 
-if (playerClass == 'WARLOCK' and C['nPower'].showSoulshards or playerClass == 'PALADIN' and C['nPower'].showHolypower) then
+if (playerClass == 'MONK') then
+    f.Chi = {}
+    f.Chi.maxChi = 4
+
+    for i = 1, 5 do
+        f.Chi[i] = f:CreateFontString(nil, 'ARTWORK')
+
+        f.Chi[i]:SetFont(C['nMedia'].font, C['nPower'].energy.comboFontSize, 'THINOUTLINE')
+        f.Chi[i]:SetShadowOffset(0, 0)
+
+        f.Chi[i]:SetParent(f)
+        f.Chi[i]:SetText(i)
+        f.Chi[i]:SetAlpha(0)
+    end
+
+    local yOffset = C['nPower'].energy.comboPointsBelow and -35 or 0
+    f.Chi[1]:SetPoint('CENTER', -39, yOffset)
+    f.Chi[2]:SetPoint('CENTER', -13, yOffset)
+    f.Chi[3]:SetPoint('CENTER', 13, yOffset)
+    f.Chi[4]:SetPoint('CENTER', 39, yOffset)
+    f.Chi[5]:SetPoint('CENTER', 52, yOffset)
+    f.Chi[5]:Hide()
+end
+
+if (playerClass == 'WARLOCK' and C['nPower'].showSoulshards or playerClass == 'PALADIN' and C['nPower'].showHolypower or playerClass == 'PRIEST' and C['nPower'].showShadowOrbs) then
     f.extraPoints = f:CreateFontString(nil, 'ARTWORK')
-    
+
     if (C['nPower'].extraFontOutline) then
         f.extraPoints:SetFont(C['nMedia'].font, C['nPower'].extraFontSize, 'THINOUTLINE')
         f.extraPoints:SetShadowOffset(0, 0)
@@ -84,7 +140,7 @@ if (playerClass == 'WARLOCK' and C['nPower'].showSoulshards or playerClass == 'P
 end
 
 if (playerClass == 'DEATHKNIGHT' and C['nPower'].rune.showRuneCooldown) then
-    for i = 1, 6 do 
+    for i = 1, 6 do
         RuneFrame:UnregisterAllEvents()
         _G['RuneButtonIndividual'..i]:Hide()
     end
@@ -145,7 +201,7 @@ f.Power.BackgroundShadow:SetPoint('TOPLEFT', -4, 4)
 f.Power.BackgroundShadow:SetPoint('BOTTOMRIGHT', 4, -4)
 f.Power.BackgroundShadow:SetBackdrop({
     BgFile = 'Interface\\ChatFrame\\ChatFrameBackground',
-    edgeFile = 'Interface\\Addons\\NeavUI\\nMedia\\nTextures\\PowerbarGlow', edgeSize = 4,
+    edgeFile = 'Interface\\Addons\\NeavUI\\nMedia\\nTextures\\textureGlow', edgeSize = 4,
     insets = {left = 3, right = 3, top = 3, bottom = 3}
 })
 f.Power.BackgroundShadow:SetBackdropColor(0.15, 0.15, 0.15, 1)
@@ -171,12 +227,23 @@ if (C['nPower'].showCombatRegen) then
     f.mpreg:Show()
 end
 
-local function FormatValue(self)
-    if (self >= 10000) then
-        return ('%.1fk'):format(self / 1e3)
-    else
-        return self
+local function GetWarlockPower()
+    local powerType = SPELL_POWER_MANA
+    local unitPower = 0
+
+    if (IsPlayerSpell(WARLOCK_SOULBURN)) then
+        powerType = SPELL_POWER_SOUL_SHARDS
+    elseif (IsPlayerSpell(WARLOCK_BURNING_EMBERS)) then
+        powerType = SPELL_POWER_BURNING_EMBERS
+    elseif (IsPlayerSpell(WARLOCK_METAMORPHOSIS)) then
+        powerType = SPELL_POWER_DEMONIC_FURY
     end
+
+    if (powerType ~= SPELL_POWER_MANA) then
+        unitPower = UnitPower('player', powerType)
+    end
+
+    return unitPower
 end
 
 local function GetRealMpFive()
@@ -211,6 +278,43 @@ local function SetComboAlpha(i)
     end
 end
 
+local function UpdateChi()
+    local chi = UnitPower('player', SPELL_POWER_CHI)
+    local maxChi = UnitPowerMax('player', SPELL_POWER_CHI)
+    local yOffset = C['nPower'].energy.comboPointsBelow and -35 or 0
+
+    if (f.Chi.maxChi ~= maxChi) then
+        if (maxChi == 4) then
+            f.Chi[1]:SetPoint('CENTER', -39, yOffset)
+            f.Chi[2]:SetPoint('CENTER', -13, yOffset)
+            f.Chi[3]:SetPoint('CENTER', 13, yOffset)
+            f.Chi[4]:SetPoint('CENTER', 39, yOffset)
+            f.Chi[5]:Hide()
+            f.Chi.maxChi = 4
+        else
+            f.Chi[1]:SetPoint('CENTER', -52, yOffset)
+            f.Chi[2]:SetPoint('CENTER', -26, yOffset)
+            f.Chi[3]:SetPoint('CENTER', 0, yOffset)
+            f.Chi[4]:SetPoint('CENTER', 26, yOffset)
+            f.Chi[5]:Show()
+            f.Chi.maxChi = 5
+        end
+    end
+
+    for i = 1, maxChi do
+        if (UnitHasVehicleUI('player')) then
+            if (f.Chi[i]:IsShown()) then
+                f.Chi[i]:Hide()
+            end
+        else
+            if (not f.Chi[i]:IsShown()) then
+                f.Chi[i]:Show()
+            end
+        end
+        f.Chi[i]:SetAlpha(i == chi and 1 or 0)
+    end
+end
+
 local function CalcRuneCooldown(self)
     local start, duration, runeReady = GetRuneCooldown(self)
     local time = floor(GetTime() - start)
@@ -233,15 +337,20 @@ end
 
 local function UpdateBarVisibility()
     local _, powerType = UnitPowerType('player')
+    local newAlpha = nil
 
     if ((not C['nPower'].energy.show and powerType == 'ENERGY') or (not C['nPower'].showFocus and powerType == 'FOCUS') or (not C['nPower'].showRage and powerType == 'RAGE') or (not C['nPower'].showMana and powerType == 'MANA') or (not C['nPower'].rune.show and powerType == 'RUNEPOWER') or UnitIsDeadOrGhost('player') or UnitHasVehicleUI('player')) then
         f.Power:SetAlpha(0)
     elseif (InCombatLockdown()) then
-        securecall('UIFrameFadeIn', f.Power, 0.3, f.Power:GetAlpha(), C['nPower'].activeAlpha)
+        newAlpha = C['nPower'].activeAlpha
     elseif (not InCombatLockdown() and UnitPower('player') > 0) then
-        securecall('UIFrameFadeOut', f.Power, 0.3, f.Power:GetAlpha(), C['nPower'].inactiveAlpha)
+        newAlpha = C['nPower'].inactiveAlpha
     else
-        securecall('UIFrameFadeOut', f.Power, 0.3, f.Power:GetAlpha(), C['nPower'].emptyAlpha)
+        newAlpha = C['nPower'].emptyAlpha
+    end
+
+    if (newAlpha) then
+        Fade(f.Power, 0.3, f.Power:GetAlpha(), newAlpha)
     end
 end
 
@@ -301,10 +410,35 @@ f:SetScript('OnEvent', function(self, event, arg1)
         f.Rune[arg1].type = GetRuneType(arg1)
     end
 
-    --[[
+    if (f.extraPoints) then
+        if (UnitHasVehicleUI('player')) then
+            if (f.extraPoints:IsShown()) then
+                f.extraPoints:Hide()
+            end
+        else
+            local nump
+            if (playerClass == 'WARLOCK') then
+                nump = GetWarlockPower()
+            elseif (playerClass == 'PALADIN') then
+                nump = UnitPower('player', SPELL_POWER_HOLY_POWER)
+            elseif (playerClass == 'PRIEST') then
+                nump = UnitPower('player', SPELL_POWER_SHADOW_ORBS)
+            end
+
+            f.extraPoints:SetText(nump == 0 and '' or nump)
+        end
+    end
+
+    if (f.Chi) then
+        UpdateChi()
+    end
+
+    if (f.mpreg and (event == 'UNIT_AURA' or event == 'PLAYER_ENTERING_WORLD')) then
+        f.mpreg:SetText(GetRealMpFive())
+    end
+
     UpdateBar()
     UpdateBarVisibility()
-    --]]
 
     if (event == 'PLAYER_ENTERING_WORLD') then
         if (InCombatLockdown()) then
@@ -317,22 +451,18 @@ f:SetScript('OnEvent', function(self, event, arg1)
     if (event == 'PLAYER_REGEN_DISABLED') then
         securecall('UIFrameFadeIn', f, 0.35, f:GetAlpha(), 1)
     end
-    
+
     if (event == 'PLAYER_REGEN_ENABLED') then
         securecall('UIFrameFadeOut', f, 0.35, f:GetAlpha(), C['nPower'].inactiveAlpha)
     end
 end)
 
-local updateTimer = 0
-f:SetScript('OnUpdate', function(self, elapsed)
-    updateTimer = updateTimer + elapsed
+if (f.Rune) then
+    local updateTimer = 0
+    f:SetScript('OnUpdate', function(self, elapsed)
+        updateTimer = updateTimer + elapsed
 
-    if (updateTimer > 0.1) then
-        if (f.mpreg) then
-            f.mpreg:SetText(GetRealMpFive())
-        end
-
-        if (f.Rune) then
+        if (updateTimer > 0.1) then
             for i = 1, 6 do
                 if (UnitHasVehicleUI('player')) then
                     if (f.Rune[i]:IsShown()) then
@@ -347,28 +477,8 @@ f:SetScript('OnUpdate', function(self, elapsed)
                 f.Rune[i]:SetText(CalcRuneCooldown(i))
                 f.Rune[i]:SetTextColor(SetRuneColor(i))
             end
+
+            updateTimer = 0
         end
-
-        if (f.extraPoints) then
-            if (UnitHasVehicleUI('player')) then
-                if (f.extraPoints:IsShown()) then
-                    f.extraPoints:Hide()
-                end
-            else
-                local nump
-                if (playerClass == 'WARLOCK') then
-                    nump = UnitPower('player', SPELL_POWER_SOUL_SHARDS)
-                elseif (playerClass == 'PALADIN') then
-                    nump = UnitPower('player', SPELL_POWER_HOLY_POWER)
-                end
-                
-                f.extraPoints:SetText(nump == 0 and '' or nump)
-            end
-        end
-
-        UpdateBar()
-        UpdateBarVisibility()
-
-        updateTimer = 0
-    end
-end)
+    end)
+end

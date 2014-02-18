@@ -4,7 +4,7 @@ if C['nCore'].mail ~= true then return end
 
 
 local f = CreateFrame('Button', nil, InboxFrame, 'UIPanelButtonTemplate')
-f:SetPoint('TOPRIGHT', -48, -46)
+f:SetPoint("CENTER", InboxFrame, "TOP", -25, -396)
 f:SetSize(100, 22)
 f:SetText(OPENMAIL)
 

@@ -2,7 +2,7 @@ local N, C, DB = unpack(select(2, ...)) -- Import:  N - function; C - config; DB
 
 if C['nMainbar'].enable ~= true then return end
 
-if (not C['nMainbar'].MainMenuBar.skinButton) then
+if (not C['nMainbar'].skinButton) then
     return
 end
 
@@ -34,7 +34,7 @@ hooksecurefunc('PetActionBar_Update', function()
     for _, name in pairs({
         'PetActionButton',
         'PossessButton',    
-        'ShapeshiftButton', 
+        'StanceButton', 
     }) do
         for i = 1, 12 do
             local button = _G[name..i]

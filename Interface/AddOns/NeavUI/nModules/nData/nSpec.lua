@@ -31,10 +31,10 @@ if C['nData'].spec and C['nData'].spec > 0 then
 
 
 	local function LoadTalentTrees()
-		for i = 1, GetNumTalentGroups(false, false) do
+		for i = 1, GetNumSpecGroups (false, false) do
 			talent[i] = {} -- init talent group table
-			for j = 1, GetNumTalentTabs(false, false) do
-				talent[i][j] = select(5, GetTalentTabInfo(j, false, false, i))
+			for j = 1, GetNumSpecializations (false, false) do
+				talent[i][j] = select(5, GetSpecializationInfo (j, false, false, i))
 			end
 		end
 	end
@@ -42,10 +42,10 @@ if C['nData'].spec and C['nData'].spec > 0 then
 	local int = 1
 	local function Update(self, t)
 		int = int - t
-		if int > 0 or not GetPrimaryTalentTree() then return end
+		if int > 0 or not GetSpecialization () then return end
 
-		active = GetActiveTalentGroup(false, false)
-		Text:SetFormattedText(talentString, hexa..select(2, GetTalentTabInfo(GetPrimaryTalentTree(false, false, active)))..hexb)
+		active = GetActiveSpecGroup(false, false)
+		Text:SetFormattedText(talentString, hexa..select(2, GetSpecializationInfo (GetSpecialization (false, false, active)))..hexb)
 		int = 1
 
 		-- disable script	
@@ -62,9 +62,9 @@ if C['nData'].spec and C['nData'].spec > 0 then
 		GameTooltip:ClearLines()
 		GameTooltip:AddLine(hexa..N.myname.."'s"..hexb.." Spec")
 		GameTooltip:AddLine' '		
-		for i = 1, GetNumTalentGroups() do
-			if GetPrimaryTalentTree(false, false, i) then
-				GameTooltip:AddLine(string.join(' ', string.format(talentStringTip, select(2, GetTalentTabInfo(GetPrimaryTalentTree(false, false, i))), talent[i][1], talent[i][2], talent[i][3]), (i == active and activeString or inactiveString)),1,1,1)
+		for i = 1, GetNumSpecGroups () do
+			if GetSpecialization (false, false, i) then
+				GameTooltip:AddLine(string.join(' ', string.format(talentStringTip, select(2, GetSpecializationInfo (GetSpecialization (false, false, i))), talent[i][1], talent[i][2], talent[i][3]), (i == active and activeString or inactiveString)),1,1,1)
 			end
 		end
 		

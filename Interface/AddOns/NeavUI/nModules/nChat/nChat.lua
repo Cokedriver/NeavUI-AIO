@@ -19,6 +19,7 @@ _G.CHAT_FRAME_TAB_NORMAL_NOMOUSE_ALPHA = 0
 _G.CHAT_FRAME_FADE_OUT_TIME = 0.25
 _G.CHAT_FRAME_FADE_TIME = 0.1
 
+
 --[[
 _G.CHAT_SAY_GET = '%s:\32'
 _G.CHAT_YELL_GET = '%s:\32'
@@ -49,19 +50,11 @@ _G.CHAT_RAID_LEADER_GET = '(|Hchannel:raid|hL|h) %s:\32'
 _G.CHAT_BATTLEGROUND_GET = '(|Hchannel:Battleground|hBG|h) %s:\32'
 _G.CHAT_BATTLEGROUND_LEADER_GET = '(|Hchannel:Battleground|hBL|h) %s:\32'
 
-    -- Blizzard introduced a bug in 4.3 that always enables
-    -- the profanity filter
-
-BNSetMatureLanguageFilter(false)
-
-    -- Disable the profanity filter interface option
-
-InterfaceOptionsSocialPanelProfanityFilter:SetAlpha(0.35)
-InterfaceOptionsSocialPanelProfanityFilter:Disable()
-InterfaceOptionsSocialPanelProfanityFilter:EnableMouse(false)
+_G.CHAT_INSTANCE_CHAT_GET = '|Hchannel:INSTANCE_CHAT|h[I]|h %s:\32';
+_G.CHAT_INSTANCE_CHAT_LEADER_GET = '|Hchannel:INSTANCE_CHAT|h[IL]|h %s:\32';
 
 --[[
-local channelFormat 
+local channelFormat
 do
     local a, b = '.*%[(.*)%].*', '%%[%1%%]'
     channelFormat = {
@@ -70,7 +63,7 @@ do
 
         [3] = {gsub(CHAT_GUILD_GET, a, b), '[G]'},
         [4] = {gsub(CHAT_OFFICER_GET, a, b), '[O]'},
-        
+
         [5] = {gsub(CHAT_PARTY_GET, a, b), '[P]'},
         [6] = {gsub(CHAT_PARTY_LEADER_GET, a, b), '[PL]'},
         [7] = {gsub(CHAT_PARTY_GUIDE_GET, a, b), '[PL]'},
@@ -91,8 +84,8 @@ local function FCF_AddMessage(self, text, ...)
     if (type(text) == 'string') then
         text = gsub(text, '(|HBNplayer.-|h)%[(.-)%]|h', '%1%2|h')
         text = gsub(text, '(|Hplayer.-|h)%[(.-)%]|h', '%1%2|h')
-        text = gsub(text, '%[(%d0?)%. (.-)%]', '(%1)') 
-        
+        text = gsub(text, '%[(%d0?)%. (.-)%]', '(%1)')
+
         --[[
         for i = 1, #channelFormat  do
             text = gsub(text, channelFormat[i][1], channelFormat[i][2])
@@ -103,74 +96,6 @@ local function FCF_AddMessage(self, text, ...)
     return AddMessage(self, text, ...)
 end
 
-    -- Modify the editbox
-    
-for k = 6, 11 do
-   select(k, ChatFrame1EditBox:GetRegions()):SetTexture(nil)
-end
-
-ChatFrame1EditBox:SetAltArrowKeyMode(false)
-ChatFrame1EditBox:ClearAllPoints()
-ChatFrame1EditBox:SetPoint('BOTTOMLEFT', ChatFrame1, 'TOPLEFT', 2, 33)
-ChatFrame1EditBox:SetPoint('BOTTOMRIGHT', ChatFrame1, 'TOPRIGHT', 0, 33)
-ChatFrame1EditBox:SetBackdrop({
-    bgFile = 'Interface\\Buttons\\WHITE8x8',
-    insets = { 
-        left = 3, right = 3, top = 2, bottom = 2 
-    },
-})
-
-ChatFrame1EditBox:SetBackdropColor(0, 0, 0, 0.5)
-ChatFrame1EditBox:CreateBeautyBorder(12)
-ChatFrame1EditBox:SetBeautyBorderPadding(-2, -1, -2, -1, -2, -1, -2, -1)
-
-if (C['nChat'].enableBorderColoring) then
-    ChatFrame1EditBox:SetBeautyBorderTexture('white')
-
-    hooksecurefunc('ChatEdit_UpdateHeader', function(editBox)
-        local type = editBox:GetAttribute('chatType')
-        if (not type) then
-            return
-        end
-
-        local info = ChatTypeInfo[type]
-        ChatFrame1EditBox:SetBeautyBorderColor(info.r, info.g, info.b)
-    end)
-end
-
-if C['nChat'].chatBorder == true then	
-	do	
-		for i = 1, NUM_CHAT_WINDOWS do
-			local cf = _G['ChatFrame'..i]
-			if cf then
-				cf:CreateBeautyBorder(12)
-				cf:SetBeautyBorderPadding( 5, 5, 5, 5, 5, 8, 5, 8)
-				cf:SetBeautyBorderTexture('white')
-				if C['nMedia'].border == "Default" then
-					cf:SetBeautyBorderColor(0.38, 0.38, 0.38)		
-				elseif C['nMedia'].border == "Classcolor" then
-					cf:SetBeautyBorderColor(N.ccolor.r, N.ccolor.g, N.ccolor.b)
-				elseif C['nMedia'].border == "Custom" then
-					cf:SetBeautyBorderColor(C['nMedia'].color.r, C['nMedia'].color.g, C['nMedia'].color.b)		
-				end	
-			end
-		end
-		
-		local ct = _G['ChatFrame2']
-		if ct then
-			ct:CreateBeautyBorder(12)
-			ct:SetBeautyBorderPadding(5, 29, 5, 29, 5, 8, 5, 8)
-			ct:SetBeautyBorderTexture('white')
-			if C['nMedia'].border == "Default" then
-				ct:SetBeautyBorderColor(0.38, 0.38, 0.38)		
-			elseif C['nMedia'].border == "Classcolor" then
-				ct:SetBeautyBorderColor(N.ccolor.r, N.ccolor.g, N.ccolor.b)
-			elseif C['nMedia'].border == "Custom" then
-				ct:SetBeautyBorderColor(C['nMedia'].color.r, C['nMedia'].color.g, C['nMedia'].color.b)		
-			end			
-		end
-	end
-end	
     -- Hide the menu and friend button
 
 FriendsMicroButton:SetAlpha(0)
@@ -249,7 +174,7 @@ end)
 
     -- Modify the chat tabs
 
-function SkinTab(self)
+local function SkinTab(self)
     local chat = _G[self]
 
     local tab = _G[self..'Tab']
@@ -309,7 +234,7 @@ function SkinTab(self)
     hooksecurefunc(tab, 'Show', function()
         if (not tab.wasShown) then
             local hasNofication = tabGlow:IsShown()
-            
+
             if (chat:IsMouseOver()) then
                 tab:SetAlpha(CHAT_FRAME_TAB_NORMAL_MOUSEOVER_ALPHA)
             else
@@ -346,13 +271,13 @@ local function ModChat(self)
     SkinTab(self)
 
     local font, fontsize, fontflags = chat:GetFont()
-    chat:SetFont(C['nMedia'].font, fontsize, C['nChat'].chatOutline and 'THINOUTLINE' or fontflags)
+    chat:SetFont(font, fontsize, C['nChat'].chatOutline and 'THINOUTLINE' or fontflags)
     chat:SetClampedToScreen(false)
 
     chat:SetClampRectInsets(0, 0, 0, 0)
     chat:SetMaxResize(UIParent:GetWidth(), UIParent:GetHeight())
     chat:SetMinResize(150, 25)
-    
+
     if (self ~= 'ChatFrame2') then
         chat.AddMessage = FCF_AddMessage
     end
@@ -369,7 +294,7 @@ local function ModChat(self)
     if (C['nChat'].enableBottomButton) then
         buttonBottom:Hide()
         buttonBottom:ClearAllPoints()
-        buttonBottom:SetPoint('BOTTOMRIGHT', chat, 1, 3)
+        buttonBottom:SetPoint('BOTTOMLEFT', chat, -1, -3)
         buttonBottom:HookScript('OnClick', function(self)
             self:Hide()
         end)
@@ -390,6 +315,41 @@ local function ModChat(self)
         'ButtonFrameTopTexture',
     }) do
         _G[self..texture]:SetTexture(nil)
+    end
+
+        -- Modify the editbox
+
+    for k = 6, 11 do
+        select(k, _G[self..'EditBox']:GetRegions()):SetTexture(nil)
+    end
+
+    _G[self..'EditBox']:SetAltArrowKeyMode(false)
+    _G[self..'EditBox']:ClearAllPoints()
+    _G[self..'EditBox']:SetPoint('BOTTOMLEFT', self, 'TOPLEFT', 2, 33)
+    _G[self..'EditBox']:SetPoint('BOTTOMRIGHT', self, 'TOPRIGHT', 0, 33)
+    _G[self..'EditBox']:SetBackdrop({
+        bgFile = 'Interface\\Buttons\\WHITE8x8',
+        insets = {
+            left = 3, right = 3, top = 2, bottom = 2
+        },
+    })
+
+    _G[self..'EditBox']:SetBackdropColor(0, 0, 0, 0.5)
+    _G[self..'EditBox']:CreateBeautyBorder(11)
+    _G[self..'EditBox']:SetBeautyBorderPadding(-2, -1, -2, -1, -2, -1, -2, -1)
+
+    if (C['nChat'].enableBorderColoring) then
+        _G[self..'EditBox']:SetBeautyBorderTexture('white')
+
+        hooksecurefunc('ChatEdit_UpdateHeader', function(editBox)
+            local type = editBox:GetAttribute('chatType')
+            if (not type) then
+                return
+            end
+
+            local info = ChatTypeInfo[type]
+            _G[self..'EditBox']:SetBeautyBorderColor(info.r, info.g, info.b)
+        end)
     end
 end
 
@@ -413,8 +373,7 @@ local function SetChatStyle()
 
             chat.hasModification = true
         end
-    end	
-	
+    end
 end
 hooksecurefunc('FCF_OpenTemporaryWindow', SetChatStyle)
 SetChatStyle()
@@ -430,6 +389,123 @@ hooksecurefunc('ChatFrameMenu_UpdateAnchorPoint', function()
         ChatMenu:SetPoint('BOTTOMLEFT', ChatFrame1Tab, 'TOPRIGHT')
     end
 end)
+
+ChatFrame1Tab:RegisterForClicks('AnyUp')
+ChatFrame1Tab:HookScript('OnClick', function(self, button)
+    if (button == 'MiddleButton' or button == 'Button4' or button == 'Button5') then
+        if (ChatMenu:IsShown()) then
+            ChatMenu:Hide()
+        else
+            ChatMenu:Show()
+        end
+    else
+        ChatMenu:Hide()
+    end
+end)
+
+    -- Modify the gm chatframe and add a sound notification on incoming whispers
+
+local f = CreateFrame('Frame')
+f:RegisterEvent('ADDON_LOADED')
+f:RegisterEvent('CHAT_MSG_WHISPER')
+f:RegisterEvent('CHAT_MSG_BN_WHISPER')
+f:SetScript('OnEvent', function(_, event)
+    if (event == 'ADDON_LOADED' and arg1 == 'Blizzard_GMChatUI') then
+        GMChatFrame:EnableMouseWheel(true)
+        GMChatFrame:SetScript('OnMouseWheel', ChatFrame1:GetScript('OnMouseWheel'))
+        GMChatFrame:SetHeight(200)
+
+        GMChatFrameUpButton:SetAlpha(0)
+        GMChatFrameUpButton:EnableMouse(false)
+
+        GMChatFrameDownButton:SetAlpha(0)
+        GMChatFrameDownButton:EnableMouse(false)
+
+        GMChatFrameBottomButton:SetAlpha(0)
+        GMChatFrameBottomButton:EnableMouse(false)
+    end
+
+    if (event == 'CHAT_MSG_WHISPER' or event == 'CHAT_MSG_BN_WHISPER') then
+        PlaySoundFile('Sound\\Spells\\Simongame_visual_gametick.wav')
+    end
+end)
+
+local combatLog = {
+    text = 'CombatLog',
+    colorCode = '|cffFFD100',
+    isNotRadio = true,
+
+    func = function()
+        if (not LoggingCombat()) then
+            LoggingCombat(true)
+            DEFAULT_CHAT_FRAME:AddMessage(COMBATLOGENABLED, 1, 1, 0)
+        else
+            LoggingCombat(false)
+            DEFAULT_CHAT_FRAME:AddMessage(COMBATLOGDISABLED, 1, 1, 0)
+        end
+    end,
+
+    checked = function()
+        if (LoggingCombat()) then
+            return true
+        else
+            return false
+        end
+    end
+}
+
+local chatLog = {
+    text = 'ChatLog',
+    colorCode = '|cffFFD100',
+    isNotRadio = true,
+
+    func = function()
+        if (not LoggingChat()) then
+            LoggingChat(true)
+            DEFAULT_CHAT_FRAME:AddMessage(CHATLOGENABLED, 1, 1, 0)
+        else
+            LoggingChat(false)
+            DEFAULT_CHAT_FRAME:AddMessage(CHATLOGDISABLED, 1, 1, 0)
+        end
+    end,
+
+    checked = function()
+        if (LoggingChat()) then
+            return true
+        else
+            return false
+        end
+    end
+}
+
+local origFCF_Tab_OnClick = _G.FCF_Tab_OnClick
+local function FCF_Tab_OnClickHook(chatTab, ...)
+    origFCF_Tab_OnClick(chatTab, ...)
+
+    combatLog.arg1 = chatTab
+    UIDropDownMenu_AddButton(combatLog)
+
+    chatLog.arg1 = chatTab
+    UIDropDownMenu_AddButton(chatLog)
+end
+FCF_Tab_OnClick = FCF_Tab_OnClickHook
+
+if (C['nChat'].chatBorder) then
+    for i = 1, NUM_CHAT_WINDOWS do
+        local cf = _G['ChatFrame'..i]
+        if (cf) then
+            cf:CreateBeautyBorder(12)
+            cf:SetBeautyBorderPadding(5, 5, 5, 5, 5, 8, 5, 8)
+        end
+    end
+
+    local ct = _G['ChatFrame2']
+    if (ct) then
+        ct:CreateBeautyBorder(12)
+        ct:SetBeautyBorderPadding(5, 29, 5, 29, 5, 8, 5, 8)
+    end
+end
+
 
 ChatFrame1Tab:RegisterForClicks('AnyUp')
 ChatFrame1Tab:HookScript('OnClick', function(self, button)
